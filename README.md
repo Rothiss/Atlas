@@ -1,5 +1,7 @@
 # Atlas‑CFM — Documentation (WoW 1.12)
 
+> **Personal-fork warning** — This repository is a personal/preference version of the Atlas dungeon-map addon. Do **not** run it in combination with the original addons this version is based on or replaces (Atlas, AtlasLoot, TWLoot) — install this one on its own. For the upstream project, see <https://github.com/byCFM2/Atlas-CFM>.
+
 Overview: Atlas‑CFM is a dungeon map browser with an integrated loot panel and quests module. It is compatible with World of Warcraft 1.12 and includes localization support.
 
 ![main](https://github.com/user-attachments/assets/fb4b69fc-158c-4f55-a0dd-bfd0a7967170)
