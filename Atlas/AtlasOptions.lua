@@ -158,15 +158,7 @@ end
 ---
 function Atlas.OptionsCursorCoordsOnClick()
     AtlasOptions.AtlasCursorCoords = not AtlasOptions.AtlasCursorCoords
-    if AtlasMapOverlay then
-        if AtlasOptions.AtlasCursorCoords then
-            AtlasMapOverlay:Show()
-            PrintA("Cursor coordinates on map enabled")
-        else
-            AtlasMapOverlay:Hide()
-            PrintA("Cursor coordinates on map disabled")
-        end
-    end
+    -- Cursor coordinate overlay is rendered by the World Map OnUpdate in AtlasUI.lua
     if AtlasOptionCursorCoords then
         AtlasOptionCursorCoords:SetChecked(AtlasOptions.AtlasCursorCoords)
     end

@@ -129,15 +129,20 @@ verFrame:RegisterEvent('CHAT_MSG_CHANNEL')
 --- @return nil
 verFrame:SetScript('OnEvent', function()
   if event == 'PLAYER_ENTERING_WORLD' then
+    VC.publishAttempts = 0
     VC.joinAt = GetTime() + 5
     VC.resetPublishDelay()
   elseif event == 'CHAT_MSG_CHANNEL' and arg2 ~= UnitName('player') then
-    -- Extract "channel base name" from arg4 like "3. LFT" without calling GetChannelName
-    local channelName = string.gsub(arg4 or '', '^%d+%.%s*', '')
-    if channelName and isOurChannel(channelName) then
-      local _, _, addonName, remoteVersionStr, _ = string.find(arg1 or '', '([^:]+):([^:]+):([^:]+)')
-      if addonName == VC.abbrev then
-        checkRemoteVersion(tonumber(remoteVersionStr))
+    -- Cheap prefix guard: skip all parsing for unrelated channel messages
+    local abbrevPrefix = VC.abbrev .. ':'
+    if arg1 and string.sub(arg1, 1, string.len(abbrevPrefix)) == abbrevPrefix then
+      -- Extract "channel base name" from arg4 like "3. LFT" without calling GetChannelName
+      local channelName = string.gsub(arg4 or '', '^%d+%.%s*', '')
+      if channelName and isOurChannel(channelName) then
+        local _, _, addonName, remoteVersionStr, _ = string.find(arg1, '([^:]+):([^:]+):([^:]+)')
+        if addonName == VC.abbrev then
+          checkRemoteVersion(tonumber(remoteVersionStr))
+        end
       end
     end
   end
@@ -160,6 +165,15 @@ verFrame:SetScript('OnUpdate', function()
     if VC.publishVersion() then
       VC.nextPublishAt = nil
       this:SetScript('OnUpdate', nil)
+    else
+      -- Channel not reachable yet (not joined / no slot): retry a bounded
+      -- number of times, then stop publishing so the 1s ticker goes quiet.
+      VC.publishAttempts = (VC.publishAttempts or 0) + 1
+      if VC.publishAttempts >= 8 then
+        VC.nextPublishAt = nil
+      else
+        VC.nextPublishAt = time() + 30
+      end
     end
   end
 end)

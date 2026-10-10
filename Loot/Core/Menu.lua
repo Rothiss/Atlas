@@ -31,76 +31,13 @@ local LocalizedStrings = {
 }
 
 -- Menu key to meta-category mapping (used for parent resolution)
-local MenuKeyToMetaCategory = {
-	WorldEvents = LocalizedStrings.WorldEvents,
-	Factions = LocalizedStrings.Factions,
-	WorldBosses = LocalizedStrings.World,
-	PVP = LocalizedStrings.PvPRewards,
-	PVPSets = LocalizedStrings.PvPRewards,
-	Sets = LocalizedStrings.Collections,
-	-- Professions (all map to Crafting)
-	Alchemy = LocalizedStrings.Crafting,
-	Smithing = LocalizedStrings.Crafting,
-	Enchanting = LocalizedStrings.Crafting,
-	Engineering = LocalizedStrings.Crafting,
-	Leatherworking = LocalizedStrings.Crafting,
-	Mining = LocalizedStrings.Crafting,
-	Tailoring = LocalizedStrings.Crafting,
-	Jewelcrafting = LocalizedStrings.Crafting,
-	Cooking = LocalizedStrings.Crafting,
-	FirstAid = LocalizedStrings.Crafting,
-	Poisons = LocalizedStrings.Crafting,
-	Herbalism = LocalizedStrings.Crafting,
-	Survival = LocalizedStrings.Crafting,
-	Skinning = LocalizedStrings.Crafting,
-	Fishing = LocalizedStrings.Crafting,
-}
-
----
---- Gets the meta-category for a menu key or lootpage
---- @param key string - Menu key (e.g., "Alchemy") or lootpage identifier
---- @return string|nil - Localized meta-category name, or nil if not found
---- @usage local meta = Atlas_GetMetaCategoryForMenu("Alchemy") -- returns L["Crafting"]
----
-function Atlas_GetMetaCategoryForMenu(key)
-	if not key or not Atlas or not Atlas.MenuData then return nil end
-
-	-- Direct menu key lookup
-	if MenuKeyToMetaCategory[key] then
-		return MenuKeyToMetaCategory[key]
-	end
-
-	-- Scan MenuData tables for the lootpage
-	for menuKey, metaName in pairs(MenuKeyToMetaCategory) do
-		local menuTable = Atlas.MenuData[menuKey]
-		if type(menuTable) == "table" then
-			local n = table.getn(menuTable)
-			for i = 1, n do
-				local entry = menuTable[i]
-				if entry and entry.lootpage == key then
-					return metaName
-				end
-			end
-		end
-	end
-
-	return nil
-end
+-- NOTE: legacy global Atlas_GetMetaCategoryForMenu was a duplicate of
+-- Atlas.LootUtils.GetMetaCategoryForMenu and has been removed; use that instead.
 
 --- Counts the maximum numeric index in a sparse array
---- @param tbl table The table to analyze for maximum numeric index
---- @return number The highest numeric key found in the table
 --- @usage local max = GetMaxNumericIndex({[1] = "a", [5] = "b"}) -- returns 5
 
-local function GetMaxNumericIndex(tbl)
-	local maxIndex = 0
-	for k, v in pairs(tbl) do
-		if type(k) == "number" and k > maxIndex and v then
-			maxIndex = k
-		end
-	end
-	return maxIndex
-end
+local GetMaxNumericIndex = Atlas.LootUtils.GetMaxNumericIndex
 
 --- Processes category data for loot configuration
 --- @param data table The raw category data to process
@@ -367,27 +304,7 @@ function AtlasLoot_HewdropClick(tablename, text, tabletype)
 		AtlasLootItemsFrame.StoredCurrentInstance = effectiveInstanceKey
 
 		-- Set current instance in Atlas dropdown lists
-		local function FindAndSetAtlasIndicesByInstance(instKey)
-			if not (Atlas and Atlas.DropDowns and instKey) then return false end
-			local ddCount = table.getn(Atlas.DropDowns)
-			for typeIndex = 1, ddCount do
-				local dropDownData = Atlas.DropDowns[typeIndex]
-				if type(dropDownData) == "table" then
-					local m = table.getn(dropDownData)
-					for zoneIndex = 1, m do
-						if dropDownData[zoneIndex] == instKey then
-							AtlasOptions.AtlasType = typeIndex
-							AtlasOptions.AtlasZone = zoneIndex
-							Atlas.Refresh()
-							Atlas.FrameDropDownTypeOnShow()
-							Atlas.FrameDropDownOnShow()
-							return true
-						end
-					end
-				end
-			end
-			return false
-		end
+		local FindAndSetAtlasIndicesByInstance = Atlas.LootUtils.FindAndSetAtlasIndicesByInstance
 		local matched = FindAndSetAtlasIndicesByInstance(effectiveInstanceKey)
 		if not matched then
 			if Atlas and Atlas.PopulateDropdowns then Atlas.PopulateDropdowns() end

@@ -384,24 +384,8 @@ local TOOLTIP_HANDLERS = {
 	item = HandleItemTooltip,
 }
 
--- Function to find boss index in ScrollList by ID or name
-local function FindBossIndexInScrollList(bossIdOrName)
-	if not Atlas.ScrollList or not bossIdOrName then
-		return nil
-	end
-
-	local n = table.getn(Atlas.ScrollList)
-	for i = 1, n do
-		local entry = Atlas.ScrollList[i]
-		if entry and (entry.id == bossIdOrName or entry.name == bossIdOrName) then
-			--PrintA("FindBossIndexInScrollList: found boss " .. tostring(bossIdOrName) .. " at index " .. tostring(i))
-			return i
-		end
-	end
-
-	--PrintA("FindBossIndexInScrollList: boss " .. tostring(bossIdOrName) .. " not found in ScrollList")
-	return nil
-end
+-- Function to find boss index in ScrollList by ID or name (shared in Atlas.LootUtils)
+local FindBossIndexInScrollList = Atlas.LootUtils.FindBossIndexInScrollList
 
 ---
 --- Builds the sourcePage value for adding items to WishList
@@ -572,25 +556,6 @@ local function NavigateFromSourcePage(sourcePage)
 	end)
 
 	return true
-end
-
----
---- Generates a chat link for an item
---- Creates properly formatted item links for chat output
---- @param id number Item ID to create link for
---- @return string Formatted chat link
---- @usage local link = Atlas.Interactions.GetChatLink(12345)
----
-function Atlas.Interactions.GetChatLink(id)
-	local itemName, itemLink, itemQuality = GetItemInfo(tonumber(id))
-	if not itemName or not itemLink or not itemQuality then
-		-- If item is not cached, return simple link
-		return "[Item:" .. tostring(id) .. "]"
-	end
-
-	local _, _, _, colorCode = GetItemQualityColor(itemQuality)
-	local colorHex = string.sub(colorCode, 2)
-	return "\124" .. colorHex .. "\124H" .. itemLink .. "\124h[" .. itemName .. "]\124h\124r"
 end
 
 ---
@@ -868,28 +833,8 @@ function Atlas.Interactions.ElementList_OnClick(buttonName)
 	end
 end
 
--- Helper function to set current instance in dropdown lists for correct navigation
-local function FindAndSetAtlasIndicesByInstance(instKey)
-	if not (Atlas and Atlas.DropDowns and instKey) then return false end
-	local ddCount = table.getn(Atlas.DropDowns)
-	for typeIndex = 1, ddCount do
-		local dropDownData = Atlas.DropDowns[typeIndex]
-		if type(dropDownData) == "table" then
-			local n = table.getn(dropDownData)
-			for zoneIndex = 1, n do
-				if dropDownData[zoneIndex] == instKey then
-					AtlasOptions.AtlasType = typeIndex
-					AtlasOptions.AtlasZone = zoneIndex
-					Atlas.Refresh()
-					Atlas.FrameDropDownTypeOnShow()
-					Atlas.FrameDropDownOnShow()
-					return true
-				end
-			end
-		end
-	end
-	return false
-end
+-- Helper function to set current instance in dropdown lists for correct navigation (shared in Atlas.LootUtils)
+local FindAndSetAtlasIndicesByInstance = Atlas.LootUtils.FindAndSetAtlasIndicesByInstance
 
 ---
 --- Handles menu item click events in the loot browser

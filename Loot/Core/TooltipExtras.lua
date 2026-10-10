@@ -37,11 +37,6 @@ function Atlas.TooltipExtras.ShowIcon(tooltip, texture)
     iconFrame:Show()
 end
 
--- Function to hide icon
-function Atlas.TooltipExtras.HideIcon()
-    iconFrame:Hide()
-end
-
 -- Function to add ItemID to tooltip
 function Atlas.TooltipExtras.AddItemID(tooltip, itemID)
     if not itemID or not AtlasOptions.TooltipShowID then return end
@@ -87,13 +82,22 @@ end
 
 -- OnUpdate handler for iconFrame to handle async texture loading
 iconFrame:SetScript("OnUpdate", function()
-    -- Handle waiting for texture
+    -- Handle waiting for texture (self-stops after a bounded number of frames
+    -- so a texture that never resolves doesn't tick every frame forever)
     if this.waitID then
         local _, _, _, _, _, _, _, _, texture = GetItemInfo(this.waitID)
         if texture then
             Atlas.TooltipExtras.ShowIcon(this.waitTooltip, texture)
             this.waitID = nil
             this.waitTooltip = nil
+            this.waitFrames = nil
+        else
+            this.waitFrames = (this.waitFrames or 0) + 1
+            if this.waitFrames > 30 then
+                this.waitID = nil
+                this.waitTooltip = nil
+                this.waitFrames = nil
+            end
         end
     end
 end)

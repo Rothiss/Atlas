@@ -14,6 +14,67 @@ local L = Atlas.Localization.UI
 local RED = Atlas.Colors.RED
 local WHITE = Atlas.Colors.WHITE
 
+---
+--- Counts the maximum numeric index in a sparse array
+--- Canonical implementation shared across the loot browser and menus
+--- @param tbl table The table to analyze for maximum numeric index
+--- @return number The highest numeric key found in the table (0 if empty)
+---
+function Atlas.LootUtils.GetMaxNumericIndex(tbl)
+	local maxIndex = 0
+	for k, v in pairs(tbl) do
+		if type(k) == "number" and k > maxIndex and v then
+			maxIndex = k
+		end
+	end
+	return maxIndex
+end
+
+---
+--- Finds the index of a boss entry in the current Atlas scroll list by id or name
+--- Shared implementation used by the boss list and loot interactions
+--- @param bossIdOrName string|number The boss id or name to locate
+--- @return number|nil The matching index in Atlas.ScrollList, or nil
+---
+function Atlas.LootUtils.FindBossIndexInScrollList(bossIdOrName)
+	if not (Atlas and Atlas.ScrollList) or not bossIdOrName then return nil end
+	for i = 1, table.getn(Atlas.ScrollList) do
+		local entry = Atlas.ScrollList[i]
+		if entry and (entry.id == bossIdOrName or entry.name == bossIdOrName) then
+			return i
+		end
+	end
+	return nil
+end
+
+---
+--- Sets the Atlas dropdown type/zone to the given instance key, syncing navigation
+--- Shared implementation used by menu clicks and instance navigation
+--- @param instKey string The instance key to locate in the dropdowns
+--- @return boolean True if the instance was found and selected
+---
+function Atlas.LootUtils.FindAndSetAtlasIndicesByInstance(instKey)
+	if not (Atlas and Atlas.DropDowns and instKey) then return false end
+	local ddCount = table.getn(Atlas.DropDowns)
+	for typeIndex = 1, ddCount do
+		local dropDownData = Atlas.DropDowns[typeIndex]
+		if type(dropDownData) == "table" then
+			local n = table.getn(dropDownData)
+			for zoneIndex = 1, n do
+				if dropDownData[zoneIndex] == instKey then
+					AtlasOptions.AtlasType = typeIndex
+					AtlasOptions.AtlasZone = zoneIndex
+					Atlas.Refresh()
+					Atlas.FrameDropDownTypeOnShow()
+					Atlas.FrameDropDownOnShow()
+					return true
+				end
+			end
+		end
+	end
+	return false
+end
+
 -- Timer system
 Atlas.Timer = {}
 local activeTimers = {}
@@ -606,15 +667,7 @@ function Atlas.LootUtils.GetProfessionByLootPageKey(pageKey)
     }
 
     -- Local helper: safe traversal of sparse arrays
-    local function GetMaxNumericIndex(tbl)
-        local maxIndex = 0
-        for k, v in pairs(tbl) do
-            if type(k) == "number" and k > maxIndex and v then
-                maxIndex = k
-            end
-        end
-        return maxIndex
-    end
+    local GetMaxNumericIndex = Atlas.LootUtils.GetMaxNumericIndex
 
     -- Local helper: attempt to find profession by menu table
     local function TryResolveByTable(tableKey)

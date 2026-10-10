@@ -348,16 +348,26 @@ function AtlasLoot_CategorizeWishList(wishList)
 			return instKey
 		end
 
-		table.sort(listToProcess, function(a, b)
-			local instA = GetSourceNameLocal(a)
-			local instB = GetSourceNameLocal(b)
-			if instA ~= instB then
-				return instA < instB
+		-- Precompute sort keys once per entry so the comparator never re-runs
+		-- the resolver/menu scans (previously done on every comparison, O(n log n)).
+		local prepped = {}
+		for prepIdx = 1, table.getn(listToProcess) do
+			local v = listToProcess[prepIdx]
+			prepped[prepIdx] = {
+				v = v,
+				source = GetSourceNameLocal(v),
+				name = GetItemNameLocal(v.id or v[1], v.type or v[4] or "item"),
+			}
+		end
+		table.sort(prepped, function(a, b)
+			if a.source ~= b.source then
+				return a.source < b.source
 			end
-			local nameA = GetItemNameLocal(a.id or a[1], a.type or a[4] or "item")
-			local nameB = GetItemNameLocal(b.id or b[1], b.type or b[4] or "item")
-			return nameA < nameB
+			return a.name < b.name
 		end)
+		for prepIdx = 1, table.getn(prepped) do
+			listToProcess[prepIdx] = prepped[prepIdx].v
+		end
 	end
 
 	-- Go through list and add headers when category changes

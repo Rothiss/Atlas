@@ -122,6 +122,18 @@ Atlas.ItemDB.ClassItems = {
 local PlayerAllowedLookup = nil
 local PlayerAllowedPatterns = nil
 local ColoredTextCache = {}
+local ColoredTextCacheCount = 0
+local MAX_COLORED_TEXT_CACHE = 1000
+
+-- Bounded write into ColoredTextCache (full reset when oversized; recompute is cheap)
+local function cacheColoredText(key, value)
+    ColoredTextCacheCount = ColoredTextCacheCount + 1
+    if ColoredTextCacheCount > MAX_COLORED_TEXT_CACHE then
+        for k in pairs(ColoredTextCache) do ColoredTextCache[k] = nil end
+        ColoredTextCacheCount = 0
+    end
+    ColoredTextCache[key] = value
+end
 
 -- Simple cache system for tooltip data (no LRU - full reset is faster in WoW 1.12)
 local RawTooltipDataCache = {} -- Stores raw parsed data (slot, slot2, class, requires, specials)
@@ -149,6 +161,10 @@ local function releasePooledTable(t)
     if table.setn then table.setn(t, 0) end
     table.insert(tablePool, t)
 end
+
+-- Scratch array for string concatenation in ParseTooltipForItemInfo
+-- (single-threaded usage, avoids per-call allocation)
+local concatArray = {}
 
 local SLOT_KEYWORDS = Atlas.ItemDB.SLOT_KEYWORDS
 local SLOT2_KEYWORDS = Atlas.ItemDB.SLOT2_KEYWORDS
@@ -285,7 +301,7 @@ local function getColoredText(text, typeText)
             colorCode = COLOR_RED
         end
         local res = colorCode .. classText .. COLOR_END
-        ColoredTextCache[cacheKey] = res
+        cacheColoredText(cacheKey, res)
         return res
     elseif typeText == "requires" then
         local levelText = string.gsub(text, L_REQUIRES .. " ", "")
@@ -295,12 +311,12 @@ local function getColoredText(text, typeText)
             colorCode = COLOR_RED
         end
         local res = colorCode .. levelText .. COLOR_END
-        ColoredTextCache[cacheKey] = res
+        cacheColoredText(cacheKey, res)
         return res
     end
 
     local res = colorCode .. text .. COLOR_END
-    ColoredTextCache[cacheKey] = res
+    cacheColoredText(cacheKey, res)
     return res
 end
 
@@ -334,7 +350,9 @@ local function CleanupTooltipCache()
         local count = 0
         for k in pairs(ParsedTooltipCache) do
             ParsedTooltipCache[k] = nil
-            ParsedSuitabilityCache[k] = nil -- Sync suitability cache
+            -- ParsedTooltipCache keys are "itemID_extratext"; suitability is keyed by numeric itemID
+            local _, _, idStr = string.find(k, "^(%d+)")
+            if idStr then ParsedSuitabilityCache[tonumber(idStr)] = nil end
             count = count + 1
             if count >= removeCount then break end
         end
@@ -374,15 +392,16 @@ function Atlas.ItemDB.ParseTooltipForItemInfo(itemID, extratext)
     end
     local suitability = ParsedSuitabilityCache[itemID]
 
-    -- Ensure the item is cached by game client
-    if not GetItemInfo(itemID) then
-        return extratext or ""
-    end
-
-    -- Check formatted cache first (with extratext)
+    -- Check formatted cache first (with extratext) BEFORE touching GetItemInfo;
+    -- this is hit on every loot-row re-render after the first parse.
     local cacheKey = itemID .. "_" .. (extratext or "")
     if ParsedTooltipCache[cacheKey] then
         return ParsedTooltipCache[cacheKey]
+    end
+
+    -- Ensure the item is cached by game client
+    if not GetItemInfo(itemID) then
+        return extratext or ""
     end
 
     CleanupTooltipCache()
@@ -587,15 +606,17 @@ function Atlas.ItemDB.ParseTooltipForItemInfo(itemID, extratext)
     local result = extratext or ""
     if table.getn(info) > 0 then
         -- Safe concatenation for WoW 1.12 to avoid "table contains non-strings" error
-        local strings = {}
+        local strings = concatArray
+        local nCount = 0
         for i = 1, table.getn(info) do
             local val = info[i]
             if val ~= nil then
-                table.insert(strings, tostring(val))
+                nCount = nCount + 1
+                strings[nCount] = tostring(val)
             end
         end
-        if table.getn(strings) > 0 then
-            result = table.concat(strings, ", ")
+        if nCount > 0 then
+            result = table.concat(strings, ", ", 1, nCount)
         end
     end
 
@@ -669,11 +690,18 @@ function Atlas.CreateItemsFromLootTable(bossData)
     local items = {}
     local defaults = bossData.defaults or {}
     for _, origItemData in ipairs(bossData.loot) do
-        -- Create a copy to avoid mutating original data
-        local itemData = {}
-        for k, v in pairs(origItemData) do
-            itemData[k] = v
-        end
+        -- Copy only the fields CreateItem consumes (avoids copying discarded
+        -- fields such as type/extra/icon for every entry at load time)
+        local itemData = {
+            id = origItemData.id,
+            name = origItemData.name,
+            disc = origItemData.disc,
+            dropRate = origItemData.dropRate,
+            container = origItemData.container,
+            quantity = origItemData.quantity,
+            skill = origItemData.skill,
+            servers = origItemData.servers,
+        }
         -- Apply default values to the copy
         for key, value in pairs(defaults) do
             if itemData[key] == nil then

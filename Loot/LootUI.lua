@@ -766,10 +766,6 @@ local function AtlasLoot_CreateItemsFrame()
     frame:SetPoint("TOPLEFT", "AtlasFrame", "TOPLEFT", 18, -84)
     frame:EnableMouse(true)
     frame:EnableMouseWheel(true)
-    frame:RegisterEvent("VARIABLES_LOADED")
-    frame:SetScript("OnEvent", function()
-        AtlasLoot_OnEvent()
-    end)
     frame:RegisterForDrag("LeftButton")
     frame:SetScript("OnDragStart", function()
         Atlas.StartMoving()
@@ -1221,55 +1217,6 @@ local function AtlasLoot_CreatePanel()
     return frame
 end
 
----
---- Hooks a script handler while preserving the original handler
---- Chains both the original and new handlers together
---- @param frame1 frame The frame to hook the script on
---- @param scriptType string The script type to hook (e.g., "OnShow", "OnHide")
---- @param handler function The new handler function to add
---- @return nil
---- @usage hookScript(Atlas.Quest.Tooltip, "OnShow", pfUI.eqcompare.GameTooltipShow)
----
-local function hookScript(frame1, scriptType, handler)
-    -- Store original script handler
-    local originalScript = frame1:GetScript(scriptType)
-    -- Set new script that chains both handlers
-    frame1:SetScript(scriptType, function()
-        -- Call original handler if it exists
-        if originalScript then
-            originalScript()
-        end
-        -- Call our new handler
-        handler()
-    end)
-end
-
----
---- Sets up pfUI tooltip integration for Atlas quest tooltips
---- Creates backdrops and equipment comparison functionality
---- @return nil
---- @usage setupPfUITooltip() -- Called during initialization
----
-local function setupPfUITooltip()
-    if not IsAddOnLoaded("pfUI") then
-        return
-    end
-    -- Create pfUI tooltip backdrop
-    pfUI.api.CreateBackdrop(AtlasLootTooltip)
-    pfUI.api.CreateBackdropShadow(AtlasLootTooltip)
-    pfUI.api.CreateBackdrop(AtlasLootTooltip2)
-    pfUI.api.CreateBackdropShadow(AtlasLootTooltip2)
-    -- Setup equipment comparison if available
-    if pfUI.eqcompare then
-        hookScript(AtlasLootTooltip, "OnShow", pfUI.eqcompare.GameTooltipShow)
-        hookScript(AtlasLootTooltip, "OnHide", function()
-            ShoppingTooltip1:Hide()
-            ShoppingTooltip2:Hide()
-        end)
-    end
-end
-
----
 -- Initialize the AtlasLoot UI components
 -- @function AtlasLoot_InitializeUI
 -- @usage AtlasLoot_InitializeUI()
@@ -1278,5 +1225,4 @@ function AtlasLoot_InitializeUI()
     AtlasLoot_CreateTooltips()
     AtlasLoot_CreateItemsFrame()
     AtlasLoot_CreatePanel()
-    --setupPfUITooltip()
 end

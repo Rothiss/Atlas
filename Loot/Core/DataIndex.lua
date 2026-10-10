@@ -28,6 +28,22 @@ DataIndex.isIndexed = false
 DataIndex.isIndexing = false
 DataIndex.callbacks = {}
 
+---
+--- Invalidates all index caches so the next lookup rebuilds them
+--- Called when the active server changes (server-specific loot differs)
+--- @return nil
+---
+function DataIndex.ResetIndex()
+    DataIndex.isIndexed = false
+    DataIndex.isIndexing = false
+    DataIndex.SourceCache = {}
+    DataIndex.LocationCache = {}
+    DataIndex.SkillCache = {}
+    DataIndex.NameToID = {}
+    DataIndex.SpellID = {}
+    for k in pairs(namesMemo) do namesMemo[k] = nil end
+end
+
 -- Scanner for name resolution
 local scanner = CreateFrame("GameTooltip", "AtlasDataIndexScanner", nil, "GameTooltipTemplate")
 scanner:SetOwner(WorldFrame, "ANCHOR_NONE")
@@ -51,8 +67,14 @@ end
 
 -- Helper: Get Names from ID (returns list of potential names)
 -- Consolidated from ProfessionHooks.lua
+-- Memoized during a build session to avoid repeated spell/item tooltip scans.
+local namesMemo = {}
+
 function DataIndex.GetNamesFromID(id)
     if not id then return {} end
+    local memoized = namesMemo[id]
+    if memoized then return memoized end
+
     local names = {}
     local seen = {}
 
@@ -112,6 +134,8 @@ function DataIndex.GetNamesFromID(id)
             end
         end
     end
+
+    namesMemo[id] = names
 
     return names
 end
@@ -191,24 +215,46 @@ end
 
 local function indexProfItems(spellList, profPages, typeName)
     if not spellList then return end
-    for spellID, data in pairs(spellList) do
-        local foundPageKey = nil
-        local foundProfName = nil
 
-        for _, profEntry in ipairs(profPages) do
-            local pageKey = profEntry.pageKey
-            local profName = profEntry.name
-            if AtlasLoot_Data[pageKey] and Atlas.LootUtils.IsItemInLootPage(AtlasLoot_Data[pageKey], spellID) then
-                DataIndex.SpellID[spellID] = profName
-                foundPageKey = pageKey
-                foundProfName = profName
-                break
+    -- Invert the lookup once: spellID -> { pageKey, profName } using the same
+    -- priority as before (first profPage containing the spell wins).
+    -- Previously this was O(spells x pages x pageSize) per spell.
+    local spellToPage = {}
+    for _, profEntry in ipairs(profPages) do
+        local pageKey = profEntry.pageKey
+        local pageData = AtlasLoot_Data[pageKey]
+        if type(pageData) == "table" then
+            local function scan(tbl)
+                for i = 1, table.getn(tbl) do
+                    local item = tbl[i]
+                    if type(item) == "table" then
+                        local entryID = item.id or item[1]
+                        if entryID and spellToPage[entryID] == nil then
+                            spellToPage[entryID] = { pageKey = pageKey, profName = profEntry.name }
+                        end
+                        if item.container and type(item.container) == "table" then
+                            scan(item.container)
+                        end
+                    elseif type(item) == "number" and spellToPage[item] == nil then
+                        spellToPage[item] = { pageKey = pageKey, profName = profEntry.name }
+                    end
+                end
             end
+            scan(pageData)
         end
+    end
+
+    for spellID, data in pairs(spellList) do
+        local foundPage = spellToPage[spellID]
+        local foundPageKey, foundProfName = foundPage and foundPage.pageKey, foundPage and foundPage.profName
         local itemID = Atlas.Server.GetDataField(data, "item")
+
+        if foundPage then
+            DataIndex.SpellID[spellID] = foundProfName
+        end
         if itemID then
             if DataIndex.SourceCache[itemID] == nil then
-                DataIndex.SourceCache[itemID] = DataIndex.SpellID[spellID]
+                DataIndex.SourceCache[itemID] = foundProfName
             end
         end
 
@@ -236,7 +282,6 @@ local function indexProfItems(spellList, profPages, typeName)
             end
 
             -- For the created item
-            local itemID = Atlas.Server.GetDataField(data, "item")
             if itemID then
                 if not DataIndex.LocationCache[itemID] then DataIndex.LocationCache[itemID] = {} end
                 local iCache = DataIndex.LocationCache[itemID]

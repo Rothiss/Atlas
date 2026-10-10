@@ -1020,7 +1020,6 @@ end
 
 ---
 --- Applies pfUI styling to tooltips
---- Already handled in LootUI.lua via setupPfUITooltip()
 --- This function ensures consistency if tooltips are created later
 ---
 local function StyleTooltips()
@@ -1228,8 +1227,15 @@ end
 ---
 --- Main initialization function
 --- Applies all pfUI styling when pfUI is detected
+--- Idempotent: runs once per session to avoid restyling/re-registering on
+--- repeated ADDON_LOADED / PLAYER_ENTERING_WORLD triggers.
 ---
+local pfUIStyled = false
+
 function Atlas.pfUI.Initialize()
+    if pfUIStyled then return end
+    pfUIStyled = true
+
     if not IsPfUIBaseLoaded() then
         return
     end

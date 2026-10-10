@@ -148,6 +148,19 @@ function Atlas.LootCache.CacheAllItems(dataSource, callback)
         return
     end
 
+    -- Fast path: very small sets skip the memo/hash/batch machinery
+    -- (commonly hit per-row when rendering spell/enchant loot entries)
+    if totalToCache <= 2 then
+        for i = 1, totalToCache do
+            local id = itemsToCache[i]
+            if not GetItemInfo(id) then
+                Atlas.LootCache.ForceCacheItem(id, 1)
+            end
+        end
+        if callback then callback() end
+        return
+    end
+
     -- Memoization: skip repeated sets
     local itemsCopy = {}
     local n = table.getn(itemsToCache)
@@ -244,8 +257,11 @@ function Atlas.LootCache.CacheAllItems(dataSource, callback)
                     end
                     uncachedItems = remaining
 
-                    if table.getn(uncachedItems) == 0 or iteration >= maxIterations then
-                        if not AtlasLOOT_CHECKED_SETS[setHash] then
+                    local allCached = (table.getn(uncachedItems) == 0)
+                    if allCached or iteration >= maxIterations then
+                        -- Only memoize when we actually cached everything;
+                        -- otherwise the set stays unmarked so the next open retries.
+                        if allCached and not AtlasLOOT_CHECKED_SETS[setHash] then
                             AtlasLOOT_CHECKED_SETS[setHash] = true
                             AtlasLOOT_CHECKED_SETS_COUNT = AtlasLOOT_CHECKED_SETS_COUNT + 1
                         end

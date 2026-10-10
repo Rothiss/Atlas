@@ -20,8 +20,6 @@ local levels = {}
 local buttons = {}
 local START_LEVEL = 1000 -- Frame level start
 
-local lua51 = loadstring("return function(...) return ... end") and true or false
-
 -- Helper to create tables with specific keys
 local tmp
 do
@@ -734,6 +732,12 @@ function Atlas.HewdropMenus:OpenServerMenu(parent)
                         Atlas.Refresh()
                         if Atlas.ReagentData and Atlas.ReagentData.ClearIndex then
                             Atlas.ReagentData.ClearIndex()
+                        end
+                        if Atlas.DataIndex and Atlas.DataIndex.ResetIndex then
+                            Atlas.DataIndex.ResetIndex()
+                        end
+                        if Atlas.LootBrowserUI and Atlas.LootBrowserUI.InvalidateBossLootCache then
+                            Atlas.LootBrowserUI.InvalidateBossLootCache()
                         end
                         if Atlas.UpdateOptionsUI then
                             Atlas.UpdateOptionsUI()

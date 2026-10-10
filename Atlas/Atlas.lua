@@ -19,7 +19,6 @@
 
 local _G = getfenv()
 Atlas = _G.Atlas
-Atlas.UI = Atlas.UI or {}
 
 local L = Atlas.Localization.UI
 local LZ = Atlas.Localization.Zones
@@ -366,23 +365,6 @@ local function atlasSwitchDD_OnClick()
 end
 
 ---
---- Initializes the Atlas switch dropdown on load
---- Sets up the dropdown options and default selection
---- @return nil
---- @usage Called automatically during UI initialization
----
-local function atlasSwitchDD_OnLoad()
-	local info
-	for _, v in pairs(Atlas_Ints_Ent_DropDown) do
-		info = {
-			text = Atlas.InstanceData[v].Name,
-			func = atlasSwitchDD_OnClick
-		}
-		UIDropDownMenu_AddButton(info)
-	end
-end
-
----
 --- Sorting function for Atlas switch dropdown items
 --- Compares two dropdown items for alphabetical ordering
 --- @param a table First dropdown item to compare
@@ -670,71 +652,6 @@ function Atlas.SwitchButtonOnClick()
 end
 
 ---
---- Handles map type dropdown menu item clicks
---- Updates the main dropdown menu contents to reflect the selected map category
---- @return nil
---- @usage Called automatically by dropdown menu system
----
-local function atlasFrameDropDownType_OnClick()
-	local thisID = this:GetID()
-	UIDropDownMenu_SetSelectedID(AtlasFrameDropDownType, thisID)
-	AtlasOptions.AtlasType = thisID
-	AtlasOptions.AtlasZone = 1
-	Atlas.FrameDropDownOnShow()
-	Atlas.Refresh()
-end
-
----
---- Initializes the map type dropdown menu with category options
---- Populates dropdown with sorted category names based on current sort settings
---- @return nil
---- @usage UIDropDownMenu_Initialize(AtlasFrameDropDownType, atlasFrameDropDownType_Initialize)
----
-local function atlasFrameDropDownType_Initialize()
-	local info
-	local sortType = Atlas_DropDownSortOrder[AtlasOptions.AtlasSortBy]
-	local subcatOrder = Atlas_DropDownGetLayoutOrder(sortType)
-	local m = getn(subcatOrder)
-	for i = 1, m do
-		info = {
-			text = subcatOrder[i],
-			func = atlasFrameDropDownType_OnClick
-		}
-		UIDropDownMenu_AddButton(info)
-	end
-end
-
----
---- Handles click events on main dropdown menu items
---- Sets the newly selected map as current and refreshes the Atlas frame
---- @return nil
---- @usage Called automatically by UI dropdown system
----
-local function atlasFrameDropDown_OnClick()
-	local i = this:GetID()
-	UIDropDownMenu_SetSelectedID(AtlasFrameDropDown, i)
-	AtlasOptions.AtlasZone = i
-	Atlas.Refresh()
-end
-
----
---- Initializes the main dropdown menu with instance/map options
---- Populates dropdown based on current AtlasType selection
---- @return nil
---- @usage UIDropDownMenu_Initialize(AtlasFrameDropDown, atlasFrameDropDown_Initialize)
----
-local function atlasFrameDropDown_Initialize()
-	local info
-	for _, v in pairs(Atlas.DropDowns[AtlasOptions.AtlasType]) do
-		info = {
-			text = Atlas.InstanceData[v].Name,
-			func = atlasFrameDropDown_OnClick
-		}
-		UIDropDownMenu_AddButton(info)
-	end
-end
-
----
 --- Gets the current zone text with Atlas naming convention fixes applied
 --- Always use this function instead of GetRealZoneText within Atlas
 --- @return string The corrected zone name or original if no substitution exists
@@ -867,17 +784,8 @@ end
 --- @return nil
 --- @usage Called automatically when Atlas frame is shown
 ---
--- Helper to find boss index
-local function FindBossIndexInScrollList(bossIdOrName)
-	if not (Atlas and Atlas.ScrollList) or not bossIdOrName then return nil end
-	for i = 1, table.getn(Atlas.ScrollList) do
-		local entry = Atlas.ScrollList[i]
-		if entry and (entry.id == bossIdOrName or entry.name == bossIdOrName) then
-			return i
-		end
-	end
-	return nil
-end
+-- Helper to find boss index (shared in Atlas.LootUtils)
+local FindBossIndexInScrollList = Atlas.LootUtils.FindBossIndexInScrollList
 
 function Atlas.OnShow()
 	if (AtlasOptions.AtlasAutoSelect) then

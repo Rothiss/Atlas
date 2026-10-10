@@ -809,7 +809,8 @@ function Atlas.ProfessionHooks.OnTradeSkillUpdate_TurtleLatest()
     local skillOffset = FauxScrollFrame_GetOffset(TradeSkillListScrollFrame)
 
     local numDisplayed = TRADE_SKILLS_DISPLAYED
-    while _G["TradeSkillSkill" .. (numDisplayed + 1)] do numDisplayed = numDisplayed + 1 end
+    -- Bound the global-name probe so a stray/corrupt frame name can't loop forever
+    while numDisplayed < 40 and _G["TradeSkillSkill" .. (numDisplayed + 1)] do numDisplayed = numDisplayed + 1 end
 
     for i = 1, numDisplayed do
         local skillButton = _G["TradeSkillSkill" .. i]
@@ -1136,7 +1137,8 @@ function TSF.HookTradeSkillFrameUpdate()
 
         local numItems = table.getn(TSF.List)
         local numDisplayed = TRADE_SKILLS_DISPLAYED
-        while _G["TradeSkillSkill" .. (numDisplayed + 1)] do numDisplayed = numDisplayed + 1 end
+        -- Bound the global-name probe so a stray/corrupt frame name can't loop forever
+        while numDisplayed < 40 and _G["TradeSkillSkill" .. (numDisplayed + 1)] do numDisplayed = numDisplayed + 1 end
 
         local rowHeight = TRADE_SKILL_HEIGHT or 16
         FauxScrollFrame_Update(TradeSkillListScrollFrame, numItems, numDisplayed, rowHeight)

@@ -580,10 +580,13 @@ do
             return s
         end
 
+        -- Track last rendered string to avoid per-frame SetText (expensive in WoW 1.12)
+        local lastCoordsText = ""
+
         WorldMapDetailFrame:SetScript("OnUpdate", function()
             -- Respect option and visibility
             if not AtlasOptions or not AtlasOptions.AtlasCursorCoords or not WorldMapFrame:IsShown() then
-                wmCoordText:Hide()
+                if wmCoordText:IsShown() then wmCoordText:Hide() end
                 return
             end
             local cursorX, cursorY = GetCursorPosition()
@@ -594,13 +597,13 @@ do
             local mapLeft, mapBottom = WorldMapDetailFrame:GetLeft(), WorldMapDetailFrame:GetBottom()
             local mapWidth, mapHeight = WorldMapDetailFrame:GetWidth(), WorldMapDetailFrame:GetHeight()
             if not mapLeft or not mapBottom or not mapWidth or not mapHeight then
-                wmCoordText:Hide()
+                if wmCoordText:IsShown() then wmCoordText:Hide() end
                 return
             end
             local relX = cursorX - mapLeft
             local relY = cursorY - mapBottom
             if relX < 0 or relY < 0 or relX > mapWidth or relY > mapHeight then
-                wmCoordText:Hide()
+                if wmCoordText:IsShown() then wmCoordText:Hide() end
                 return
             end
             if not wmCoordText:IsShown() then wmCoordText:Show() end
@@ -608,7 +611,11 @@ do
             local fracY = 1 - (relY / mapHeight)
             local xPercent = wm_round1(fracX * 100)
             local yPercent = wm_round1(fracY * 100)
-            wmCoordText:SetText(xPercent .. ", " .. yPercent)
+            local coordsText = xPercent .. ", " .. yPercent
+            if coordsText ~= lastCoordsText then
+                lastCoordsText = coordsText
+                wmCoordText:SetText(coordsText)
+            end
         end)
         return true
     end

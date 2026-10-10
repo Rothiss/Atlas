@@ -60,7 +60,7 @@ function Atlas.LootBrowserUI.ScrollBarUpdate()
 				_G["AtlasBossLine" .. line .. "_Text"]:SetText(Atlas.ScrollList[lineplusoffset].line)
 
 				-- Check if this boss has loot data
-				local hasLoot = Atlas.DataResolver.GetLootByID(zoneID, lineplusoffset)
+				local hasLoot = GetBossHasLoot(zoneID, lineplusoffset)
 
 				if AtlasLootItemsFrame.activeElement == lineplusoffset then
 					bossLine:Enable()
@@ -107,14 +107,50 @@ local function formSkillStyle(skilltext)
 end
 
 -- Helper function to count maximum numeric index (sparse array support)
-local function GetMaxNumericIndex(tbl)
-	local maxIndex = 0
-	for k, v in pairs(tbl) do
-		if type(k) == "number" and k > maxIndex and v then
-			maxIndex = k
-		end
-	end
-	return maxIndex
+local GetMaxNumericIndex = Atlas.LootUtils.GetMaxNumericIndex
+
+-- Cache of boss-name -> has-loot per zone. Fixes ScrollBarUpdate doing a linear
+-- instance scan (Reputation/Keys/Bosses) for every visible line on every scroll.
+local bossLootZoneCache = nil
+local bossLootZoneKey = nil
+
+local function BuildBossLootCache(zoneID)
+    bossLootZoneKey = zoneID
+    bossLootZoneCache = {}
+    local inst = type(zoneID) == "string" and Atlas and Atlas.InstanceData and Atlas.InstanceData[zoneID]
+    if not inst then return end
+    -- First match wins, matching AL_FindInInstance priority (Reputation -> Keys -> Bosses)
+    local function IndexSection(section)
+        for i = 1, table.getn(section) do
+            local el = section[i]
+            if el and el.name and bossLootZoneCache[el.name] == nil then
+                bossLootZoneCache[el.name] = (el.items or el.loot) and true or false
+            end
+        end
+    end
+    if inst.Reputation then IndexSection(inst.Reputation) end
+    if inst.Keys then IndexSection(inst.Keys) end
+    if inst.Bosses then IndexSection(inst.Bosses) end
+end
+
+--- Looks up whether a ScrollList line has loot, using the per-zone cache
+--- @param zoneID string The instance/dropdown zone key
+--- @param index number Line index into Atlas.ScrollList
+--- @return boolean
+local function GetBossHasLoot(zoneID, index)
+    if bossLootZoneKey ~= zoneID then
+        BuildBossLootCache(zoneID)
+    end
+    local entry = Atlas.ScrollList and Atlas.ScrollList[index]
+    if not entry then return false end
+    local elemName = entry.name or entry.id
+    return bossLootZoneCache[elemName] == true
+end
+
+--- Invalidates the boss-loot cache (e.g. on server switch)
+function Atlas.LootBrowserUI.InvalidateBossLootCache()
+    bossLootZoneKey = nil
+    bossLootZoneCache = nil
 end
 
 -- OnUpdate handler for triple blink
@@ -317,7 +353,8 @@ function Atlas.LootBrowserUI.ScrollBarLootUpdate()
 		local LZ = Atlas.Localization.Zones
 		local quantityFrame, menuButton, extraText, defaultIcon, itemButton, iconFrame, nameFrame, extraFrame, borderFrame
 
-		local totalItems = GetMaxNumericIndex(dataSource)
+		-- filtered was built via contiguous table.insert above, so getn == max numeric key
+		local totalItems = table.getn(dataSource)
 
 		if totalItems > Atlas.LOOT_NUM_LINES then
 			AtlasLoot_BlinkScrollHint()
@@ -796,37 +833,6 @@ function Atlas.LootBrowserUI.ScrollBarLootUpdate()
 
 	--Show the loot frame
 	AtlasLootItemsFrame:Show()
-	--[[     -- Load data for the current clicked element line
-    local dataID = AtlasLootItemsFrame.StoredElement
-    local instanceKey = (AtlasLootItemsFrame and type(AtlasLootItemsFrame.StoredMenu) == "string") and AtlasLootItemsFrame.StoredMenu or nil
-    local dataSource = Atlas.DataResolver.GetLootByElemName(dataID, instanceKey) or AtlasLootItemsFrame.StoredMenu
-
-    -- Special handling for wish list and search results
-    if type(dataSource) == "table" and dataSource.wishlist then
-        Atlas.LootBrowserUI.DisplayWishList(dataSource.wishlist)
-        return
-    end
-
-    if type(dataSource) == "table" and dataSource.searchResults then
-        Atlas.LootBrowserUI.DisplaySearchResults(dataSource.searchResults)
-        return
-    end
-
-    -- Handle menu data
-    if type(dataSource) == "table" and not dataSource[1] then
-        Atlas.LootBrowserUI.DisplayMenuData(dataSource)
-        return
-    end
-
-    -- Handle regular loot data
-    if type(dataSource) == "table" then
-        Atlas.LootBrowserUI.DisplayLootData(dataSource)
-    else
-        Atlas.LootBrowserUI.ClearLootDisplay()
-    end
-
-    -- Show the loot frame
-    AtlasLootItemsFrame:Show() ]]
 end
 
 ---
