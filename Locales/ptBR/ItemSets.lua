@@ -6,7 +6,7 @@
 --- @compatible World of Warcraft 1.12
 ---
 
-AtlasCFM.Localization:RegisterNamespace("ItemSets", "ptBR", {
+Atlas.Localization:RegisterNamespace("ItemSets", "ptBR", {
     --1.18.1
     ["Sacred Windhorn Attire"] = "Vestes do Cânion do Vento Sagrado", --TODO
 

@@ -6,7 +6,7 @@
 --- @compatible World of Warcraft 1.12
 ---
 
-AtlasCFM.Localization:RegisterNamespace("Factions", "enUS", {
+Atlas.Localization:RegisterNamespace("Factions", "enUS", {
     -- Player Factions
     ["Alliance"] = true,
     ["Horde"] = true,

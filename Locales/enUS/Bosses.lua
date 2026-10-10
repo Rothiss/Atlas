@@ -6,7 +6,7 @@
 --- @compatible World of Warcraft 1.12
 ---
 
-AtlasCFM.Localization:RegisterNamespace("Bosses", "enUS", {
+Atlas.Localization:RegisterNamespace("Bosses", "enUS", {
     --************************************************
     -- TW 1.18.1 Additions TODO
     --************************************************

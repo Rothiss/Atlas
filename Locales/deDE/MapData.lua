@@ -6,7 +6,7 @@
 --- @compatible World of Warcraft 1.12
 ---
 
-AtlasCFM.Localization:RegisterNamespace("MapData", "deDE", {
+Atlas.Localization:RegisterNamespace("MapData", "deDE", {
     --************************************************
     -- Instance Specific Data
     --************************************************

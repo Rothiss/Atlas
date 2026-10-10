@@ -5,7 +5,7 @@
 --- @compatible World of Warcraft 1.12
 ---
 
-AtlasCFM.Localization:RegisterNamespace("ItemSets", "zhCN", {
+Atlas.Localization:RegisterNamespace("ItemSets", "zhCN", {
     --1.18.1
     ["Sacred Windhorn Attire"] = "神圣风角服饰",
 

@@ -6,7 +6,7 @@
 --- @compatible World of Warcraft 1.12
 ---
 
-AtlasCFM.Localization:RegisterNamespace("Classes", "ptBR", {
+Atlas.Localization:RegisterNamespace("Classes", "ptBR", {
     ["Warlock"] = "Bruxo",
     ["Warrior"] = "Guerreiro",
     ["Hunter"] = "Caçador",

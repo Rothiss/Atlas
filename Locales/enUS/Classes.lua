@@ -6,7 +6,7 @@
 --- @compatible World of Warcraft 1.12
 ---
 
-AtlasCFM.Localization:RegisterNamespace("Classes", "enUS", {
+Atlas.Localization:RegisterNamespace("Classes", "enUS", {
     ["Druid"] = true,
     ["Hunter"] = true,
     ["Mage"] = true,

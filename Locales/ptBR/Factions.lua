@@ -6,7 +6,7 @@
 --- @compatible World of Warcraft 1.12
 ---
 
-AtlasCFM.Localization:RegisterNamespace("Factions", "ptBR", {
+Atlas.Localization:RegisterNamespace("Factions", "ptBR", {
     ["Alliance"] = "Aliança",
     ["Horde"] = "Horda",
     ["Firebird Corps"] = "Corpo do Colibri",

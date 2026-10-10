@@ -1,9 +1,9 @@
 ---
 --- QuestData_enUS.lua - Definições de dados do registro de missões do Atlas para localização em português
 ---
---- Este arquivo contém todas as definições de dados de missões para o Atlas-CFM em Português.
+--- Este arquivo contém todas as definições de dados de missões para o Atlas em Português.
 --- Inclui informações de missões, recompensas, localizações e requisitos
---- para todas as instâncias e zonas suportadas pelo Atlas-CFM.
+--- para todas as instâncias e zonas suportadas pelo Atlas.
 ---
 --- Features:
 --- - Base de dados de missões para todas as instâncias
@@ -16,18 +16,18 @@
 ---
 
 local _G = getfenv()
-AtlasCFM = _G.AtlasCFM
+Atlas = _G.Atlas
 
 if GetLocale() ~= "ptBR" then return end
 
 ---------------
 --- COLOURS ---
 ---------------
-local red = AtlasCFM.Colors.RED
-local white = AtlasCFM.Colors.WHITE
-local green = AtlasCFM.Colors.GREEN2
-local blue = AtlasCFM.Colors.BLUE
-local yellow = AtlasCFM.Colors.YELLOW2
+local red = Atlas.Colors.RED
+local white = Atlas.Colors.WHITE
+local green = Atlas.Colors.GREEN2
+local blue = Atlas.Colors.BLUE
+local yellow = Atlas.Colors.YELLOW2
 
 ----------------------------------------------
 ------------- Quest Instance Data ------------
@@ -170,7 +170,7 @@ kQuestInstanceData.TheDeadmines.Alliance[7] = {
 
 }
 kQuestInstanceData.TheDeadmines.Alliance[8] = {
-    Servers = { AtlasCFM.Server.TURTLE1 },
+    Servers = { Atlas.Server.TURTLE1 },
     Title = "A Vingança do Capitão Grayson",
     Id = 40396,
     Level = 22,
@@ -186,7 +186,7 @@ kQuestInstanceData.TheDeadmines.Alliance[8] = {
     }
 }
 kQuestInstanceData.TheDeadmines.Alliance[9] = {
-    Servers = { AtlasCFM.Server.TURTLE1 },
+    Servers = { Atlas.Server.TURTLE1 },
     Title = "O Mistério do Golem da Colheita",
     Id = 40478,
     Level = 19,
@@ -211,7 +211,7 @@ kQuestInstanceData.TheDeadmines.Alliance[9] = {
     }
 }
 kQuestInstanceData.TheDeadmines.Alliance[10] = {
-    Servers = { AtlasCFM.Server.TURTLE1 },
+    Servers = { Atlas.Server.TURTLE1 },
     Title = "Fechando a torneira",
     Id = 41392,
     Level = 20,
@@ -228,7 +228,7 @@ kQuestInstanceData.TheDeadmines.Alliance[10] = {
     }
 }
 kQuestInstanceData.TheDeadmines.Horde[1] = {
-    Servers = { AtlasCFM.Server.TURTLE1 },
+    Servers = { Atlas.Server.TURTLE1 },
     Title = "Roubo de protótipo",
     Id = 55005,
     Level = 18,
@@ -243,7 +243,7 @@ kQuestInstanceData.TheDeadmines.Horde[1] = {
     }
 }
 kQuestInstanceData.TheDeadmines.Horde[2] = {
-    Servers = { AtlasCFM.Server.TURTLE1 },
+    Servers = { Atlas.Server.TURTLE1 },
     Title = "A Vingança do Capitão Grayson",
     Id = 40396,
     Level = 22,
@@ -259,7 +259,7 @@ kQuestInstanceData.TheDeadmines.Horde[2] = {
     }
 }
 kQuestInstanceData.TheDeadmines.Horde[3] = {
-    Servers = { AtlasCFM.Server.TURTLE1 },
+    Servers = { Atlas.Server.TURTLE1 },
     Title = "Machado do Defensor da Horda",
     Id = 39998,
     Level = 18,
@@ -363,7 +363,7 @@ kQuestInstanceData.WailingCaverns.Alliance[5] = {
     }
 }
 kQuestInstanceData.WailingCaverns.Alliance[6] = {
-    Servers = { AtlasCFM.Server.TURTLE1 },
+    Servers = { Atlas.Server.TURTLE1 },
     Title = "Serpente Flor",
     Id = 60125,
     Level = 18,
@@ -379,7 +379,7 @@ kQuestInstanceData.WailingCaverns.Alliance[6] = {
     }
 }
 kQuestInstanceData.WailingCaverns.Alliance[7] = {
-    Servers = { AtlasCFM.Server.TURTLE1 },
+    Servers = { Atlas.Server.TURTLE1 },
     Title = "Preso no pesadelo",
     Id = 60124,
     Level = 19,
@@ -396,7 +396,7 @@ kQuestInstanceData.WailingCaverns.Alliance[7] = {
     }
 }
 kQuestInstanceData.WailingCaverns.Alliance[8] = {
-    Servers = { AtlasCFM.Server.TURTLE1 },
+    Servers = { Atlas.Server.TURTLE1 },
     Title = "Ervas daninhas desenfreadas",
     Id = 41363,
     Level = 20,
@@ -494,7 +494,7 @@ kQuestInstanceData.WailingCaverns.Horde[7] = {
     }
 }
 kQuestInstanceData.WailingCaverns.Horde[8] = {
-    Servers = { AtlasCFM.Server.TURTLE1 },
+    Servers = { Atlas.Server.TURTLE1 },
     Title = "Armas Arcanas",
     Id = 80312,
     Level = 18,
@@ -521,7 +521,7 @@ kQuestInstanceData.WailingCaverns.Horde[8] = {
     }
 }
 kQuestInstanceData.WailingCaverns.Horde[9] = {
-    Servers = { AtlasCFM.Server.TURTLE1 },
+    Servers = { Atlas.Server.TURTLE1 },
     Title = "Contra o Sonho Kolkar",
     Id = 41367,
     Level = 23,
@@ -864,7 +864,7 @@ kQuestInstanceData.Uldaman.Alliance[16] = {
     Folgequest = "Surtos de mana",
 }
 kQuestInstanceData.Uldaman.Alliance[17] = {
-    Servers = { AtlasCFM.Server.TURTLE },
+    Servers = { Atlas.Server.TURTLE },
     --1.18
     Title = "Roubando um Núcleo",
     Id = 40129,
@@ -1015,7 +1015,7 @@ kQuestInstanceData.Uldaman.Horde[9] = createInheritedQuest(
 
 kQuestInstanceData.Uldaman.Horde[10] = kQuestInstanceData.Uldaman.Alliance[16]
 kQuestInstanceData.Uldaman.Horde[11] = {
-    Servers = { AtlasCFM.Server.TURTLE1 },
+    Servers = { Atlas.Server.TURTLE1 },
     Title = "Requisitando um Núcleo",
     Id = 40131,
     Level = 45,
@@ -1330,7 +1330,7 @@ kQuestInstanceData.BlackrockDepths.Alliance[17] = {
         yellow .. "[22]" .. white .. " e Fundi-lo.",
 }
 kQuestInstanceData.BlackrockDepths.Alliance[18] = {
-    Servers = { AtlasCFM.Server.TURTLE1 },
+    Servers = { Atlas.Server.TURTLE1 },
     Title = "Operação Ajuda Jabbey",
     Id = 40757,
     Level = 58,
@@ -1353,7 +1353,7 @@ kQuestInstanceData.BlackrockDepths.Alliance[18] = {
     }
 }
 kQuestInstanceData.BlackrockDepths.Alliance[19] = {
-    Servers = { AtlasCFM.Server.TURTLE1 },
+    Servers = { Atlas.Server.TURTLE1 },
     Title = "O Profanador Ferro Negro",
     Id = 40762,
     Level = 60,
@@ -1370,7 +1370,7 @@ kQuestInstanceData.BlackrockDepths.Alliance[19] = {
     }
 }
 kQuestInstanceData.BlackrockDepths.Alliance[20] = {
-    Servers = { AtlasCFM.Server.TURTLE1 },
+    Servers = { Atlas.Server.TURTLE1 },
     Title = "Vingança Senador",
     Id = 40464,
     Level = 56,
@@ -1388,7 +1388,7 @@ kQuestInstanceData.BlackrockDepths.Alliance[20] = {
     }
 }
 kQuestInstanceData.BlackrockDepths.Alliance[21] = {
-    Servers = { AtlasCFM.Server.TURTLE1 },
+    Servers = { Atlas.Server.TURTLE1 },
     Title = "O Núcleo do Golem Arcano",
     Id = 40467,
     Level = 55,
@@ -1407,7 +1407,7 @@ kQuestInstanceData.BlackrockDepths.Alliance[21] = {
     }
 }
 kQuestInstanceData.BlackrockDepths.Alliance[22] = {
-    Servers = { AtlasCFM.Server.TURTLE1 },
+    Servers = { Atlas.Server.TURTLE1 },
     Title = "Para construir um Pounder",
     Id = 80401,
     Level = 60,
@@ -1430,7 +1430,7 @@ kQuestInstanceData.BlackrockDepths.Alliance[22] = {
     }
 }
 kQuestInstanceData.BlackrockDepths.Alliance[23] = {
-    Servers = { AtlasCFM.Server.TURTLE1 },
+    Servers = { Atlas.Server.TURTLE1 },
     Title = "Cerveja Véu de Inverno",
     Id = 40748,
     Level = 55,
@@ -1739,7 +1739,7 @@ kQuestInstanceData.BlackwingLair.Alliance[4] = {
     }
 }
 kQuestInstanceData.BlackwingLair.Alliance[5] = {
-    Servers = { AtlasCFM.Server.TURTLE1 },
+    Servers = { Atlas.Server.TURTLE1 },
     Title = "A chave para Karazhan IX",
     Id = 40828,
     Level = 60,
@@ -1758,7 +1758,7 @@ kQuestInstanceData.BlackwingLair.Alliance[5] = {
     }
 }
 kQuestInstanceData.BlackwingLair.Alliance[6] = {
-    Servers = { AtlasCFM.Server.TURTLE1 },
+    Servers = { Atlas.Server.TURTLE1 },
     Title = "Foice da Deusa",
     Id = 41067,
     Level = 60,
@@ -1899,7 +1899,7 @@ kQuestInstanceData.BlackfathomDeeps.Alliance[6] = {
     }
 }
 kQuestInstanceData.BlackfathomDeeps.Alliance[7] = {
-    Servers = { AtlasCFM.Server.TURTLE1 },
+    Servers = { Atlas.Server.TURTLE1 },
     Title = "As Ruínas do Santuário Lunar",
     Id = 41812,
     Level = 26,
@@ -2256,7 +2256,7 @@ kQuestInstanceData.BlackrockSpireLower.Alliance[14] = {
     }
 }
 kQuestInstanceData.BlackrockSpireLower.Alliance[15] = {
-    Servers = { AtlasCFM.Server.TURTLE1 },
+    Servers = { Atlas.Server.TURTLE1 },
     Title = "O Profanador Ferro Negro",
     Id = 40762,
     Level = 60,
@@ -2342,7 +2342,7 @@ for i = 11, 15 do
     kQuestInstanceData.BlackrockSpireLower.Horde[i] = kQuestInstanceData.BlackrockSpireLower.Alliance[i]
 end
 kQuestInstanceData.BlackrockSpireLower.Horde[16] = {
-    Servers = { AtlasCFM.Server.TURTLE1 },
+    Servers = { Atlas.Server.TURTLE1 },
     Title = "Escória de Trolls da Floresta",
     Id = 40495,
     Level = 60,
@@ -2360,7 +2360,7 @@ kQuestInstanceData.BlackrockSpireLower.Horde[16] = {
     }
 }
 kQuestInstanceData.BlackrockSpireLower.Horde[17] = {
-    Servers = { AtlasCFM.Server.TURTLE1 },
+    Servers = { Atlas.Server.TURTLE1 },
     Title = "Ataque do Raider",
     Id = 40498,
     Level = 58,
@@ -2378,7 +2378,7 @@ kQuestInstanceData.BlackrockSpireLower.Horde[17] = {
     }
 }
 kQuestInstanceData.BlackrockSpireLower.Horde[18] = {
-    Servers = { AtlasCFM.Server.TURTLE1 },
+    Servers = { Atlas.Server.TURTLE1 },
     Title = "A última rachadura",
     Id = 40509,
     Level = 59,
@@ -2566,7 +2566,7 @@ kQuestInstanceData.BlackrockSpireUpper.Alliance[11] = {
     }
 }
 kQuestInstanceData.BlackrockSpireUpper.Alliance[12] = {
-    Servers = { AtlasCFM.Server.TURTLE1 },
+    Servers = { Atlas.Server.TURTLE1 },
     Title = "A Ligação Superior I",
     Id = 41011,
     Level = 60,
@@ -2788,7 +2788,7 @@ kQuestInstanceData.DireMaulEast.Alliance[7] = {
     }
 }
 kQuestInstanceData.DireMaulEast.Alliance[8] = {
-    Servers = { AtlasCFM.Server.TURTLE1 },
+    Servers = { Atlas.Server.TURTLE1 },
     Title = "O Moldador Selvagem",
     Id = 41016,
     Level = 60,
@@ -2804,7 +2804,7 @@ kQuestInstanceData.DireMaulEast.Alliance[8] = {
     }
 }
 kQuestInstanceData.DireMaulEast.Alliance[9] = {
-    Servers = { AtlasCFM.Server.TURTLE1 },
+    Servers = { Atlas.Server.TURTLE1 },
     Title = "Embrulhando Warpwood",
     Id = 41376,
     Level = 61,
@@ -3175,7 +3175,7 @@ kQuestInstanceData.DireMaulWest.Alliance[17] = {
     Folgequest = "A Forja de Quel'Serrar",
 }
 kQuestInstanceData.DireMaulWest.Alliance[18] = {
-    Servers = { AtlasCFM.Server.TURTLE1 },
+    Servers = { Atlas.Server.TURTLE1 },
     Title = "Mantendo Segredos",
     Id = 40254,
     Level = 58,
@@ -3197,7 +3197,7 @@ kQuestInstanceData.DireMaulWest.Alliance[18] = {
     }
 }
 kQuestInstanceData.DireMaulWest.Alliance[19] = {
-    Servers = { AtlasCFM.Server.TURTLE1 },
+    Servers = { Atlas.Server.TURTLE1 },
     Title = "A Ligação Superior III",
     Id = 41013,
     Level = 60,
@@ -3222,7 +3222,7 @@ kQuestInstanceData.DireMaulWest.Alliance[19] = {
     }
 }
 kQuestInstanceData.DireMaulWest.Alliance[20] = {
-    Servers = { AtlasCFM.Server.TURTLE1 },
+    Servers = { Atlas.Server.TURTLE1 },
     Title = "A chave para Karazhan VIII",
     Id = 40827,
     Level = 60,
@@ -3234,7 +3234,7 @@ kQuestInstanceData.DireMaulWest.Alliance[20] = {
     Folgequest = "A chave para Karazhan IX (BWL) -> A chave para Karazhan X",
 }
 kQuestInstanceData.DireMaulWest.Alliance[21] = {
-    Servers = { AtlasCFM.Server.TURTLE1 },
+    Servers = { Atlas.Server.TURTLE1 },
     Title = "Dentro do Sonho III",
     Id = 40959,
     Level = 60,
@@ -3404,7 +3404,7 @@ kQuestInstanceData.Maraudon.Alliance[8] = {
     Prequest = "Corrupção da Terra e da Semente",
 }
 kQuestInstanceData.Maraudon.Alliance[9] = {
-    Servers = { AtlasCFM.Server.TURTLE1 },
+    Servers = { Atlas.Server.TURTLE1 },
     Title = "Arnês de Quimerano",
     Id = 41052,
     Level = 48,
@@ -3421,7 +3421,7 @@ kQuestInstanceData.Maraudon.Alliance[9] = {
     }
 }
 kQuestInstanceData.Maraudon.Alliance[10] = {
-    Servers = { AtlasCFM.Server.TURTLE1 },
+    Servers = { Atlas.Server.TURTLE1 },
     Title = "Por que não ambos?",
     Id = 41142,
     Level = 50,
@@ -3438,7 +3438,7 @@ kQuestInstanceData.Maraudon.Alliance[10] = {
     }
 }
 kQuestInstanceData.Maraudon.Alliance[11] = {
-    Servers = { AtlasCFM.Server.TURTLE1 },
+    Servers = { Atlas.Server.TURTLE1 },
     Title = "Preparação",
     Id = 41281,
     Level = 48,
@@ -3493,7 +3493,7 @@ kQuestInstanceData.Maraudon.Horde[7] = {
 }
 kQuestInstanceData.Maraudon.Horde[8] = kQuestInstanceData.Maraudon.Alliance[8]
 kQuestInstanceData.Maraudon.Horde[9] = {
-    Servers = { AtlasCFM.Server.TURTLE1 },
+    Servers = { Atlas.Server.TURTLE1 },
     Title = "Preparação",
     Id = 41281,
     Level = 48,
@@ -3510,7 +3510,7 @@ kQuestInstanceData.Maraudon.Horde[9] = {
     Folgequest = "O corte final",
 }
 kQuestInstanceData.Maraudon.Horde[10] = {
-    Servers = { AtlasCFM.Server.TURTLE },
+    Servers = { Atlas.Server.TURTLE },
     --TODO translate
     Title = "Águas Contaminadas",
     Id = 41943,
@@ -3914,7 +3914,7 @@ kQuestInstanceData.RazorfenDowns.Horde[4] = {
     }
 }
 kQuestInstanceData.RazorfenDowns.Horde[5] = {
-    Servers = { AtlasCFM.Server.TURTLE1 },
+    Servers = { Atlas.Server.TURTLE1 },
     Title = "Os poderes além",
     Id = 40995,
     Level = 44,
@@ -4082,7 +4082,7 @@ kQuestInstanceData.RazorfenKraul.Horde[5] = {
     Folgequest = "(See Note)",
 }
 kQuestInstanceData.RazorfenKraul.Horde[6] = {
-    Servers = { AtlasCFM.Server.TURTLE1 },
+    Servers = { Atlas.Server.TURTLE1 },
     Title = "Coração de Zarza Corrompido",
     Id = 41758,
     Level = 30,
@@ -4247,7 +4247,7 @@ kQuestInstanceData.ScarletMonasteryArmory.Alliance[1] = kQuestInstanceData.Scarl
 kQuestInstanceData.ScarletMonasteryArmory.Horde[1] = kQuestInstanceData.ScarletMonasteryLibrary.Horde[1]
 kQuestInstanceData.ScarletMonasteryArmory.Horde[2] = kQuestInstanceData.ScarletMonasteryLibrary.Horde[2]
 kQuestInstanceData.ScarletMonasteryArmory.Horde[3] = {
-    Servers = { AtlasCFM.Server.TURTLE1 },
+    Servers = { Atlas.Server.TURTLE1 },
     Title = "Uma reminiscência de aço",
     Id = 41368,
     Level = 39,
@@ -4271,7 +4271,7 @@ kQuestInstanceData.ScarletMonasteryCathedral = {
 }
 kQuestInstanceData.ScarletMonasteryCathedral.Alliance[1] = kQuestInstanceData.ScarletMonasteryLibrary.Alliance[1]
 kQuestInstanceData.ScarletMonasteryCathedral.Alliance[2] = {
-    Servers = { AtlasCFM.Server.TURTLE1 },
+    Servers = { Atlas.Server.TURTLE1 },
     Title = "O Orbe de Kaladus",
     Id = 40233,
     Level = 38,
@@ -4292,7 +4292,7 @@ kQuestInstanceData.ScarletMonasteryCathedral.Alliance[2] = {
     }
 }
 kQuestInstanceData.ScarletMonasteryCathedral.Alliance[3] = {
-    Servers = { AtlasCFM.Server.TURTLE1 },
+    Servers = { Atlas.Server.TURTLE1 },
     Title = "Corrupção Escarlate",
     Id = 40935,
     Level = 44,
@@ -4337,7 +4337,7 @@ kQuestInstanceData.ScarletMonasteryGraveyard.Horde[2] = {
     }
 }
 kQuestInstanceData.ScarletMonasteryGraveyard.Horde[3] = {
-    Servers = { AtlasCFM.Server.TURTLE1 },
+    Servers = { Atlas.Server.TURTLE1 },
     Title = "Pinte as rosas de vermelho",
     Id = 60116,
     Level = 29,
@@ -4522,7 +4522,7 @@ kQuestInstanceData.Scholomance.Alliance[11] = {
     Folgequest = "Preparativos Finais (" .. yellow .. "Upper Blackrock Spire" .. white .. ")", -- 8994",
 }
 kQuestInstanceData.Scholomance.Alliance[12] = {
-    Servers = { AtlasCFM.Server.TURTLE1 },
+    Servers = { Atlas.Server.TURTLE1 },
     Title = "Um favor para Farsan",
     Id = 40237,
     Level = 58,
@@ -4603,7 +4603,7 @@ kQuestInstanceData.ShadowfangKeep.Alliance[2] = {
     }
 }
 kQuestInstanceData.ShadowfangKeep.Alliance[3] = {
-    Servers = { AtlasCFM.Server.TURTLE1 },
+    Servers = { Atlas.Server.TURTLE1 },
     Title = "A loucura de Arugal",
     Id = 60108,
     Level = 27,
@@ -4617,7 +4617,7 @@ kQuestInstanceData.ShadowfangKeep.Alliance[3] = {
     }
 }
 kQuestInstanceData.ShadowfangKeep.Alliance[4] = {
-    Servers = { AtlasCFM.Server.TURTLE1 },
+    Servers = { Atlas.Server.TURTLE1 },
     Title = "O Feiticeiro Desaparecido",
     Id = 60109,
     Level = 24,
@@ -4628,7 +4628,7 @@ kQuestInstanceData.ShadowfangKeep.Alliance[4] = {
     Note = "Feiticeiro Ashcrombe está na jaula " .. yellow .. "[1]" .. white .. ".",
 }
 kQuestInstanceData.ShadowfangKeep.Alliance[5] = {
-    Servers = { AtlasCFM.Server.TURTLE1 },
+    Servers = { Atlas.Server.TURTLE1 },
     Title = "Sangue de Vorgendor",
     Id = 41378,
     Level = 60,
@@ -4710,7 +4710,7 @@ kQuestInstanceData.ShadowfangKeep.Horde[4] = {
     }
 }
 kQuestInstanceData.ShadowfangKeep.Horde[5] = {
-    Servers = { AtlasCFM.Server.TURTLE1 },
+    Servers = { Atlas.Server.TURTLE1 },
     Title = "Nas mandíbulas",
     Id = 40281,
     Level = 25,
@@ -4732,7 +4732,7 @@ kQuestInstanceData.ShadowfangKeep.Horde[5] = {
     }
 }
 kQuestInstanceData.ShadowfangKeep.Horde[6] = {
-    Servers = { AtlasCFM.Server.TURTLE1 },
+    Servers = { Atlas.Server.TURTLE1 },
     Title = "Tarde demais para prelado",
     Id = 41366,
     Level = 22,
@@ -4749,7 +4749,7 @@ kQuestInstanceData.ShadowfangKeep.Horde[6] = {
     }
 }
 kQuestInstanceData.ShadowfangKeep.Horde[7] = {
-    Servers = { AtlasCFM.Server.TURTLE1 },
+    Servers = { Atlas.Server.TURTLE1 },
     Title = "O Lobo, a Velha e a Foice",
     Id = 41381,
     Level = 60,
@@ -5040,7 +5040,7 @@ kQuestInstanceData.Stratholme.Alliance[17] = {
     }
 }
 kQuestInstanceData.Stratholme.Alliance[18] = {
-    Servers = { AtlasCFM.Server.TURTLE1 },
+    Servers = { Atlas.Server.TURTLE1 },
     Title = "Para construir um Pounder",
     Id = 80401,
     Level = 60,
@@ -5091,7 +5091,7 @@ kQuestInstanceData.Stratholme.Alliance[19] = {
     }
 }
 kQuestInstanceData.Stratholme.Alliance[20] = {
-    Servers = { AtlasCFM.Server.TURTLE1 },
+    Servers = { Atlas.Server.TURTLE1 },
     Title = "Broche da Família Rothlen",
     Id = 41000,
     Level = 60,
@@ -5109,7 +5109,7 @@ kQuestInstanceData.Stratholme.Alliance[20] = {
     Folgequest = "A receita secreta (" .. yellow .. "[Karazhan]" .. white .. ")",
 }
 kQuestInstanceData.Stratholme.Alliance[21] = {
-    Servers = { AtlasCFM.Server.TURTLE1 },
+    Servers = { Atlas.Server.TURTLE1 },
     Title = "A chave para Karazhan VII",
     Id = 40826,
     Level = 60,
@@ -5152,7 +5152,7 @@ kQuestInstanceData.Stratholme.Horde[18] = {
     }
 }
 kQuestInstanceData.Stratholme.Horde[19] = {
-    Servers = { AtlasCFM.Server.TURTLE1 },
+    Servers = { Atlas.Server.TURTLE1 },
     Title = "Para construir um Pounder",
     Id = 80401,
     Level = 60,
@@ -5227,7 +5227,7 @@ kQuestInstanceData.TheRuinsofAhnQiraj.Alliance[2] = {
     }
 }
 kQuestInstanceData.TheRuinsofAhnQiraj.Alliance[3] = {
-    Servers = { AtlasCFM.Server.TURTLE1 },
+    Servers = { Atlas.Server.TURTLE1 },
     Title = "Perdido nas areias",
     Id = 70001,
     Level = 60,
@@ -5247,7 +5247,7 @@ kQuestInstanceData.TheRuinsofAhnQiraj.Alliance[3] = {
     }
 }
 kQuestInstanceData.TheRuinsofAhnQiraj.Alliance[4] = {
-    Servers = { AtlasCFM.Server.TURTLE1 },
+    Servers = { Atlas.Server.TURTLE1 },
     Title = "Olhos Contorcidos",
     Id = 42002,
     Level = 60,
@@ -5350,7 +5350,7 @@ kQuestInstanceData.TheStockade.Alliance[6] = {
     Folgequest = "O visitante curioso",
 }
 kQuestInstanceData.TheStockade.Alliance[7] = {
-    Servers = { AtlasCFM.Server.TURTLE1 },
+    Servers = { Atlas.Server.TURTLE1 },
     Title = "The Stockade's Search",
     Id = 55221,
     Level = 24,
@@ -5657,7 +5657,7 @@ kQuestInstanceData.TheSunkenTemple.Alliance[15] = {
     Folgequest = "Tyrande e Remulos",
 }
 kQuestInstanceData.TheSunkenTemple.Alliance[16] = {
-    Servers = { AtlasCFM.Server.TURTLE1 },
+    Servers = { Atlas.Server.TURTLE1 },
     Title = "Por Qualquer Meio Necessário IV",
     Id = 40400,
     Level = 53,
@@ -5695,7 +5695,7 @@ kQuestInstanceData.TheSunkenTemple.Alliance[17] = {
     }
 }
 kQuestInstanceData.TheSunkenTemple.Alliance[18] = {
-    Servers = { AtlasCFM.Server.TURTLE1 },
+    Servers = { Atlas.Server.TURTLE1 },
     Title = "Dentro do Sonho III",
     Id = 40959,
     Level = 60,
@@ -5719,7 +5719,7 @@ kQuestInstanceData.TheSunkenTemple.Alliance[18] = {
     }
 }
 kQuestInstanceData.TheSunkenTemple.Alliance[19] = {
-    Servers = { AtlasCFM.Server.TURTLE1 },
+    Servers = { Atlas.Server.TURTLE1 },
     Title = "A bengala do Riftwalker",
     Id = 41323,
     Level = 54,
@@ -5788,7 +5788,7 @@ kQuestInstanceData.TheSunkenTemple.Horde[17] = {
     }
 }
 kQuestInstanceData.TheSunkenTemple.Horde[18] = {
-    Servers = { AtlasCFM.Server.TURTLE1 },
+    Servers = { Atlas.Server.TURTLE1 },
     Title = "A crise de Maul'ogg VII",
     Id = 40270,
     Level = 54,
@@ -5813,7 +5813,7 @@ kQuestInstanceData.TheSunkenTemple.Horde[18] = {
     }
 }
 kQuestInstanceData.TheSunkenTemple.Horde[19] = {
-    Servers = { AtlasCFM.Server.TURTLE1 },
+    Servers = { Atlas.Server.TURTLE1 },
     Title = "Dentro do Sonho III",
     Id = 40959,
     Level = 60,
@@ -5837,7 +5837,7 @@ kQuestInstanceData.TheSunkenTemple.Horde[19] = {
     }
 }
 kQuestInstanceData.TheSunkenTemple.Horde[20] = {
-    Servers = { AtlasCFM.Server.TURTLE1 },
+    Servers = { Atlas.Server.TURTLE1 },
     Title = "A bengala do Riftwalker",
     Id = 41323,
     Level = 54,
@@ -6014,7 +6014,7 @@ kQuestInstanceData.ZulFarrak.Alliance[7] = {
     }
 }
 kQuestInstanceData.ZulFarrak.Alliance[8] = {
-    Servers = { AtlasCFM.Server.TURTLE1 },
+    Servers = { Atlas.Server.TURTLE1 },
     Title = "À deriva pela areia",
     Id = 40519,
     Level = 46,
@@ -6030,7 +6030,7 @@ kQuestInstanceData.ZulFarrak.Alliance[8] = {
     }
 }
 kQuestInstanceData.ZulFarrak.Alliance[9] = {
-    Servers = { AtlasCFM.Server.TURTLE1 },
+    Servers = { Atlas.Server.TURTLE1 },
     Title = "O Ancestral Farraki",
     Id = 41811,
     Level = 46,
@@ -6064,7 +6064,7 @@ for i = 2, 9 do
     kQuestInstanceData.ZulFarrak.Horde[i] = kQuestInstanceData.ZulFarrak.Alliance[i]
 end
 kQuestInstanceData.ZulFarrak.Horde[10] = {
-    Servers = { AtlasCFM.Server.TURTLE1 },
+    Servers = { Atlas.Server.TURTLE1 },
     Title = "Fim do Ukorz Sandscalp",
     Id = 40527,
     Level = 48,
@@ -6165,7 +6165,7 @@ kQuestInstanceData.ZulGurub.Alliance[4] = {
     }
 }
 kQuestInstanceData.ZulGurub.Alliance[5] = {
-    Servers = { AtlasCFM.Server.TURTLE1 },
+    Servers = { Atlas.Server.TURTLE1 },
     --TODO translate
     Title = "Uma boa jogada merece outra",
     Id = 41960,
@@ -6184,7 +6184,7 @@ kQuestInstanceData.ZulGurub.Alliance[5] = {
     Folgequest = "Escondido à vista de todos",
 }
 kQuestInstanceData.ZulGurub.Alliance[6] = {
-    Servers = { AtlasCFM.Server.TURTLE1 },
+    Servers = { Atlas.Server.TURTLE1 },
     Title = "Drenando o Esfolador de Almas",
     Id = 70003,
     Level = 60,
@@ -6371,7 +6371,7 @@ kQuestInstanceData.Gnomeregan.Alliance[10] = {
     }
 }
 kQuestInstanceData.Gnomeregan.Alliance[11] = {
-    Servers = { AtlasCFM.Server.TURTLE1 },
+    Servers = { Atlas.Server.TURTLE1 },
     Title = "Um cérebro forte",
     Id = 80398,
     Level = 30,
@@ -6383,7 +6383,7 @@ kQuestInstanceData.Gnomeregan.Alliance[11] = {
     Folgequest = "Para construir um Pounder",
 }
 kQuestInstanceData.Gnomeregan.Alliance[12] = {
-    Servers = { AtlasCFM.Server.TURTLE1 },
+    Servers = { Atlas.Server.TURTLE1 },
     Title = "Regulador de alta energia",
     Id = 40861,
     Level = 33,
@@ -6400,7 +6400,7 @@ kQuestInstanceData.Gnomeregan.Alliance[12] = {
     }
 }
 kQuestInstanceData.Gnomeregan.Alliance[13] = {
-    Servers = { AtlasCFM.Server.TURTLE1 },
+    Servers = { Atlas.Server.TURTLE1 },
     Title = "Ativação do sistema de backup",
     Id = 40856,
     Level = 33,
@@ -6497,7 +6497,7 @@ kQuestInstanceData.Gnomeregan.Horde[5] = {
     }
 }
 kQuestInstanceData.Gnomeregan.Horde[6] = {
-    Servers = { AtlasCFM.Server.TURTLE1 },
+    Servers = { Atlas.Server.TURTLE1 },
     Title = "Um cérebro forte",
     Id = 80398,
     Level = 30,
@@ -6509,7 +6509,7 @@ kQuestInstanceData.Gnomeregan.Horde[6] = {
     Folgequest = "Para construir um Pounder",
 }
 kQuestInstanceData.Gnomeregan.Horde[7] = {
-    Servers = { AtlasCFM.Server.TURTLE1 },
+    Servers = { Atlas.Server.TURTLE1 },
     Title = "Capacitor de reserva",
     Id = 55006,
     Level = 34,
@@ -6578,7 +6578,7 @@ kQuestInstanceData.FourDragons.Alliance[1] = {
     }
 }
 kQuestInstanceData.FourDragons.Alliance[2] = {
-    Servers = { AtlasCFM.Server.TURTLE },
+    Servers = { Atlas.Server.TURTLE },
     Title = "Pedra dos Sonhos, Vale Gris",
     Id = 41923,
     Level = 60,
@@ -6588,7 +6588,7 @@ kQuestInstanceData.FourDragons.Alliance[2] = {
         yellow .. "[2]" .. white .. ").",
 }
 kQuestInstanceData.FourDragons.Alliance[3] = {
-    Servers = { AtlasCFM.Server.TURTLE },
+    Servers = { Atlas.Server.TURTLE },
     Title = "Pedra dos Sonhos, Feralas",
     Id = 41924,
     Level = 60,
@@ -6598,7 +6598,7 @@ kQuestInstanceData.FourDragons.Alliance[3] = {
         yellow .. "[2]" .. white .. ").",
 }
 kQuestInstanceData.FourDragons.Alliance[4] = {
-    Servers = { AtlasCFM.Server.TURTLE },
+    Servers = { Atlas.Server.TURTLE },
     Title = "Pedra dos Sonhos, Bosque do Crepúsculo",
     Id = 41925,
     Level = 60,
@@ -6608,7 +6608,7 @@ kQuestInstanceData.FourDragons.Alliance[4] = {
         yellow .. "[2]" .. white .. ").",
 }
 kQuestInstanceData.FourDragons.Alliance[5] = {
-    Servers = { AtlasCFM.Server.TURTLE },
+    Servers = { Atlas.Server.TURTLE },
     Title = "Pedra dos Sonhos, Terras Agrestes",
     Id = 41926,
     Level = 60,
@@ -6618,7 +6618,7 @@ kQuestInstanceData.FourDragons.Alliance[5] = {
         yellow .. "[2]" .. white .. ").",
 }
 kQuestInstanceData.FourDragons.Alliance[6] = {
-    Servers = { AtlasCFM.Server.TURTLE1 },
+    Servers = { Atlas.Server.TURTLE1 },
     Title = "Encharcado em Poder",
     Id = 42004,
     Level = 60,
@@ -6642,7 +6642,7 @@ kQuestInstanceData.Reaver = {
     Horde = {}
 }
 kQuestInstanceData.Reaver.Alliance[1] = {
-    Servers = { AtlasCFM.Server.TURTLE },
+    Servers = { Atlas.Server.TURTLE },
     Title = "Apito de Montaria de Lord Blackwald II",
     Id = 41927,
     Level = 60,
@@ -6664,7 +6664,7 @@ kQuestInstanceData.Nerubian = {
     Horde = {}
 }
 kQuestInstanceData.Nerubian.Alliance[1] = {
-    Servers = { AtlasCFM.Server.TURTLE },
+    Servers = { Atlas.Server.TURTLE },
     Title = "O Chamado do Lorde da Cripta",
     Id = 41928,
     Level = 60,
@@ -6723,7 +6723,7 @@ kQuestInstanceData.Concavius = {
     Horde = {}
 }
 kQuestInstanceData.Concavius.Alliance[1] = {
-    Servers = { AtlasCFM.Server.TURTLE },
+    Servers = { Atlas.Server.TURTLE },
     Title = "Fragmento de Mana Transbordante",
     Id = 41929,
     Level = 60,
@@ -6775,7 +6775,7 @@ kQuestInstanceData.Azuregos.Alliance[2] = {
     Folgequest = "Traduzindo o livro-razão",
 }
 kQuestInstanceData.Azuregos.Alliance[3] = {
-    Servers = { AtlasCFM.Server.TURTLE },
+    Servers = { Atlas.Server.TURTLE },
     --TODO translate
     Title = "Rito de Ressurreição",
     Id = 41935,
@@ -6804,7 +6804,7 @@ kQuestInstanceData.LordKazzak = {
     Horde = {}
 }
 kQuestInstanceData.LordKazzak.Alliance[1] = {
-    Servers = { AtlasCFM.Server.TURTLE },
+    Servers = { Atlas.Server.TURTLE },
     --TODO translate
     Title = "Cristal de Fenda Retorcida",
     Id = 41936,
@@ -7638,7 +7638,7 @@ kQuestInstanceData.HateforgeQuarry.Alliance[6] = {
     }
 }
 kQuestInstanceData.HateforgeQuarry.Alliance[7] = {
-    Servers = { AtlasCFM.Server.TURTLE1 },
+    Servers = { Atlas.Server.TURTLE1 },
     Title = "Por que não ambos?",
     Id = 41142,
     Level = 50,
@@ -7947,7 +7947,7 @@ kQuestInstanceData.GilneasCity.Alliance[8] = {
     }
 }
 kQuestInstanceData.GilneasCity.Alliance[9] = {
-    Servers = { AtlasCFM.Server.TURTLE1 },
+    Servers = { Atlas.Server.TURTLE1 },
     Title = "Sangue de Vorgendor",
     Id = 41378,
     Level = 60,
@@ -8093,7 +8093,7 @@ kQuestInstanceData.GilneasCity.Horde[7] = {
     }
 }
 kQuestInstanceData.GilneasCity.Horde[8] = {
-    Servers = { AtlasCFM.Server.TURTLE1 },
+    Servers = { Atlas.Server.TURTLE1 },
     Title = "O Lobo, a Velha e a Foice",
     Id = 41381,
     Level = 60,
@@ -8235,7 +8235,7 @@ kQuestInstanceData.LowerKarazhan.Alliance[9] = {
     Folgequest = "Broche da Família Rothlen",
 }
 kQuestInstanceData.LowerKarazhan.Alliance[10] = {
-    Servers = { AtlasCFM.Server.TURTLE1 },
+    Servers = { Atlas.Server.TURTLE1 },
     Title = "Broche da Família Rothlen",
     Id = 41000,
     Level = 60,
@@ -8352,7 +8352,7 @@ kQuestInstanceData.LowerKarazhan.Alliance[17] = {
     }
 }
 kQuestInstanceData.LowerKarazhan.Alliance[18] = {
-    Servers = { AtlasCFM.Server.TURTLE1 },
+    Servers = { Atlas.Server.TURTLE1 },
     Title = "Sangue de Vorgendor",
     Id = 41381,
     Level = 60,
@@ -9391,4 +9391,4 @@ kQuestInstanceData.TimbermawHold.Horde[11] = { --TODO translate
     Note = "'Loktanag, o Vil' está em " .. yellow .. "[4]" .. white .. ".",
 }
 
-AtlasCFM.Quest.DataBase = kQuestInstanceData
+Atlas.Quest.DataBase = kQuestInstanceData

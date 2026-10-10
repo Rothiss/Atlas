@@ -5,7 +5,7 @@
 --- @compatible World of Warcraft 1.12
 ---
 
-AtlasCFM.Localization:RegisterNamespace("ItemSets", "esES", {
+Atlas.Localization:RegisterNamespace("ItemSets", "esES", {
     --1.18.1
     ["Sacred Windhorn Attire"] = "Vestiduras Cornaviento Sagradas",
 

@@ -1,38 +1,38 @@
-# Atlas‑CFM — Documentation (WoW 1.12)
+# Atlas — Documentation (WoW 1.12)
 
 > **Personal-fork warning** — This repository is a personal/preference version of the Atlas dungeon-map addon. Do **not** run it in combination with the original addons this version is based on or replaces (Atlas, AtlasLoot, TWLoot) — install this one on its own. For the upstream project, see <https://github.com/byCFM2/Atlas-CFM>.
 
-Overview: Atlas‑CFM is a dungeon map browser with an integrated loot panel and quests module. It is compatible with World of Warcraft 1.12 and includes localization support.
+Overview: Atlas is a dungeon map browser with an integrated loot panel and quests module. It is compatible with World of Warcraft 1.12 and includes localization support.
 
 ![main](https://github.com/user-attachments/assets/fb4b69fc-158c-4f55-a0dd-bfd0a7967170)
 
 
 1) Compatibility and Requirements
 - Client: WoW 1.12 (Interface: 11200)
-- Addon folder: Interface\AddOns\Atlas-CFM
+- Addon folder: Interface\AddOns\Atlas
 - Saved variables:
-  - Account-wide: AtlasCFMOptions
-  - Per-character: AtlasCFMCharDB
+  - Account-wide: AtlasOptions
+  - Per-character: AtlasCharDB
 - Optional dependencies (detected if installed): EquipCompare, EQCompare, pfQuest, pfUI
 
 2) Installation
-- Copy the Atlas‑CFM folder to Interface\AddOns
+- Copy the Atlas folder to Interface\AddOns
 - Enable the addon on the character selection screen
 
 3) Quick Start and Controls
-- Open/Close Atlas‑CFM: /atlas
+- Open/Close Atlas: /atlas
 - Open options: /atlas options (or /atlas opt)
 - Minimap button (if enabled):
-  - Left-click — open Atlas‑CFM
-  - Middle-click — open Atlas‑CFM options
+  - Left-click — open Atlas
+  - Middle-click — open Atlas options
   - Right-click + drag — move the button
-- The AtlasCFM window can be dragged when unlocked (lock button on the frame)
-- Right-click on the AtlasCFM window (if enabled) — close AtlasCFM and open the World Map
+- The Atlas window can be dragged when unlocked (lock button on the frame)
+- Right-click on the Atlas window (if enabled) — close Atlas and open the World Map
 
 - **World Map Markers**:
   - Icons for Dungeons, Raids, World Bosses, and Transport routes (Zeppelins, Boats, Tram) directly on the World Map.
   - Interactive tooltips showing level ranges and destinations.
-  - Clicking a marker automatically opens the corresponding map in Atlas‑CFM.
+  - Clicking a marker automatically opens the corresponding map in Atlas.
 - **Profession & Crafting Integration**:
   - Comprehensive catalogs for all professions and world events.
   - Automatic detection of player professions and recipe knowledge (Known/Unknown).
@@ -50,7 +50,7 @@ Overview: Atlas‑CFM is a dungeon map browser with an integrated loot panel and
 - Optional: cursor coordinates overlay on the default World Map.
 
 5) Window and UI Elements
-- Main frame: AtlasCFMFrame
+- Main frame: AtlasFrame
 - Drop-downs:
   - Map Type (category)
   - Instance selection
@@ -71,22 +71,22 @@ Overview: Atlas‑CFM is a dungeon map browser with an integrated loot panel and
 - **Server Selection** — Change the target server specialization for data and markers.
 - **Show Map Markers** — Toggle icons for dungeons and transport on the World Map.
 - **Profession Filters** — Filter tooltip info based on chosen professions.
-- Show cursor coordinates on World Map — toggle AtlasCFMOptions.AtlasCursorCoords
+- Show cursor coordinates on World Map — toggle AtlasOptions.AtlasCursorCoords
 
 7) Commands
-- /atlascfm — toggle Atlas‑CFM window
-- /atlascfm options (or /atlascfm opt) — open options
-- /atlascfm ver — print your local Atlas‑CFM version to chat
-- /atlascfm ver check — immediately publish your version to LFT and print confirmation
+- /atlas — toggle Atlas window
+- /atlas options (or /atlas opt) — open options
+- /atlas ver — print your local Atlas version to chat
+- /atlas ver check — immediately publish your version to LFT and print confirmation
 
 8) First Run
 - On the first run, a setup prompt may be shown once
-- AtlasCFMCharDB.FirstTime controls the one‑time greeting behavior
+- AtlasCharDB.FirstTime controls the one‑time greeting behavior
 
 9) FAQ
 - The window is invisible
   - Check Scale/Transparency in options
-  - Type /atlascfm
+  - Type /atlas
 - Minimap button is missing
   - Enable "Show Button on Minimap" in options
 - Right‑click opens the World Map
@@ -101,7 +101,7 @@ Overview: Atlas‑CFM is a dungeon map browser with an integrated loot panel and
 - Hide the loot panel temporarily to save space inside the Atlas window
 
 11) Localization
-- Atlas-CFM uses a modular localization system based on namespaces
+- Atlas uses a modular localization system based on namespaces
 - Structure:
   - `Locales/LocalizationFramework.lua` — Core localization system
   - `Locales/[locale]/` — Language-specific files (enUS, deDE, esES, ptBR, zhCN)

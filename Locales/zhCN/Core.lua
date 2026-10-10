@@ -7,40 +7,40 @@
 ---
 
 if GetLocale() ~= "zhCN" then return end
--- DEFAULT_CHAT_FRAME:AddMessage("AtlasCFM: Loading zhCN Core...")
+-- DEFAULT_CHAT_FRAME:AddMessage("Atlas: Loading zhCN Core...")
 
 -- Zone name substitutions (for display purposes)
-AtlasCFMSortIgnore = {}
+AtlasSortIgnore = {}
 
-AtlasCFMZoneSubstitutions = {
+AtlasZoneSubstitutions = {
     ["阿塔哈卡神庙"] = "沉没的神庙"
 }
 
 ---
---- Key binding definitions for Atlas-CFM addon
+--- Key binding definitions for Atlas addon
 ---
-BINDING_HEADER_AtlasCFM_TITLE = "Atlas-CFM 快捷键"
-BINDING_NAME_AtlasCFM_TOGGLE = "打开/关闭 Atlas-CFM"
-BINDING_NAME_AtlasCFM_OPTIONS = "打开/关闭选项"
-BINDING_HEADER_AtlasCFMLOOT_TITLE = "AtlasCFM 物品查询快捷键"
-BINDING_NAME_AtlasCFMLOOT_QL1 = "快速查看 1"
-BINDING_NAME_AtlasCFMLOOT_QL2 = "快速查看 2"
-BINDING_NAME_AtlasCFMLOOT_QL3 = "快速查看 3"
-BINDING_NAME_AtlasCFMLOOT_QL4 = "快速查看 4"
-BINDING_NAME_AtlasCFMLOOT_QL5 = "快速查看 5"
-BINDING_NAME_AtlasCFMLOOT_QL6 = "快速查看 6"
-BINDING_NAME_AtlasCFMLOOT_WISHLIST = "心愿单"
+BINDING_HEADER_Atlas_TITLE = "Atlas 快捷键"
+BINDING_NAME_Atlas_TOGGLE = "打开/关闭 Atlas"
+BINDING_NAME_Atlas_OPTIONS = "打开/关闭选项"
+BINDING_HEADER_AtlasLOOT_TITLE = "Atlas 物品查询快捷键"
+BINDING_NAME_AtlasLOOT_QL1 = "快速查看 1"
+BINDING_NAME_AtlasLOOT_QL2 = "快速查看 2"
+BINDING_NAME_AtlasLOOT_QL3 = "快速查看 3"
+BINDING_NAME_AtlasLOOT_QL4 = "快速查看 4"
+BINDING_NAME_AtlasLOOT_QL5 = "快速查看 5"
+BINDING_NAME_AtlasLOOT_QL6 = "快速查看 6"
+BINDING_NAME_AtlasLOOT_WISHLIST = "心愿单"
 
-AtlasCFM = AtlasCFM or {}
+Atlas = Atlas or {}
 
 --Default map to auto-select to when no SubZone data is available
-AtlasCFM.AssocDefaults = {
+Atlas.AssocDefaults = {
     ["厄运之槌"] = "DireMaulNorth",
     ["黑石塔"] = "BlackrockSpireLower",
     ["血色修道院"] = "ScarletMonasteryEnt"
 }
 --Links maps together that are part of the same instance
-AtlasCFM.SubZoneAssoc = {
+Atlas.SubZoneAssoc = {
     ["DireMaulNorth"] = "厄运之槌",
     ["DireMaulEast"] = "厄运之槌",
     ["DireMaulWest"] = "厄运之槌",
@@ -55,7 +55,7 @@ AtlasCFM.SubZoneAssoc = {
     ["ScarletMonasteryEnt"] = "血色修道院"
 }
 --Links SubZone values with specific instance maps
-AtlasCFM.SubZoneData = {
+Atlas.SubZoneData = {
     ["毁灭大厅"] = "DireMaulNorth",
     ["戈多克的王座"] = "DireMaulNorth",
     ["扭木广场"] = "DireMaulEast",
@@ -94,7 +94,7 @@ AtlasCFM.SubZoneData = {
     ["大门廊"] = "ScarletMonasteryEnt"
 }
 --Maps to auto-select to from outdoor zones.
-AtlasCFM.OutdoorZoneToAtlas = {
+Atlas.OutdoorZoneToAtlas = {
     ["灰谷"] = "BlackfathomDeepsEnt",
     ["荒芜之地"] = "UldamanEnt",
     ["黑石山"] = "BlackrockMountainEnt",
@@ -122,7 +122,7 @@ AtlasCFM.OutdoorZoneToAtlas = {
     ["湿地"] = "DragonmawRetreat" -- TurtleWOW
 }
 
-AtlasCFM.Localization:RegisterNamespace("UI", "zhCN", {
+Atlas.Localization:RegisterNamespace("UI", "zhCN", {
     -- Common UI Strings
     ["Currently Equipped"] = "当前装备",
     ["Rank Pattern"] = "等级 %d+$",
@@ -225,13 +225,13 @@ AtlasCFM.Localization:RegisterNamespace("UI", "zhCN", {
     ["Select Category"] = "选择类别",
     ["Select Map"] = "选择地图",
     ["Select Loot Table"] = "选择掉落表",
-    ["Show the Quest Panel with AtlasCFM"] = "在 AtlasCFM 显示任务面板",
+    ["Show the Quest Panel with Atlas"] = "在 Atlas 显示任务面板",
     ["Show Quest Panel on the Left"] = "在左侧显示任务面板",
     ["Show Quest Panel on the Right"] = "在右侧显示任务面板",
     ["Color Quests by Level"] = "按等级为任务着色",
     ["Color Quests from the Questlog"] = "按任务日志为任务着色",
     ["Auto-Query Unknown Items"] = "自动查询未知物品",
-    ["Show Loot Panel with AtlasCFM"] = "在 AtlasCFM 显示掉落面板",
+    ["Show Loot Panel with Atlas"] = "在 Atlas 显示掉落面板",
     ["Sort Instance by:"] = "副本排序依据：",
     ["Server:"] = "服务器：",
     ["Show Button on Minimap"] = "在小地图显示按钮",
@@ -275,9 +275,9 @@ AtlasCFM.Localization:RegisterNamespace("UI", "zhCN", {
     ["Last Result"] = "最后结果",
     ["Search options"] = "搜索选项",
     ["Partial matching"] = "部分匹配",
-    ["If checked, AtlasCFMLoot searches item names for a partial match."] = "选中后，AtlasCFMLoot 将按物品名称进行部分匹配搜索。",
+    ["If checked, AtlasLoot searches item names for a partial match."] = "选中后，AtlasLoot 将按物品名称进行部分匹配搜索。",
     ["Predict search"] = "预测搜索",
-    ["If checked, AtlasCFMLoot predicts search results."] = "选中后，AtlasCFMLoot 会在你输入时显示搜索建议。",
+    ["If checked, AtlasLoot predicts search results."] = "选中后，AtlasLoot 会在你输入时显示搜索建议。",
     ["No match found for"] = "未找到匹配项：",
 
     -- Items & Loot
@@ -295,7 +295,7 @@ AtlasCFM.Localization:RegisterNamespace("UI", "zhCN", {
     ["Unique"] = "唯一",
     ["Charges"] = "次数",
 
-    -- AtlasCFM Loot
+    -- Atlas Loot
     ["Loot Panel"] = "掉落面板",
     ["Filter: No Filter"] = "过滤器：无",
     ["Filter: My Class"] = "过滤器：我的职业",
@@ -323,7 +323,7 @@ AtlasCFM.Localization:RegisterNamespace("UI", "zhCN", {
     ["Show IDs in Tooltips"] = "在提示中显示 ID",
     ["Show Icon in Tooltips"] = "在提示中显示图标",
     ["Show Source on Tooltips"] = "在提示中显示来源",
-    ["Welcome to Atlas-CFM Edition. Please take a moment to set your preferences."] = "欢迎使用 Atlas-CFM 版本。请花点时间设置您的偏好。",
+    ["Welcome to Atlas Edition. Please take a moment to set your preferences."] = "欢迎使用 Atlas 版本。请花点时间设置您的偏好。",
 
     -- Version & Updates
     ["Update available"] = "有可用更新",
@@ -345,8 +345,8 @@ AtlasCFM.Localization:RegisterNamespace("UI", "zhCN", {
     ["Trainers"] = "训练师",
 
     -- Minimap Tooltip
-    ["Left-click to open Atlas-CFM.\nMiddle-click for Atlas-CFM options.\nRight-click and drag to move this button."] =
-    "左键打开 Atlas-CFM。\n中键打开 Atlas-CFM 选项。\n右键拖动移动此按钮。",
+    ["Left-click to open Atlas.\nMiddle-click for Atlas options.\nRight-click and drag to move this button."] =
+    "左键打开 Atlas。\n中键打开 Atlas 选项。\n右键拖动移动此按钮。",
 
     -- Instance Locations
     ["Instances"] = "副本",
@@ -616,20 +616,20 @@ AtlasCFM.Localization:RegisterNamespace("UI", "zhCN", {
     ["Recipe #%d"] = "配方 #%d",
 })
 
-BINDING_HEADER_AtlasCFM_TITLE = "Atlas-CFM 快捷键"
-BINDING_NAME_AtlasCFM_TOGGLE = "切换 Atlas-CFM"
-BINDING_NAME_AtlasCFM_OPTIONS = "切换 Atlas-CFM 选项"
-BINDING_HEADER_AtlasCFMLOOT_TITLE = "AtlasCFM 掉落快捷键"
-BINDING_NAME_AtlasCFMLOOT_QL1 = "快速查看 1"
-BINDING_NAME_AtlasCFMLOOT_QL2 = "快速查看 2"
-BINDING_NAME_AtlasCFMLOOT_QL3 = "快速查看 3"
-BINDING_NAME_AtlasCFMLOOT_QL4 = "快速查看 4"
-BINDING_NAME_AtlasCFMLOOT_QL5 = "快速查看 5"
-BINDING_NAME_AtlasCFMLOOT_QL6 = "快速查看 6"
-BINDING_NAME_AtlasCFMLOOT_WISHLIST = "愿望清单"
+BINDING_HEADER_Atlas_TITLE = "Atlas 快捷键"
+BINDING_NAME_Atlas_TOGGLE = "切换 Atlas"
+BINDING_NAME_Atlas_OPTIONS = "切换 Atlas 选项"
+BINDING_HEADER_AtlasLOOT_TITLE = "Atlas 掉落快捷键"
+BINDING_NAME_AtlasLOOT_QL1 = "快速查看 1"
+BINDING_NAME_AtlasLOOT_QL2 = "快速查看 2"
+BINDING_NAME_AtlasLOOT_QL3 = "快速查看 3"
+BINDING_NAME_AtlasLOOT_QL4 = "快速查看 4"
+BINDING_NAME_AtlasLOOT_QL5 = "快速查看 5"
+BINDING_NAME_AtlasLOOT_QL6 = "快速查看 6"
+BINDING_NAME_AtlasLOOT_WISHLIST = "愿望清单"
 
-AtlasCFMSortIgnore = { "the (.+)" }
+AtlasSortIgnore = { "the (.+)" }
 
-AtlasCFMZoneSubstitutions = {
+AtlasZoneSubstitutions = {
     ["The Temple of Atal'Hakkar"] = "沉没的神殿"
 }

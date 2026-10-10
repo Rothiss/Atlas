@@ -5,7 +5,7 @@
 --- @compatible World of Warcraft 1.12
 ---
 
-AtlasCFM.Localization:RegisterNamespace("Spells", "zhCN", {
+Atlas.Localization:RegisterNamespace("Spells", "zhCN", {
     ["Alchemy"] = "炼金术",
     ["Armorsmith"] = "防具锻造师",
     ["Basic Campfire"] = "基础营火",

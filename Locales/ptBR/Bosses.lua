@@ -6,7 +6,7 @@
 --- @compatible World of Warcraft 1.12
 ---
 
-AtlasCFM.Localization:RegisterNamespace("Bosses", "ptBR", {
+Atlas.Localization:RegisterNamespace("Bosses", "ptBR", {
     ["Broodcommander Axelus"] = "Comandante da Ninhada Axelus",
     ["Ezzel Darkbrewer"] = "Ezzel, o Cervejeiro Sombrio",
     ["High Speaker Jam'wahli"] = "Alto Orador Jam'wahli", -- TODO

@@ -1,57 +1,57 @@
 <Bindings>
-	<Binding name="AtlasCFM_TOGGLE" header="AtlasCFM_TITLE">
-		AtlasCFM = AtlasCFM or {}
-		AtlasCFM.ToggleAtlas()
+	<Binding name="Atlas_TOGGLE" header="Atlas_TITLE">
+		Atlas = Atlas or {}
+		Atlas.ToggleAtlas()
 	</Binding>
-	<Binding name="AtlasCFM_OPTIONS">
-		AtlasCFM = AtlasCFM or {}
-		AtlasCFM.OptionsOnClick()
+	<Binding name="Atlas_OPTIONS">
+		Atlas = Atlas or {}
+		Atlas.OptionsOnClick()
 	</Binding>
-	<Binding name="AtlasCFMLOOT_QL1" header="AtlasCFMLOOT_TITLE">
-		if AtlasCFMCharDB["QuickLooks"][1] then
-			if AtlasCFMFrame and AtlasCFMFrame:IsVisible() then
-				AtlasCFMLootPanel_Preset1:Click()
+	<Binding name="AtlasLOOT_QL1" header="AtlasLOOT_TITLE">
+		if AtlasCharDB["QuickLooks"][1] then
+			if AtlasFrame and AtlasFrame:IsVisible() then
+				AtlasLootPanel_Preset1:Click()
 			end
 		end
 	</Binding>
-	<Binding name="AtlasCFMLOOT_QL2">
-		if AtlasCFMCharDB["QuickLooks"][2] then
-			if AtlasCFMFrame and AtlasCFMFrame:IsVisible() then
-				AtlasCFMLootPanel_Preset2:Click()
+	<Binding name="AtlasLOOT_QL2">
+		if AtlasCharDB["QuickLooks"][2] then
+			if AtlasFrame and AtlasFrame:IsVisible() then
+				AtlasLootPanel_Preset2:Click()
 			end
 		end
 	</Binding>
-	<Binding name="AtlasCFMLOOT_QL3">
-		if AtlasCFMCharDB["QuickLooks"][3] then
-			if AtlasCFMFrame and AtlasCFMFrame:IsVisible() then
-				AtlasCFMLootPanel_Preset3:Click()
+	<Binding name="AtlasLOOT_QL3">
+		if AtlasCharDB["QuickLooks"][3] then
+			if AtlasFrame and AtlasFrame:IsVisible() then
+				AtlasLootPanel_Preset3:Click()
 			end
 		end
 	</Binding>
-	<Binding name="AtlasCFMLOOT_QL4">
-		if AtlasCFMCharDB["QuickLooks"][4] then
-			if AtlasCFMFrame and AtlasCFMFrame:IsVisible() then
-				AtlasCFMLootPanel_Preset4:Click()
+	<Binding name="AtlasLOOT_QL4">
+		if AtlasCharDB["QuickLooks"][4] then
+			if AtlasFrame and AtlasFrame:IsVisible() then
+				AtlasLootPanel_Preset4:Click()
 			end
 		end
 	</Binding>
-	<Binding name="AtlasCFMLOOT_QL5">
-		if AtlasCFMCharDB["QuickLooks"][5] then
-			if AtlasCFMFrame and AtlasCFMFrame:IsVisible() then
-				AtlasCFMLootPanel_Preset5:Click()
+	<Binding name="AtlasLOOT_QL5">
+		if AtlasCharDB["QuickLooks"][5] then
+			if AtlasFrame and AtlasFrame:IsVisible() then
+				AtlasLootPanel_Preset5:Click()
 			end
 		end
 	</Binding>
-	<Binding name="AtlasCFMLOOT_QL6">
-		if AtlasCFMCharDB["QuickLooks"][6] then
-			if AtlasCFMFrame and AtlasCFMFrame:IsVisible() then
-				AtlasCFMLootPanel_Preset6:Click()
+	<Binding name="AtlasLOOT_QL6">
+		if AtlasCharDB["QuickLooks"][6] then
+			if AtlasFrame and AtlasFrame:IsVisible() then
+				AtlasLootPanel_Preset6:Click()
 			end
 		end
 	</Binding>
-	<Binding name="AtlasCFMLOOT_WISHLIST">
-		if AtlasCFMFrame and AtlasCFMFrame:IsVisible() then
-			AtlasCFMLootPanel_WishList:Click()
+	<Binding name="AtlasLOOT_WISHLIST">
+		if AtlasFrame and AtlasFrame:IsVisible() then
+			AtlasLootPanel_WishList:Click()
 		end
 	</Binding>
 </Bindings>

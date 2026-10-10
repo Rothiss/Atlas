@@ -7,37 +7,37 @@
 ---
 
 -- Zone name substitutions (for display purposes)
-AtlasCFMSortIgnore = { "the (.+)" }
+AtlasSortIgnore = { "the (.+)" }
 
-AtlasCFMZoneSubstitutions = {
+AtlasZoneSubstitutions = {
     ["The Temple of Atal'Hakkar"] = "Sunken Temple"
 }
 
 ---
---- Key binding definitions for Atlas-CFM addon
+--- Key binding definitions for Atlas addon
 ---
-BINDING_HEADER_AtlasCFM_TITLE = "Atlas-CFM Bindings"
-BINDING_NAME_AtlasCFM_TOGGLE = "Toggle Atlas-CFM"
-BINDING_NAME_AtlasCFM_OPTIONS = "Toggle Options"
-BINDING_HEADER_AtlasCFMLOOT_TITLE = "Atlas-CFM Loot Bindings"
-BINDING_NAME_AtlasCFMLOOT_QL1 = "QuickLook 1"
-BINDING_NAME_AtlasCFMLOOT_QL2 = "QuickLook 2"
-BINDING_NAME_AtlasCFMLOOT_QL3 = "QuickLook 3"
-BINDING_NAME_AtlasCFMLOOT_QL4 = "QuickLook 4"
-BINDING_NAME_AtlasCFMLOOT_QL5 = "QuickLook 5"
-BINDING_NAME_AtlasCFMLOOT_QL6 = "QuickLook 6"
-BINDING_NAME_AtlasCFMLOOT_WISHLIST = "WishList"
+BINDING_HEADER_Atlas_TITLE = "Atlas Bindings"
+BINDING_NAME_Atlas_TOGGLE = "Toggle Atlas"
+BINDING_NAME_Atlas_OPTIONS = "Toggle Options"
+BINDING_HEADER_AtlasLOOT_TITLE = "Atlas Loot Bindings"
+BINDING_NAME_AtlasLOOT_QL1 = "QuickLook 1"
+BINDING_NAME_AtlasLOOT_QL2 = "QuickLook 2"
+BINDING_NAME_AtlasLOOT_QL3 = "QuickLook 3"
+BINDING_NAME_AtlasLOOT_QL4 = "QuickLook 4"
+BINDING_NAME_AtlasLOOT_QL5 = "QuickLook 5"
+BINDING_NAME_AtlasLOOT_QL6 = "QuickLook 6"
+BINDING_NAME_AtlasLOOT_WISHLIST = "WishList"
 
-AtlasCFM = AtlasCFM or {}
+Atlas = Atlas or {}
 
 --Default map to auto-select to when no SubZone data is available
-AtlasCFM.AssocDefaults = {
+Atlas.AssocDefaults = {
     ["Dire Maul"] = "DireMaulNorth",
     ["Blackrock Spire"] = "BlackrockSpireLower",
     ["Scarlet Monastery"] = "ScarletMonasteryEnt"
 }
 --Links maps together that are part of the same instance
-AtlasCFM.SubZoneAssoc = {
+Atlas.SubZoneAssoc = {
     ["DireMaulNorth"] = "Dire Maul",
     ["DireMaulEast"] = "Dire Maul",
     ["DireMaulWest"] = "Dire Maul",
@@ -52,7 +52,7 @@ AtlasCFM.SubZoneAssoc = {
     ["ScarletMonasteryEnt"] = "Scarlet Monastery"
 }
 --Links SubZone values with specific instance maps
-AtlasCFM.SubZoneData = {
+Atlas.SubZoneData = {
     ["Halls of Destruction"] = "DireMaulNorth",
     ["Gordok's Seat"] = "DireMaulNorth",
     ["Warpwood Quarter"] = "DireMaulEast",
@@ -91,7 +91,7 @@ AtlasCFM.SubZoneData = {
     ["The Grand Vestibule"] = "ScarletMonasteryEnt"
 }
 --Maps to auto-select to from outdoor zones.
-AtlasCFM.OutdoorZoneToAtlas = {
+Atlas.OutdoorZoneToAtlas = {
     ["Ashenvale"] = "BlackfathomDeepsEnt",
     ["Badlands"] = "UldamanEnt",
     ["Blackrock Mountain"] = "BlackrockMountainEnt",
@@ -122,7 +122,7 @@ AtlasCFM.OutdoorZoneToAtlas = {
 ---
 --- Register Core UI translations
 ---
-AtlasCFM.Localization:RegisterNamespace("UI", "enUS", {
+Atlas.Localization:RegisterNamespace("UI", "enUS", {
     --************************************************
     -- Common UI Strings
     --************************************************
@@ -246,13 +246,13 @@ AtlasCFM.Localization:RegisterNamespace("UI", "enUS", {
     ["Select Category"] = true,
     ["Select Map"] = true,
     ["Select Loot Table"] = true,
-    ["Show the Quest Panel with AtlasCFM"] = true,
+    ["Show the Quest Panel with Atlas"] = true,
     ["Show Quest Panel on the Left"] = true,
     ["Show Quest Panel on the Right"] = true,
     ["Color Quests by Level"] = true,
     ["Color Quests from the Questlog"] = true,
     ["Auto-Query Unknown Items"] = true,
-    ["Show Loot Panel with AtlasCFM"] = true,
+    ["Show Loot Panel with Atlas"] = true,
     ["Sort Instance by:"] = true,
     ["Server:"] = true,
     ["Show Button on Minimap"] = true,
@@ -267,7 +267,7 @@ AtlasCFM.Localization:RegisterNamespace("UI", "enUS", {
     ["pfUI styling enabled. Type /reload to apply changes."] = true,
     ["pfUI styling disabled. Type /reload to apply changes."] = true,
     ["Scale"] = true,
-    ["Welcome to Atlas-CFM Edition. Please take a moment to set your preferences."] = true,
+    ["Welcome to Atlas Edition. Please take a moment to set your preferences."] = true,
 
     --************************************************
     -- Quest Related
@@ -301,9 +301,9 @@ AtlasCFM.Localization:RegisterNamespace("UI", "enUS", {
     ["Last Result"] = true,
     ["Search options"] = true,
     ["Partial matching"] = true,
-    ["If checked, AtlasCFMLoot searches item names for a partial match."] = true,
+    ["If checked, AtlasLoot searches item names for a partial match."] = true,
     ["Predict search"] = true,
-    ["If checked, AtlasCFMLoot predicts search results."] = true,
+    ["If checked, AtlasLoot predicts search results."] = true,
     ["No match found for"] = true,
 
     --************************************************
@@ -324,7 +324,7 @@ AtlasCFM.Localization:RegisterNamespace("UI", "enUS", {
     ["Charges"] = true,
 
     --************************************************
-    -- AtlasCFM Loot
+    -- Atlas Loot
     --************************************************
     ["Loot Panel"] = true,
     ["Filter: No Filter"] = "Filter: No Filter",
@@ -384,7 +384,7 @@ AtlasCFM.Localization:RegisterNamespace("UI", "enUS", {
     --************************************************
     -- Minimap Tooltip
     --************************************************
-    ["Left-click to open Atlas-CFM.\nMiddle-click for Atlas-CFM options.\nRight-click and drag to move this button."] = true,
+    ["Left-click to open Atlas.\nMiddle-click for Atlas options.\nRight-click and drag to move this button."] = true,
 
     --************************************************
     -- Instance Locations

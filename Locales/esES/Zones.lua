@@ -6,7 +6,7 @@
 --- @compatible World of Warcraft 1.12
 ---
 
-AtlasCFM.Localization:RegisterNamespace("Zones", "esES", {
+Atlas.Localization:RegisterNamespace("Zones", "esES", {
     ["Frostmane Hollow"] = "Hondonada Peloescarcha", --1.18.1
     ["Moonwhisper Coast"] = "Costa Susurrolunar",    --1.18.1
     ["Thorn Gorge"] = "Garganta Espinosa",           --1.18.1

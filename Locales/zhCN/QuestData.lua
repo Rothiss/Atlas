@@ -1,9 +1,9 @@
 ---
 --- QuestData_enUS.lua - Atlas quest data definitions for English localization
 ---
---- This file contains all quest data definitions for Atlas-CFM in English.
+--- This file contains all quest data definitions for Atlas in English.
 --- It includes quest 信息, rewards, locations, and requirements
---- for all instances and zones supported by Atlas-CFM.
+--- for all instances and zones supported by Atlas.
 ---
 --- Features:
 --- - Complete quest database for all instances
@@ -16,18 +16,18 @@
 ---
 
 local _G = getfenv()
-AtlasCFM = _G.AtlasCFM
+Atlas = _G.Atlas
 
 if GetLocale() ~= "zhCN" then return end
 
 ---------------
 --- COLOURS ---
 ---------------
-local red = AtlasCFM.Colors.RED
-local white = AtlasCFM.Colors.WHITE
-local green = AtlasCFM.Colors.GREEN2
-local blue = AtlasCFM.Colors.BLUE
-local yellow = AtlasCFM.Colors.YELLOW2
+local red = Atlas.Colors.RED
+local white = Atlas.Colors.WHITE
+local green = Atlas.Colors.GREEN2
+local blue = Atlas.Colors.BLUE
+local yellow = Atlas.Colors.YELLOW2
 
 ----------------------------------------------
 ------------- Quest Instance Data ------------
@@ -160,7 +160,7 @@ kQuestInstanceData.TheDeadmines.Alliance[7] = {
 
 }
 kQuestInstanceData.TheDeadmines.Alliance[8] = {
-    Servers = { AtlasCFM.Server.TURTLE1 },
+    Servers = { Atlas.Server.TURTLE1 },
     Title = "葛瑞森船长的复仇",
     Id = 40396,
     Level = 22,
@@ -175,7 +175,7 @@ kQuestInstanceData.TheDeadmines.Alliance[8] = {
     }
 }
 kQuestInstanceData.TheDeadmines.Alliance[9] = {
-    Servers = { AtlasCFM.Server.TURTLE1 },
+    Servers = { Atlas.Server.TURTLE1 },
     Title = "收获傀儡之谜之一",
     Id = 40478,
     Level = 19,
@@ -198,7 +198,7 @@ kQuestInstanceData.TheDeadmines.Alliance[9] = {
     }
 }
 kQuestInstanceData.TheDeadmines.Alliance[10] = {
-    Servers = { AtlasCFM.Server.TURTLE1 },
+    Servers = { Atlas.Server.TURTLE1 },
     Title = "关上水龙头",
     Id = 41392,
     Level = 20,
@@ -214,7 +214,7 @@ kQuestInstanceData.TheDeadmines.Alliance[10] = {
     }
 }
 kQuestInstanceData.TheDeadmines.Horde[1] = {
-    Servers = { AtlasCFM.Server.TURTLE1 },
+    Servers = { Atlas.Server.TURTLE1 },
     Title = "原型机图纸",
     Id = 55005,
     Level = 18,
@@ -229,7 +229,7 @@ kQuestInstanceData.TheDeadmines.Horde[1] = {
     }
 }
 kQuestInstanceData.TheDeadmines.Horde[2] = {
-    Servers = { AtlasCFM.Server.TURTLE1 },
+    Servers = { Atlas.Server.TURTLE1 },
     Title = "葛瑞森船长的复仇",
     Id = 40396,
     Level = 22,
@@ -244,7 +244,7 @@ kQuestInstanceData.TheDeadmines.Horde[2] = {
     }
 }
 kQuestInstanceData.TheDeadmines.Horde[3] = {
-    Servers = { AtlasCFM.Server.TURTLE1 },
+    Servers = { Atlas.Server.TURTLE1 },
     Title = "部落防御者之斧",
     Id = 39998,
     Level = 18,
@@ -335,7 +335,7 @@ kQuestInstanceData.WailingCaverns.Alliance[5] = {
     }
 }
 kQuestInstanceData.WailingCaverns.Alliance[6] = {
-    Servers = { AtlasCFM.Server.TURTLE1 },
+    Servers = { Atlas.Server.TURTLE1 },
     Title = "毒蛇花",
     Id = 60125,
     Level = 18,
@@ -350,7 +350,7 @@ kQuestInstanceData.WailingCaverns.Alliance[6] = {
     }
 }
 kQuestInstanceData.WailingCaverns.Alliance[7] = {
-    Servers = { AtlasCFM.Server.TURTLE1 },
+    Servers = { Atlas.Server.TURTLE1 },
     Title = "陷入梦魇",
     Id = 60124,
     Level = 19,
@@ -365,7 +365,7 @@ kQuestInstanceData.WailingCaverns.Alliance[7] = {
     }
 }
 kQuestInstanceData.WailingCaverns.Alliance[8] = {
-    Servers = { AtlasCFM.Server.TURTLE1 },
+    Servers = { Atlas.Server.TURTLE1 },
     Title = "杂草丛生",
     Id = 41363,
     Level = 20,
@@ -417,7 +417,7 @@ kQuestInstanceData.WailingCaverns.Horde[6] = {
 }
 kQuestInstanceData.WailingCaverns.Horde[7] = kQuestInstanceData.WailingCaverns.Alliance[5]
 kQuestInstanceData.WailingCaverns.Horde[8] = {
-    Servers = { AtlasCFM.Server.TURTLE1 },
+    Servers = { Atlas.Server.TURTLE1 },
     Title = "奥术武器",
     Id = 80312,
     Level = 18,
@@ -437,7 +437,7 @@ kQuestInstanceData.WailingCaverns.Horde[8] = {
     }
 }
 kQuestInstanceData.WailingCaverns.Horde[9] = {
-    Servers = { AtlasCFM.Server.TURTLE1 },
+    Servers = { Atlas.Server.TURTLE1 },
     Title = "与科卡尔的梦对抗",
     Id = 41367,
     Level = 23,
@@ -743,7 +743,7 @@ kQuestInstanceData.Uldaman.Alliance[16] = {
     Folgequest = "法力怒灵",
 }
 kQuestInstanceData.Uldaman.Alliance[17] = {
-    Servers = { AtlasCFM.Server.TURTLE },
+    Servers = { Atlas.Server.TURTLE },
     --1.18
     Title = "偷一个核心",
     Id = 40129,
@@ -821,7 +821,7 @@ kQuestInstanceData.Uldaman.Horde[9] = createInheritedQuest(
 )
 kQuestInstanceData.Uldaman.Horde[10] = kQuestInstanceData.Uldaman.Alliance[16]
 kQuestInstanceData.Uldaman.Horde[11] = {
-    Servers = { AtlasCFM.Server.TURTLE1 },
+    Servers = { Atlas.Server.TURTLE1 },
     Title = "征用一个核心",
     Id = 40131,
     Level = 45,
@@ -1088,7 +1088,7 @@ kQuestInstanceData.BlackrockDepths.Alliance[17] = {
         " 杯子的材料: 2 [红宝石], 20 [金锭], 10 [真银锭]. 之后，如果你有 [黑铁矿石]，你可以把它带到 " .. yellow .. "[22]" .. white .. " 的黑铁熔炉进行熔炼。",
 }
 kQuestInstanceData.BlackrockDepths.Alliance[18] = {
-    Servers = { AtlasCFM.Server.TURTLE1 },
+    Servers = { Atlas.Server.TURTLE1 },
     Title = "行动：帮助杰比",
     Id = 40757,
     Level = 58,
@@ -1105,7 +1105,7 @@ kQuestInstanceData.BlackrockDepths.Alliance[18] = {
     }
 }
 kQuestInstanceData.BlackrockDepths.Alliance[19] = {
-    Servers = { AtlasCFM.Server.TURTLE1 },
+    Servers = { Atlas.Server.TURTLE1 },
     Title = "黑铁亵渎者",
     Id = 40762,
     Level = 60,
@@ -1121,7 +1121,7 @@ kQuestInstanceData.BlackrockDepths.Alliance[19] = {
     }
 }
 kQuestInstanceData.BlackrockDepths.Alliance[20] = {
-    Servers = { AtlasCFM.Server.TURTLE1 },
+    Servers = { Atlas.Server.TURTLE1 },
     Title = "参议员复仇",
     Id = 40464,
     Level = 56,
@@ -1136,7 +1136,7 @@ kQuestInstanceData.BlackrockDepths.Alliance[20] = {
     }
 }
 kQuestInstanceData.BlackrockDepths.Alliance[21] = {
-    Servers = { AtlasCFM.Server.TURTLE1 },
+    Servers = { Atlas.Server.TURTLE1 },
     Title = "奥术傀儡核心",
     Id = 40467,
     Level = 55,
@@ -1151,7 +1151,7 @@ kQuestInstanceData.BlackrockDepths.Alliance[21] = {
     }
 }
 kQuestInstanceData.BlackrockDepths.Alliance[22] = {
-    Servers = { AtlasCFM.Server.TURTLE1 },
+    Servers = { Atlas.Server.TURTLE1 },
     Title = "建造一个重击者",
     Id = 80401,
     Level = 60,
@@ -1172,7 +1172,7 @@ kQuestInstanceData.BlackrockDepths.Alliance[22] = {
     }
 }
 kQuestInstanceData.BlackrockDepths.Alliance[23] = {
-    Servers = { AtlasCFM.Server.TURTLE1 },
+    Servers = { Atlas.Server.TURTLE1 },
     Title = "冬幕节酒。",
     Id = 40748,
     Level = 55,
@@ -1430,7 +1430,7 @@ kQuestInstanceData.BlackwingLair.Alliance[4] = {
     }
 }
 kQuestInstanceData.BlackwingLair.Alliance[5] = {
-    Servers = { AtlasCFM.Server.TURTLE1 },
+    Servers = { Atlas.Server.TURTLE1 },
     Title = "卡拉赞的钥匙之九",
     Id = 40828,
     Level = 60,
@@ -1446,7 +1446,7 @@ kQuestInstanceData.BlackwingLair.Alliance[5] = {
     }
 }
 kQuestInstanceData.BlackwingLair.Alliance[6] = {
-    Servers = { AtlasCFM.Server.TURTLE1 },
+    Servers = { Atlas.Server.TURTLE1 },
     Title = "女神的镰刀",
     Id = 41067,
     Level = 60,
@@ -1575,7 +1575,7 @@ kQuestInstanceData.BlackfathomDeeps.Alliance[6] = {
     }
 }
 kQuestInstanceData.BlackfathomDeeps.Alliance[7] = {
-    Servers = { AtlasCFM.Server.TURTLE1 },
+    Servers = { Atlas.Server.TURTLE1 },
     Title = "月神圣地废墟",
     Id = 41812,
     Level = 26,
@@ -1872,7 +1872,7 @@ kQuestInstanceData.BlackrockSpireLower.Alliance[14] = {
     }
 }
 kQuestInstanceData.BlackrockSpireLower.Alliance[15] = {
-    Servers = { AtlasCFM.Server.TURTLE1 },
+    Servers = { Atlas.Server.TURTLE1 },
     Title = "黑铁亵渎者",
     Id = 40762,
     Level = 60,
@@ -1951,7 +1951,7 @@ for i = 11, 15 do
     kQuestInstanceData.BlackrockSpireLower.Horde[i] = kQuestInstanceData.BlackrockSpireLower.Alliance[i]
 end
 kQuestInstanceData.BlackrockSpireLower.Horde[16] = {
-    Servers = { AtlasCFM.Server.TURTLE1 },
+    Servers = { Atlas.Server.TURTLE1 },
     Title = "森林巨魔的败类",
     Id = 40495,
     Level = 60,
@@ -1965,7 +1965,7 @@ kQuestInstanceData.BlackrockSpireLower.Horde[16] = {
     }
 }
 kQuestInstanceData.BlackrockSpireLower.Horde[17] = {
-    Servers = { AtlasCFM.Server.TURTLE1 },
+    Servers = { Atlas.Server.TURTLE1 },
     Title = "掠夺者的突袭",
     Id = 40498,
     Level = 58,
@@ -1982,7 +1982,7 @@ kQuestInstanceData.BlackrockSpireLower.Horde[17] = {
     }
 }
 kQuestInstanceData.BlackrockSpireLower.Horde[18] = {
-    Servers = { AtlasCFM.Server.TURTLE1 },
+    Servers = { Atlas.Server.TURTLE1 },
     Title = "最后的裂缝",
     Id = 40509,
     Level = 59,
@@ -2148,7 +2148,7 @@ kQuestInstanceData.BlackrockSpireUpper.Alliance[11] = {
     }
 }
 kQuestInstanceData.BlackrockSpireUpper.Alliance[12] = {
-    Servers = { AtlasCFM.Server.TURTLE1 },
+    Servers = { Atlas.Server.TURTLE1 },
     Title = "护腕的上半部分之一",
     Id = 41011,
     Level = 60,
@@ -2336,7 +2336,7 @@ kQuestInstanceData.DireMaulEast.Alliance[7] = {
     }
 }
 kQuestInstanceData.DireMaulEast.Alliance[8] = {
-    Servers = { AtlasCFM.Server.TURTLE1 },
+    Servers = { Atlas.Server.TURTLE1 },
     Title = "狂野变形者",
     Id = 41016,
     Level = 60,
@@ -2351,7 +2351,7 @@ kQuestInstanceData.DireMaulEast.Alliance[8] = {
     }
 }
 kQuestInstanceData.DireMaulEast.Alliance[9] = {
-    Servers = { AtlasCFM.Server.TURTLE1 },
+    Servers = { Atlas.Server.TURTLE1 },
     Title = "缠绕扭木",
     Id = 41376,
     Level = 61,
@@ -2677,7 +2677,7 @@ kQuestInstanceData.DireMaulWest.Alliance[17] = {
     Folgequest = "铸造奎尔塞拉",
 }
 kQuestInstanceData.DireMaulWest.Alliance[18] = {
-    Servers = { AtlasCFM.Server.TURTLE1 },
+    Servers = { Atlas.Server.TURTLE1 },
     Title = "保守秘密",
     Id = 40254,
     Level = 58,
@@ -2695,7 +2695,7 @@ kQuestInstanceData.DireMaulWest.Alliance[18] = {
     }
 }
 kQuestInstanceData.DireMaulWest.Alliance[19] = {
-    Servers = { AtlasCFM.Server.TURTLE1 },
+    Servers = { Atlas.Server.TURTLE1 },
     Title = "护腕的上半部分之三",
     Id = 41013,
     Level = 60,
@@ -2716,7 +2716,7 @@ kQuestInstanceData.DireMaulWest.Alliance[19] = {
     }
 }
 kQuestInstanceData.DireMaulWest.Alliance[20] = {
-    Servers = { AtlasCFM.Server.TURTLE1 },
+    Servers = { Atlas.Server.TURTLE1 },
     Title = "卡拉赞的钥匙之八",
     Id = 40827,
     Level = 60,
@@ -2728,7 +2728,7 @@ kQuestInstanceData.DireMaulWest.Alliance[20] = {
     Folgequest = "卡拉赞的钥匙之九 (黑翼之巢) -> 卡拉赞的钥匙之十",
 }
 kQuestInstanceData.DireMaulWest.Alliance[21] = {
-    Servers = { AtlasCFM.Server.TURTLE1 },
+    Servers = { Atlas.Server.TURTLE1 },
     Title = "寐入梦境之三",
     Id = 40959,
     Level = 60,
@@ -2876,7 +2876,7 @@ kQuestInstanceData.Maraudon.Alliance[8] = {
     Prequest = "大地的污染",
 }
 kQuestInstanceData.Maraudon.Alliance[9] = {
-    Servers = { AtlasCFM.Server.TURTLE1 },
+    Servers = { Atlas.Server.TURTLE1 },
     Title = "奇美兰的挽具",
     Id = 41052,
     Level = 48,
@@ -2891,7 +2891,7 @@ kQuestInstanceData.Maraudon.Alliance[9] = {
     }
 }
 kQuestInstanceData.Maraudon.Alliance[10] = {
-    Servers = { AtlasCFM.Server.TURTLE1 },
+    Servers = { Atlas.Server.TURTLE1 },
     Title = "为什么不两者兼得？",
     Id = 41142,
     Level = 50,
@@ -2907,7 +2907,7 @@ kQuestInstanceData.Maraudon.Alliance[10] = {
     }
 }
 kQuestInstanceData.Maraudon.Alliance[11] = {
-    Servers = { AtlasCFM.Server.TURTLE1 },
+    Servers = { Atlas.Server.TURTLE1 },
     Title = "准备",
     Id = 41281,
     Level = 48,
@@ -2954,7 +2954,7 @@ kQuestInstanceData.Maraudon.Horde[7] = {
 }
 kQuestInstanceData.Maraudon.Horde[8] = kQuestInstanceData.Maraudon.Alliance[8]
 kQuestInstanceData.Maraudon.Horde[9] = {
-    Servers = { AtlasCFM.Server.TURTLE1 },
+    Servers = { Atlas.Server.TURTLE1 },
     Title = "准备",
     Id = 41281,
     Level = 48,
@@ -2966,7 +2966,7 @@ kQuestInstanceData.Maraudon.Horde[9] = {
     Folgequest = "最终的切割",
 }
 kQuestInstanceData.Maraudon.Horde[10] = {
-    Servers = { AtlasCFM.Server.TURTLE },
+    Servers = { Atlas.Server.TURTLE },
     --TODO translate
     Title = "被污染的水域",
     Id = 41943,
@@ -3320,7 +3320,7 @@ kQuestInstanceData.RazorfenDowns.Horde[4] = {
     }
 }
 kQuestInstanceData.RazorfenDowns.Horde[5] = {
-    Servers = { AtlasCFM.Server.TURTLE1 },
+    Servers = { Atlas.Server.TURTLE1 },
     Title = "超越的力量",
     Id = 40995,
     Level = 44,
@@ -3470,7 +3470,7 @@ kQuestInstanceData.RazorfenKraul.Horde[5] = {
     Folgequest = "(见注释)",
 }
 kQuestInstanceData.RazorfenKraul.Horde[6] = {
-    Servers = { AtlasCFM.Server.TURTLE1 },
+    Servers = { Atlas.Server.TURTLE1 },
     Title = "被污染的荆棘之心",
     Id = 41758,
     Level = 30,
@@ -3614,7 +3614,7 @@ kQuestInstanceData.ScarletMonasteryArmory.Alliance[1] = kQuestInstanceData.Scarl
 kQuestInstanceData.ScarletMonasteryArmory.Horde[1] = kQuestInstanceData.ScarletMonasteryLibrary.Horde[1]
 kQuestInstanceData.ScarletMonasteryArmory.Horde[2] = kQuestInstanceData.ScarletMonasteryLibrary.Horde[2]
 kQuestInstanceData.ScarletMonasteryArmory.Horde[3] = {
-    Servers = { AtlasCFM.Server.TURTLE1 },
+    Servers = { Atlas.Server.TURTLE1 },
     Title = "往日之钢",
     Id = 41368,
     Level = 39,
@@ -3638,7 +3638,7 @@ kQuestInstanceData.ScarletMonasteryCathedral = {
 }
 kQuestInstanceData.ScarletMonasteryCathedral.Alliance[1] = kQuestInstanceData.ScarletMonasteryLibrary.Alliance[1]
 kQuestInstanceData.ScarletMonasteryCathedral.Alliance[2] = {
-    Servers = { AtlasCFM.Server.TURTLE1 },
+    Servers = { Atlas.Server.TURTLE1 },
     Title = "卡拉杜斯的宝珠",
     Id = 40233,
     Level = 38,
@@ -3655,7 +3655,7 @@ kQuestInstanceData.ScarletMonasteryCathedral.Alliance[2] = {
     }
 }
 kQuestInstanceData.ScarletMonasteryCathedral.Alliance[3] = {
-    Servers = { AtlasCFM.Server.TURTLE1 },
+    Servers = { Atlas.Server.TURTLE1 },
     Title = "血色的堕落",
     Id = 40935,
     Level = 44,
@@ -3696,7 +3696,7 @@ kQuestInstanceData.ScarletMonasteryGraveyard.Horde[2] = {
     }
 }
 kQuestInstanceData.ScarletMonasteryGraveyard.Horde[3] = {
-    Servers = { AtlasCFM.Server.TURTLE1 },
+    Servers = { Atlas.Server.TURTLE1 },
     Title = "染红玫瑰",
     Id = 60116,
     Level = 29,
@@ -3856,7 +3856,7 @@ kQuestInstanceData.Scholomance.Alliance[11] = {
     Folgequest = "最后的准备 (" .. yellow .. "黑石塔上层" .. white .. ")", -- 8994",
 }
 kQuestInstanceData.Scholomance.Alliance[12] = {
-    Servers = { AtlasCFM.Server.TURTLE1 },
+    Servers = { Atlas.Server.TURTLE1 },
     Title = "帮法杉的忙。",
     Id = 40237,
     Level = 58,
@@ -3929,7 +3929,7 @@ kQuestInstanceData.ShadowfangKeep.Alliance[2] = {
     }
 }
 kQuestInstanceData.ShadowfangKeep.Alliance[3] = {
-    Servers = { AtlasCFM.Server.TURTLE1 },
+    Servers = { Atlas.Server.TURTLE1 },
     Title = "阿鲁高的愚行",
     Id = 60108,
     Level = 27,
@@ -3942,7 +3942,7 @@ kQuestInstanceData.ShadowfangKeep.Alliance[3] = {
     }
 }
 kQuestInstanceData.ShadowfangKeep.Alliance[4] = {
-    Servers = { AtlasCFM.Server.TURTLE1 },
+    Servers = { Atlas.Server.TURTLE1 },
     Title = "失踪的巫师",
     Id = 60109,
     Level = 24,
@@ -3952,7 +3952,7 @@ kQuestInstanceData.ShadowfangKeep.Alliance[4] = {
     Note = "巫师阿克鲁比 在笼子里 " .. yellow .. "[1]" .. white .. ".",
 }
 kQuestInstanceData.ShadowfangKeep.Alliance[5] = {
-    Servers = { AtlasCFM.Server.TURTLE1 },
+    Servers = { Atlas.Server.TURTLE1 },
     Title = "沃根多尔之血",
     Id = 41378,
     Level = 60,
@@ -4023,7 +4023,7 @@ kQuestInstanceData.ShadowfangKeep.Horde[4] = {
     }
 }
 kQuestInstanceData.ShadowfangKeep.Horde[5] = {
-    Servers = { AtlasCFM.Server.TURTLE1 },
+    Servers = { Atlas.Server.TURTLE1 },
     Title = "虎口拔牙",
     Id = 40281,
     Level = 25,
@@ -4043,7 +4043,7 @@ kQuestInstanceData.ShadowfangKeep.Horde[5] = {
     }
 }
 kQuestInstanceData.ShadowfangKeep.Horde[6] = {
-    Servers = { AtlasCFM.Server.TURTLE1 },
+    Servers = { Atlas.Server.TURTLE1 },
     Title = "主教末路",
     Id = 41366,
     Level = 22,
@@ -4058,7 +4058,7 @@ kQuestInstanceData.ShadowfangKeep.Horde[6] = {
     }
 }
 kQuestInstanceData.ShadowfangKeep.Horde[7] = {
-    Servers = { AtlasCFM.Server.TURTLE1 },
+    Servers = { Atlas.Server.TURTLE1 },
     Title = "狼、巫婆与镰刀",
     Id = 41381,
     Level = 60,
@@ -4305,7 +4305,7 @@ kQuestInstanceData.Stratholme.Alliance[17] = {
     }
 }
 kQuestInstanceData.Stratholme.Alliance[18] = {
-    Servers = { AtlasCFM.Server.TURTLE1 },
+    Servers = { Atlas.Server.TURTLE1 },
     Title = "建造一个重击者",
     Id = 80401,
     Level = 60,
@@ -4345,7 +4345,7 @@ kQuestInstanceData.Stratholme.Alliance[19] = {
     }
 }
 kQuestInstanceData.Stratholme.Alliance[20] = {
-    Servers = { AtlasCFM.Server.TURTLE1 },
+    Servers = { Atlas.Server.TURTLE1 },
     Title = "罗斯伦家族胸针",
     Id = 41000,
     Level = 60,
@@ -4358,7 +4358,7 @@ kQuestInstanceData.Stratholme.Alliance[20] = {
     Folgequest = "神秘配方 (" .. yellow .. "[卡拉赞]" .. white .. ")",
 }
 kQuestInstanceData.Stratholme.Alliance[21] = {
-    Servers = { AtlasCFM.Server.TURTLE1 },
+    Servers = { Atlas.Server.TURTLE1 },
     Title = "卡拉赞的钥匙之七",
     Id = 40826,
     Level = 60,
@@ -4394,7 +4394,7 @@ kQuestInstanceData.Stratholme.Horde[18] = {
     }
 }
 kQuestInstanceData.Stratholme.Horde[19] = {
-    Servers = { AtlasCFM.Server.TURTLE1 },
+    Servers = { Atlas.Server.TURTLE1 },
     Title = "建造一个重击者",
     Id = 80401,
     Level = 60,
@@ -4462,7 +4462,7 @@ kQuestInstanceData.TheRuinsofAhnQiraj.Alliance[2] = {
     }
 }
 kQuestInstanceData.TheRuinsofAhnQiraj.Alliance[3] = {
-    Servers = { AtlasCFM.Server.TURTLE1 },
+    Servers = { Atlas.Server.TURTLE1 },
     Title = "遗失于沙漠之中",
     Id = 70001,
     Level = 60,
@@ -4481,7 +4481,7 @@ kQuestInstanceData.TheRuinsofAhnQiraj.Alliance[3] = {
     }
 }
 kQuestInstanceData.TheRuinsofAhnQiraj.Alliance[4] = {
-    Servers = { AtlasCFM.Server.TURTLE1 },
+    Servers = { Atlas.Server.TURTLE1 },
     Title = "蠕动的眼睛",
     Id = 42002,
     Level = 60,
@@ -4576,7 +4576,7 @@ kQuestInstanceData.TheStockade.Alliance[6] = {
     Folgequest = "好奇的访客",
 }
 kQuestInstanceData.TheStockade.Alliance[7] = {
-    Servers = { AtlasCFM.Server.TURTLE1 },
+    Servers = { Atlas.Server.TURTLE1 },
     Title = "The Stockade's Search",
     Id = 55221,
     Level = 24,
@@ -4844,7 +4844,7 @@ kQuestInstanceData.TheSunkenTemple.Alliance[15] = {
     Folgequest = "泰兰德和雷姆洛斯",
 }
 kQuestInstanceData.TheSunkenTemple.Alliance[16] = {
-    Servers = { AtlasCFM.Server.TURTLE1 },
+    Servers = { Atlas.Server.TURTLE1 },
     Title = "采取必要的手段之四",
     Id = 40400,
     Level = 53,
@@ -4877,7 +4877,7 @@ kQuestInstanceData.TheSunkenTemple.Alliance[17] = {
     }
 }
 kQuestInstanceData.TheSunkenTemple.Alliance[18] = {
-    Servers = { AtlasCFM.Server.TURTLE1 },
+    Servers = { Atlas.Server.TURTLE1 },
     Title = "寐入梦境之三",
     Id = 40959,
     Level = 60,
@@ -4894,7 +4894,7 @@ kQuestInstanceData.TheSunkenTemple.Alliance[18] = {
     }
 }
 kQuestInstanceData.TheSunkenTemple.Alliance[19] = {
-    Servers = { AtlasCFM.Server.TURTLE1 },
+    Servers = { Atlas.Server.TURTLE1 },
     Title = "裂隙行者法杖",
     Id = 41323,
     Level = 54,
@@ -4951,7 +4951,7 @@ kQuestInstanceData.TheSunkenTemple.Horde[17] = {
     }
 }
 kQuestInstanceData.TheSunkenTemple.Horde[18] = {
-    Servers = { AtlasCFM.Server.TURTLE1 },
+    Servers = { Atlas.Server.TURTLE1 },
     Title = "莫尔奥格危机之七",
     Id = 40270,
     Level = 54,
@@ -4974,7 +4974,7 @@ kQuestInstanceData.TheSunkenTemple.Horde[18] = {
     }
 }
 kQuestInstanceData.TheSunkenTemple.Horde[19] = {
-    Servers = { AtlasCFM.Server.TURTLE1 },
+    Servers = { Atlas.Server.TURTLE1 },
     Title = "寐入梦境之三",
     Id = 40959,
     Level = 60,
@@ -4991,7 +4991,7 @@ kQuestInstanceData.TheSunkenTemple.Horde[19] = {
     }
 }
 kQuestInstanceData.TheSunkenTemple.Horde[20] = {
-    Servers = { AtlasCFM.Server.TURTLE1 },
+    Servers = { Atlas.Server.TURTLE1 },
     Title = "裂隙行者法杖",
     Id = 41323,
     Level = 54,
@@ -5145,7 +5145,7 @@ kQuestInstanceData.ZulFarrak.Alliance[7] = {
     }
 }
 kQuestInstanceData.ZulFarrak.Alliance[8] = {
-    Servers = { AtlasCFM.Server.TURTLE1 },
+    Servers = { Atlas.Server.TURTLE1 },
     Title = "沙地漂流",
     Id = 40519,
     Level = 46,
@@ -5159,7 +5159,7 @@ kQuestInstanceData.ZulFarrak.Alliance[8] = {
     }
 }
 kQuestInstanceData.ZulFarrak.Alliance[9] = {
-    Servers = { AtlasCFM.Server.TURTLE1 },
+    Servers = { Atlas.Server.TURTLE1 },
     Title = "法拉基先人",
     Id = 41811,
     Level = 46,
@@ -5188,7 +5188,7 @@ for i = 2, 9 do
     kQuestInstanceData.ZulFarrak.Horde[i] = kQuestInstanceData.ZulFarrak.Alliance[i]
 end
 kQuestInstanceData.ZulFarrak.Horde[10] = {
-    Servers = { AtlasCFM.Server.TURTLE1 },
+    Servers = { Atlas.Server.TURTLE1 },
     Title = "乌克兹·沙顶的尽头",
     Id = 40527,
     Level = 48,
@@ -5280,7 +5280,7 @@ kQuestInstanceData.ZulGurub.Alliance[4] = {
     }
 }
 kQuestInstanceData.ZulGurub.Alliance[5] = {
-    Servers = { AtlasCFM.Server.TURTLE1 },
+    Servers = { Atlas.Server.TURTLE1 },
     --TODO translate
     Title = "一计不成，再施一计",
     Id = 41960,
@@ -5294,7 +5294,7 @@ kQuestInstanceData.ZulGurub.Alliance[5] = {
     Folgequest = "藏在眼皮底下",
 }
 kQuestInstanceData.ZulGurub.Alliance[6] = {
-    Servers = { AtlasCFM.Server.TURTLE1 },
+    Servers = { Atlas.Server.TURTLE1 },
     Title = "抽取夺灵者",
     Id = 70003,
     Level = 60,
@@ -5451,7 +5451,7 @@ kQuestInstanceData.Gnomeregan.Alliance[10] = {
     }
 }
 kQuestInstanceData.Gnomeregan.Alliance[11] = {
-    Servers = { AtlasCFM.Server.TURTLE1 },
+    Servers = { Atlas.Server.TURTLE1 },
     Title = "一个沉重的大脑",
     Id = 80398,
     Level = 30,
@@ -5462,7 +5462,7 @@ kQuestInstanceData.Gnomeregan.Alliance[11] = {
     Folgequest = "建造一个重击者",
 }
 kQuestInstanceData.Gnomeregan.Alliance[12] = {
-    Servers = { AtlasCFM.Server.TURTLE1 },
+    Servers = { Atlas.Server.TURTLE1 },
     Title = "高能调节器",
     Id = 40861,
     Level = 33,
@@ -5476,7 +5476,7 @@ kQuestInstanceData.Gnomeregan.Alliance[12] = {
     }
 }
 kQuestInstanceData.Gnomeregan.Alliance[13] = {
-    Servers = { AtlasCFM.Server.TURTLE1 },
+    Servers = { Atlas.Server.TURTLE1 },
     Title = "备份系统激活",
     Id = 40856,
     Level = 33,
@@ -5557,7 +5557,7 @@ kQuestInstanceData.Gnomeregan.Horde[5] = {
     }
 }
 kQuestInstanceData.Gnomeregan.Horde[6] = {
-    Servers = { AtlasCFM.Server.TURTLE1 },
+    Servers = { Atlas.Server.TURTLE1 },
     Title = "一个沉重的大脑",
     Id = 80398,
     Level = 30,
@@ -5568,7 +5568,7 @@ kQuestInstanceData.Gnomeregan.Horde[6] = {
     Folgequest = "建造一个重击者",
 }
 kQuestInstanceData.Gnomeregan.Horde[7] = {
-    Servers = { AtlasCFM.Server.TURTLE1 },
+    Servers = { Atlas.Server.TURTLE1 },
     Title = "后备电源",
     Id = 55006,
     Level = 34,
@@ -5632,7 +5632,7 @@ kQuestInstanceData.FourDragons.Alliance[1] = {
     }
 }
 kQuestInstanceData.FourDragons.Alliance[2] = {
-    Servers = { AtlasCFM.Server.TURTLE },
+    Servers = { Atlas.Server.TURTLE },
     --TODO translate
     Title = "梦境之石，灰谷",
     Id = 41923,
@@ -5642,7 +5642,7 @@ kQuestInstanceData.FourDragons.Alliance[2] = {
     Note = "“伊瑟拉的哀嚎”掉落自“艾伦尼乌斯的恩赐”（索尔尼乌斯困难模式）（翡翠圣所 " .. yellow .. "[2]" .. white .. "）。",
 }
 kQuestInstanceData.FourDragons.Alliance[3] = {
-    Servers = { AtlasCFM.Server.TURTLE },
+    Servers = { Atlas.Server.TURTLE },
     --TODO translate
     Title = "梦境之石，菲拉斯",
     Id = 41924,
@@ -5652,7 +5652,7 @@ kQuestInstanceData.FourDragons.Alliance[3] = {
     Note = "“伊瑟拉的哀嚎”掉落自“艾伦尼乌斯的恩赐”（索尔尼乌斯困难模式）（翡翠圣所 " .. yellow .. "[2]" .. white .. "）。",
 }
 kQuestInstanceData.FourDragons.Alliance[4] = {
-    Servers = { AtlasCFM.Server.TURTLE },
+    Servers = { Atlas.Server.TURTLE },
     Title = "梦境之石，暮色森林",
     Id = 41925,
     Level = 60,
@@ -5661,7 +5661,7 @@ kQuestInstanceData.FourDragons.Alliance[4] = {
     Note = "“伊瑟拉的哀嚎”掉落自“艾伦尼乌斯的恩赐”（索尔尼乌斯困难模式）（翡翠圣所 " .. yellow .. "[2]" .. white .. "）。",
 }
 kQuestInstanceData.FourDragons.Alliance[5] = {
-    Servers = { AtlasCFM.Server.TURTLE },
+    Servers = { Atlas.Server.TURTLE },
     --TODO translate
     Title = "梦境之石，辛特兰",
     Id = 41926,
@@ -5671,7 +5671,7 @@ kQuestInstanceData.FourDragons.Alliance[5] = {
     Note = "“伊瑟拉的哀嚎”掉落自“艾伦尼乌斯的恩赐”（索尔尼乌斯困难模式）（翡翠圣所 " .. yellow .. "[2]" .. white .. "）。",
 }
 kQuestInstanceData.FourDragons.Alliance[6] = {
-    Servers = { AtlasCFM.Server.TURTLE1 },
+    Servers = { Atlas.Server.TURTLE1 },
     --TODO translate
     Title = "力量浸染",
     Id = 42004,
@@ -5693,7 +5693,7 @@ kQuestInstanceData.Reaver = {
     Horde = {}
 }
 kQuestInstanceData.Reaver.Alliance[1] = {
-    Servers = { AtlasCFM.Server.TURTLE },
+    Servers = { Atlas.Server.TURTLE },
     --TODO translate
     Title = "黑森公爵二世的骑乘哨",
     Id = 41927,
@@ -5749,7 +5749,7 @@ kQuestInstanceData.Concavius = {
     Horde = {}
 }
 kQuestInstanceData.Concavius.Alliance[1] = {
-    Servers = { AtlasCFM.Server.TURTLE },
+    Servers = { Atlas.Server.TURTLE },
     --TODO translate
     Title = "能量迸发的法力碎片",
     Id = 41929,
@@ -5770,7 +5770,7 @@ kQuestInstanceData.Nerubian = {
     Horde = {}
 }
 kQuestInstanceData.Nerubian.Alliance[1] = {
-    Servers = { AtlasCFM.Server.TURTLE },
+    Servers = { Atlas.Server.TURTLE },
     --TODO translate
     Title = "地穴领主的召唤",
     Id = 41928,
@@ -5816,7 +5816,7 @@ kQuestInstanceData.Azuregos.Alliance[2] = {
     Folgequest = "翻译龙语",
 }
 kQuestInstanceData.Azuregos.Alliance[3] = {
-    Servers = { AtlasCFM.Server.TURTLE },
+    Servers = { Atlas.Server.TURTLE },
     --TODO translate
     Title = "复生仪式",
     Id = 41935,
@@ -5839,7 +5839,7 @@ kQuestInstanceData.LordKazzak = {
     Horde = {}
 }
 kQuestInstanceData.LordKazzak.Alliance[1] = {
-    Servers = { AtlasCFM.Server.TURTLE },
+    Servers = { Atlas.Server.TURTLE },
     --TODO translate
     Title = "扭曲裂隙水晶",
     Id = 41936,
@@ -6569,7 +6569,7 @@ kQuestInstanceData.HateforgeQuarry.Alliance[6] = {
     }
 }
 kQuestInstanceData.HateforgeQuarry.Alliance[7] = {
-    Servers = { AtlasCFM.Server.TURTLE1 },
+    Servers = { Atlas.Server.TURTLE1 },
     Title = "为什么不两者兼得？",
     Id = 41142,
     Level = 50,
@@ -6845,7 +6845,7 @@ kQuestInstanceData.GilneasCity.Alliance[8] = {
     }
 }
 kQuestInstanceData.GilneasCity.Alliance[9] = {
-    Servers = { AtlasCFM.Server.TURTLE1 },
+    Servers = { Atlas.Server.TURTLE1 },
     Title = "沃根多尔之血",
     Id = 41378,
     Level = 60,
@@ -6964,7 +6964,7 @@ kQuestInstanceData.GilneasCity.Horde[7] = {
     }
 }
 kQuestInstanceData.GilneasCity.Horde[8] = {
-    Servers = { AtlasCFM.Server.TURTLE1 },
+    Servers = { Atlas.Server.TURTLE1 },
     Title = "狼、巫婆与镰刀",
     Id = 41381,
     Level = 60,
@@ -7089,7 +7089,7 @@ kQuestInstanceData.LowerKarazhan.Alliance[9] = {
     Folgequest = "罗斯伦家族胸针",
 }
 kQuestInstanceData.LowerKarazhan.Alliance[10] = {
-    Servers = { AtlasCFM.Server.TURTLE1 },
+    Servers = { Atlas.Server.TURTLE1 },
     Title = "罗斯伦家族胸针",
     Id = 41000,
     Level = 60,
@@ -7194,7 +7194,7 @@ kQuestInstanceData.LowerKarazhan.Alliance[17] = {
     }
 }
 kQuestInstanceData.LowerKarazhan.Alliance[18] = {
-    Servers = { AtlasCFM.Server.TURTLE1 },
+    Servers = { Atlas.Server.TURTLE1 },
     Title = "沃根多尔之血",
     Id = 41381,
     Level = 60,
@@ -8123,4 +8123,4 @@ kQuestInstanceData.TimbermawHold.Horde[11] = { --TODO translate
     Note = "“邪恶洛克塔纳格”位于 " .. yellow .. "[4]" .. white .. "。",
 }
 
-AtlasCFM.Quest.DataBase = kQuestInstanceData
+Atlas.Quest.DataBase = kQuestInstanceData

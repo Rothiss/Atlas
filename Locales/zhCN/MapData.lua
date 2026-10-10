@@ -6,7 +6,7 @@
 --- @compatible World of Warcraft 1.12
 ---
 
-AtlasCFM.Localization:RegisterNamespace("MapData", "zhCN", {
+Atlas.Localization:RegisterNamespace("MapData", "zhCN", {
     -- Instance Specific Data - Razorfen Kraul
     ["Razorfen Spearhide"] = "剃刀沼泽刺鬃守卫",
     ["Willix the Importer"] = "进口商威利克斯",

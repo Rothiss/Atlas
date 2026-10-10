@@ -5,7 +5,7 @@
 --- @compatible World of Warcraft 1.12
 ---
 
-AtlasCFM.Localization:RegisterNamespace("Classes", "zhCN", {
+Atlas.Localization:RegisterNamespace("Classes", "zhCN", {
     ["Warlock"] = "术士",
     ["Warrior"] = "战士",
     ["Hunter"] = "猎人",

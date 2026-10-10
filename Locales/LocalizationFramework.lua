@@ -6,10 +6,10 @@
 
 local _G = getfenv()
 
-AtlasCFM = _G.AtlasCFM or {}
+Atlas = _G.Atlas or {}
 
-if not AtlasCFM.Localization then
-    AtlasCFM.Localization = {
+if not Atlas.Localization then
+    Atlas.Localization = {
         currentLocale = (GetLocale and GetLocale() or "enUS"),
         namespaces = {}
     }
@@ -18,8 +18,8 @@ end
 ---
 --- Debug function to check loaded translations
 ---
-function AtlasCFM.Localization:DebugPrint()
-    DEFAULT_CHAT_FRAME:AddMessage("|cff00ff00AtlasCFM Localization Debug:|r")
+function Atlas.Localization:DebugPrint()
+    DEFAULT_CHAT_FRAME:AddMessage("|cff00ff00Atlas Localization Debug:|r")
     DEFAULT_CHAT_FRAME:AddMessage("Current Locale: " .. tostring(self.currentLocale))
 
     for name, data in pairs(self.namespaces) do
@@ -35,11 +35,11 @@ function AtlasCFM.Localization:DebugPrint()
     end
 end
 
-function AtlasCFM.Localization:DebugMissing(limit)
+function Atlas.Localization:DebugMissing(limit)
     local frame = DEFAULT_CHAT_FRAME
     local out = function(msg) if frame then frame:AddMessage(msg) else PrintA(msg) end end
     limit = tonumber(limit) or 40
-    out("|cff00ff00AtlasCFM Missing Keys:|r " .. tostring(self.currentLocale))
+    out("|cff00ff00Atlas Missing Keys:|r " .. tostring(self.currentLocale))
     for name, ns in pairs(self.namespaces) do
         local missing = {}
         local en = ns.enUS or {}
@@ -60,7 +60,7 @@ end
 ---
 --- Register a new localization namespace
 ---
-function AtlasCFM.Localization:RegisterNamespace(namespace, locale, translations)
+function Atlas.Localization:RegisterNamespace(namespace, locale, translations)
     if not self.namespaces[namespace] then
         self.namespaces[namespace] = {
             enUS = {},
@@ -88,7 +88,7 @@ end
 ---
 --- Get a namespace for use
 ---
-function AtlasCFM.Localization:GetNamespace(namespace)
+function Atlas.Localization:GetNamespace(namespace)
     if not self.namespaces[namespace] then
         -- Initialize if accessed before registration
         self:RegisterNamespace(namespace, "enUS", {})
@@ -122,11 +122,11 @@ function AtlasCFM.Localization:GetNamespace(namespace)
 end
 
 -- Define standard namespaces
-AtlasCFM.Localization.UI = AtlasCFM.Localization:GetNamespace("UI")
-AtlasCFM.Localization.Zones = AtlasCFM.Localization:GetNamespace("Zones")
-AtlasCFM.Localization.Bosses = AtlasCFM.Localization:GetNamespace("Bosses")
-AtlasCFM.Localization.Classes = AtlasCFM.Localization:GetNamespace("Classes")
-AtlasCFM.Localization.Factions = AtlasCFM.Localization:GetNamespace("Factions")
-AtlasCFM.Localization.Spells = AtlasCFM.Localization:GetNamespace("Spells")
-AtlasCFM.Localization.ItemSets = AtlasCFM.Localization:GetNamespace("ItemSets")
-AtlasCFM.Localization.MapData = AtlasCFM.Localization:GetNamespace("MapData")
+Atlas.Localization.UI = Atlas.Localization:GetNamespace("UI")
+Atlas.Localization.Zones = Atlas.Localization:GetNamespace("Zones")
+Atlas.Localization.Bosses = Atlas.Localization:GetNamespace("Bosses")
+Atlas.Localization.Classes = Atlas.Localization:GetNamespace("Classes")
+Atlas.Localization.Factions = Atlas.Localization:GetNamespace("Factions")
+Atlas.Localization.Spells = Atlas.Localization:GetNamespace("Spells")
+Atlas.Localization.ItemSets = Atlas.Localization:GetNamespace("ItemSets")
+Atlas.Localization.MapData = Atlas.Localization:GetNamespace("MapData")

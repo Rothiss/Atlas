@@ -6,7 +6,7 @@
 --- @compatible World of Warcraft 1.12
 ---
 
-AtlasCFM.Localization:RegisterNamespace("Zones", "enUS", {
+Atlas.Localization:RegisterNamespace("Zones", "enUS", {
     -- Continents
     ["Eastern Kingdoms"] = true,
     ["Kalimdor"] = true,

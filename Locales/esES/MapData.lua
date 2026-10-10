@@ -5,7 +5,7 @@
 --- @compatible World of Warcraft 1.12
 ---
 
-AtlasCFM.Localization:RegisterNamespace("MapData", "esES", {
+Atlas.Localization:RegisterNamespace("MapData", "esES", {
     ["Back"] = "Atrás",
     ["Blacksmithing Plans"] = "Planos de Herrería",
     ["Brazier of Invocation"] = "Brasero de Invocación",
