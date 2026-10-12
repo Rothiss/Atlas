@@ -710,7 +710,7 @@ end
 
 --- Opens the server selection menu
 function Atlas.HewdropMenus:OpenServerMenu(parent)
-    local servers = { "Auto", "Turtle WoW", "Turtle WoW 1.17.2", "Vanilla Plus", "Classic" }
+    local servers = { "Auto", "OctoWow", "Turtle WoW", "Turtle WoW 1.17.2", "Vanilla Plus", "Classic" }
 
     Hewdrop:Open(parent,
         'children', function(level, value)

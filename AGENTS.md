@@ -28,7 +28,7 @@ Atlas: a WoW 1.12 (Classic/Vanilla) addon — dungeon map browser + loot browser
 
 ## Server gating
 
-Servers: `TURTLE1` (Turtle 1.17.2), `TURTLE` (Turtle 1.18.1, inherits TURTLE1 content unless overridden), `VANILLA_PLUS`, `CLASSIC`. Tag server-specific entries with `servers = { Atlas.Server.<X> }`; `"!Server"` / `Atlas.Server.NOT_*` = exclude; `"="` prefix = strict (no inheritance). `Atlas.Server.IsVisible(entry)` gates visibility everywhere — untagged Turtle-only loot will show on all servers.
+Servers: `OCTO` (OctoWow, inherits TURTLE + TURTLE1 content unless `=`-strict), `TURTLE1` (Turtle 1.17.2), `TURTLE` (Turtle 1.18.1, inherits TURTLE1 content unless overridden), `VANILLA_PLUS`, `CLASSIC`. Tag server-specific entries with `servers = { Atlas.Server.<X> }`; `"!Server"` / `Atlas.Server.NOT_*` = exclude; `"="` prefix = strict (no inheritance). `Atlas.Server.IsVisible(entry)` gates visibility everywhere — untagged loot will show on all servers. Auto-detect: OctoWow realms (N'Zoth/C'Thun/Y'Shaarj) → `OCTO` (checked before build since OctoWow runs the 1.18.1 client); build 1.18.1 → `TURTLE`; 1.17.2 → `TURTLE1`; "Hogger" realm → `VANILLA_PLUS`; else `CLASSIC`.
 
 ## Quirks
 

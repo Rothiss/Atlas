@@ -16,11 +16,13 @@ Atlas.Server.AUTO = "Auto"
 Atlas.Server.TURTLE = "Turtle WoW"
 Atlas.Server.TURTLE1 = "Turtle WoW 1.17.2"
 Atlas.Server.VANILLA_PLUS = "Vanilla Plus"
+Atlas.Server.OCTO = "OctoWow"
 Atlas.Server.CLASSIC = "Classic"
 
 -- Strict matching constants (no inheritance)
 Atlas.Server.STRICT_TURTLE = "=" .. Atlas.Server.TURTLE
 Atlas.Server.STRICT_TURTLE1 = "=" .. Atlas.Server.TURTLE1
+Atlas.Server.STRICT_OCTO = "=" .. Atlas.Server.OCTO
 
 local currentDetectedServer = nil
 
@@ -31,6 +33,13 @@ function Atlas.Server.Detect()
 
     local realm = GetRealmName()
     local build = GetBuildInfo()
+
+    -- OctoWoW runs a repacked Turtle 1.18.1 client, so detect by realm BEFORE
+    -- the build check (realms: N'Zoth, C'Thun, Y'Shaarj)
+    if realm and (string.find(realm, "N'Zoth") or string.find(realm, "C'Thun") or string.find(realm, "Y'Shaarj")) then
+        currentDetectedServer = Atlas.Server.OCTO
+        return currentDetectedServer
+    end
 
     -- Check build version for Turtle WoW
     if build == "1.18.1" then
@@ -135,6 +144,12 @@ function Atlas.Server.IsVisible(entry, strictMode)
                 match = true
             end
 
+            -- OctoWoW наследует контент Turtle WoW (1.18.1 и 1.17.2)
+            if not match and not strictMode and not isStrict and active == Atlas.Server.OCTO and
+                (serverTarget == Atlas.Server.TURTLE or serverTarget == Atlas.Server.TURTLE1) then
+                match = true
+            end
+
             if match then
                 if isDeny then
                     return false     -- Если сервер в черном списке — сразу скрываем
@@ -173,12 +188,26 @@ function Atlas.Server.GetDataField(entry, fieldName)
         suffix = "_TURTLE1"
     elseif active == Atlas.Server.VANILLA_PLUS then
         suffix = "_VANILLA_PLUS"
+    elseif active == Atlas.Server.OCTO then
+        suffix = "_OCTO"
     end
 
     if suffix then
         local serverField = fieldName .. suffix
         if entry[serverField] ~= nil then
             return entry[serverField]
+        end
+    end
+
+    -- OctoWoW inherits from Turtle WoW (1.18.1 then 1.17.2)
+    if active == Atlas.Server.OCTO then
+        local fallbackTurtleField = fieldName .. "_TURTLE"
+        if entry[fallbackTurtleField] ~= nil then
+            return entry[fallbackTurtleField]
+        end
+        local fallbackField = fieldName .. "_TURTLE1"
+        if entry[fallbackField] ~= nil then
+            return entry[fallbackField]
         end
     end
 
