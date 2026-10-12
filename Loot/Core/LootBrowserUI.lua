@@ -60,7 +60,7 @@ function Atlas.LootBrowserUI.ScrollBarUpdate()
 				_G["AtlasBossLine" .. line .. "_Text"]:SetText(Atlas.ScrollList[lineplusoffset].line)
 
 				-- Check if this boss has loot data
-				local hasLoot = GetBossHasLoot(zoneID, lineplusoffset)
+				local hasLoot = Atlas.DataResolver.GetLootByID(zoneID, lineplusoffset)
 
 				if AtlasLootItemsFrame.activeElement == lineplusoffset then
 					bossLine:Enable()
@@ -108,50 +108,6 @@ end
 
 -- Helper function to count maximum numeric index (sparse array support)
 local GetMaxNumericIndex = Atlas.LootUtils.GetMaxNumericIndex
-
--- Cache of boss-name -> has-loot per zone. Fixes ScrollBarUpdate doing a linear
--- instance scan (Reputation/Keys/Bosses) for every visible line on every scroll.
-local bossLootZoneCache = nil
-local bossLootZoneKey = nil
-
-local function BuildBossLootCache(zoneID)
-    bossLootZoneKey = zoneID
-    bossLootZoneCache = {}
-    local inst = type(zoneID) == "string" and Atlas and Atlas.InstanceData and Atlas.InstanceData[zoneID]
-    if not inst then return end
-    -- First match wins, matching AL_FindInInstance priority (Reputation -> Keys -> Bosses)
-    local function IndexSection(section)
-        for i = 1, table.getn(section) do
-            local el = section[i]
-            if el and el.name and bossLootZoneCache[el.name] == nil then
-                bossLootZoneCache[el.name] = (el.items or el.loot) and true or false
-            end
-        end
-    end
-    if inst.Reputation then IndexSection(inst.Reputation) end
-    if inst.Keys then IndexSection(inst.Keys) end
-    if inst.Bosses then IndexSection(inst.Bosses) end
-end
-
---- Looks up whether a ScrollList line has loot, using the per-zone cache
---- @param zoneID string The instance/dropdown zone key
---- @param index number Line index into Atlas.ScrollList
---- @return boolean
-local function GetBossHasLoot(zoneID, index)
-    if bossLootZoneKey ~= zoneID then
-        BuildBossLootCache(zoneID)
-    end
-    local entry = Atlas.ScrollList and Atlas.ScrollList[index]
-    if not entry then return false end
-    local elemName = entry.name or entry.id
-    return bossLootZoneCache[elemName] == true
-end
-
---- Invalidates the boss-loot cache (e.g. on server switch)
-function Atlas.LootBrowserUI.InvalidateBossLootCache()
-    bossLootZoneKey = nil
-    bossLootZoneCache = nil
-end
 
 -- OnUpdate handler for triple blink
 local function AtlasLoot_Blink_OnUpdate()
