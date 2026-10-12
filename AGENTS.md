@@ -33,6 +33,11 @@ Servers: `TURTLE1` (Turtle 1.17.2), `TURTLE` (Turtle 1.18.1, inherits TURTLE1 co
 ## Quirks
 
 - **Brand**: this addon presents as plain `Atlas` (`Atlas.toc`, global table `Atlas.*`, saved vars `AtlasOptions`/`AtlasCharDB`, `/atlas`). It is a personal fork of the original Atlas addon — the frame/global names now intentionally match the originals, so it must **not** be installed alongside genuine Atlas, AtlasLoot, or TWLoot. Keep the upstream link (`byCFM2/Atlas-CFM`) and `ATW` version-abbrev references intact.
+- **Shared helpers live in `Atlas.LootUtils`**: `GetMaxNumericIndex`, `GetChatLink`, `FindBossIndexInScrollList`, `FindAndSetAtlasIndicesByInstance`, `GetMetaCategoryForMenu` (global alias `Atlas_GetMetaCategoryForMenu` remains). Reuse these — do **not** add file-local duplicates.
+- **Caches invalidate automatically on server switch**: `OpenServerMenu` (`Atlas\AtlasHewdrop.lua`) calls `DataIndex.ResetIndex()`, `LootBrowserUI.InvalidateBossLootCache()`, and `ReagentData.ClearIndex()`. Don't add parallel invalidation.
+- **Init runs once**: `AtlasLoot_OnEvent` (on `VARIABLES_LOADED`) is owned solely by `Loot\Core\Init.lua`; do not re-register `VARIABLES_LOADED` elsewhere (the LootUI duplicate listener was removed).
+- **pfUI styling lives only in `Atlas\AtlaspfUI.lua`** (`Atlas.pfUI.Initialize` is idempotent); `setupPfUITooltip`/`hookScript` no longer exist.
+- **ItemDB cache keys**: `ParsedTooltipCache` is keyed `"<itemID>_<extratext>"` (string), `ParsedSuitabilityCache` is keyed numeric `itemID`, `ColoredTextCache` is bounded. Keep keys/eviction in sync if you touch caching.
 - **Dual Localization implementations**: both `AtlasConfig.lua` and `Locales\LocalizationFramework.lua` define `RegisterNamespace`/`GetNamespace`; the framework (loaded later) wins at runtime.
 - **Versioning**: bump `## Version` in `Atlas.toc` (read via `GetAddOnMetadata`). The version-check module federates `ATW:<n>:v` chat over the `LFT` channel — keep the `abbrev` stable.
 - Saved variables: `AtlasOptions` (account-wide), `AtlasCharDB` (per-char).

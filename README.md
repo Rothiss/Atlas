@@ -56,7 +56,7 @@ Overview: Atlas is a dungeon map browser with an integrated loot panel and quest
   - Instance selection
 - Top buttons:
   - Lock/Unlock — toggle window movement
-  - Options — open Atlas‑TW options
+  - Options — open Atlas options
   - Quests — show/hide quests panel
   - Loot Panel — show/hide bottom loot panel
 - Loot panel: section buttons and items area with scrolling
