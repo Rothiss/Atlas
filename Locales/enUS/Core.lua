@@ -267,7 +267,7 @@ Atlas.Localization:RegisterNamespace("UI", "enUS", {
     ["pfUI styling enabled. Type /reload to apply changes."] = true,
     ["pfUI styling disabled. Type /reload to apply changes."] = true,
     ["Scale"] = true,
-    ["Welcome to Atlas Edition. Please take a moment to set your preferences."] = true,
+    ["Welcome to Atlas. Please take a moment to set your preferences."] = true,
 
     --************************************************
     -- Quest Related

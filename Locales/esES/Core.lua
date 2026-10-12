@@ -361,8 +361,8 @@ Atlas.Localization:RegisterNamespace("UI", "esES", {
     ["Show IDs in Tooltips"] = "Mostrar IDs en descripciones emergentes",
     ["Show Icon in Tooltips"] = "Mostrar icono en descripciones emergentes",
     ["Show Source on Tooltips"] = "Mostrar origen en descripciones",
-    ["Welcome to Atlas Edition. Please take a moment to set your preferences."] =
-    "Bienvenido a Atlas Edition. Por favor, tome un momento para configurar sus preferencias.",
+    ["Welcome to Atlas. Please take a moment to set your preferences."] =
+    "Bienvenido a Atlas. Por favor, tome un momento para configurar sus preferencias.",
 
     --************************************************
     -- Version & Updates

@@ -601,7 +601,7 @@ end
 
 -- Popup Box for first time users
 StaticPopupDialogs["AtlasLoot_SETUP"] = {
-    text = L["Welcome to Atlas Edition. Please take a moment to set your preferences."],
+    text = L["Welcome to Atlas. Please take a moment to set your preferences."],
     button1 = L["Setup"],
     OnAccept = function()
         Atlas.OptionsOnClick()

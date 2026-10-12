@@ -323,7 +323,7 @@ Atlas.Localization:RegisterNamespace("UI", "zhCN", {
     ["Show IDs in Tooltips"] = "在提示中显示 ID",
     ["Show Icon in Tooltips"] = "在提示中显示图标",
     ["Show Source on Tooltips"] = "在提示中显示来源",
-    ["Welcome to Atlas Edition. Please take a moment to set your preferences."] = "欢迎使用 Atlas 版本。请花点时间设置您的偏好。",
+    ["Welcome to Atlas. Please take a moment to set your preferences."] = "欢迎使用 Atlas。请花点时间设置您的偏好。",
 
     -- Version & Updates
     ["Update available"] = "有可用更新",
