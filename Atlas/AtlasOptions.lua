@@ -323,6 +323,28 @@ function Atlas.OptionsInit()
 end
 
 ---
+--- Lightweight refresh of the minimap-button position/radius sliders only.
+--- Used instead of the heavy OptionsInit() while dragging the minimap button or
+--- sliding the position/radius controls, so their values stay in sync without
+--- re-asserting every option checkbox.
+--- @return nil
+---
+function Atlas.SyncPositionControls()
+    if AtlasOptionSliderButtonPos then
+        if AtlasOptionSliderButtonPos:GetValue() ~= AtlasOptions.AtlasButtonPosition then
+            AtlasOptionSliderButtonPos:SetValue(AtlasOptions.AtlasButtonPosition)
+        end
+        AtlasOptions_UpdateSlider(L["Button Position"], AtlasOptionSliderButtonPos)
+    end
+    if AtlasOptionSliderButtonRad then
+        if AtlasOptionSliderButtonRad:GetValue() ~= AtlasOptions.AtlasButtonRadius then
+            AtlasOptionSliderButtonRad:SetValue(AtlasOptions.AtlasButtonRadius)
+        end
+        AtlasOptions_UpdateSlider(L["Button Radius"], AtlasOptionSliderButtonRad)
+    end
+end
+
+---
 --- Resets Atlas frame position and related settings to defaults
 --- Clears frame anchors and restores default button position, radius, alpha, and scale
 --- @return nil

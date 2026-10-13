@@ -1190,7 +1190,7 @@ function TSF.HookTradeSkillFrameUpdate()
                     skillButton.isHeader = false
                     skillButton:SetNormalTexture("")
 
-                    local _, _, numAvailable = GetTradeSkillInfo(data.index)
+                    local numAvailable = data.num -- captured by BuildList (avoids a native GetTradeSkillInfo per row)
                     local customAvailable = Atlas.ProfessionHooks.TSAvailCache[data.index]
                     local realAvailable = Atlas.ProfessionHooks.TSRealCache[data.index] or numAvailable or 0
                     if not customAvailable then customAvailable = realAvailable end
@@ -1938,7 +1938,7 @@ function CF.HookCraftFrameUpdate()
                     --  craftText:SetWidth(craftButton:GetWidth() - 14)
 
                     -- Setup text with extra info (skill levels and counts)
-                    local _, _, _, numAvailable = GetCraftInfo(data.index)
+                    local numAvailable = data.num -- captured by BuildList (avoids a native GetCraftInfo per row)
 
                     local customAvailable = Atlas.ProfessionHooks.CraftAvailCache[data.index]
                     local realAvailable = Atlas.ProfessionHooks.CraftRealCache[data.index] or numAvailable or 0

@@ -109,6 +109,35 @@ end
 -- Helper function to count maximum numeric index (sparse array support)
 local GetMaxNumericIndex = Atlas.LootUtils.GetMaxNumericIndex
 
+-- Cache child frame handles on loot/menu buttons to avoid _G["<name>_<suffix>"]
+-- string concatenation on every scroll repaint.
+local function EnsureButtonChildren(button)
+	if not button or button._atlasChildren then return button end
+	local base = button:GetName()
+	if base then
+		button._nameFS = _G[base .. "_Name"]
+		button._iconTx = _G[base .. "_Icon"]
+		button._extraFS = _G[base .. "_Extra"]
+		button._border = _G[base .. "Border"]
+		button._quantityFS = _G[base .. "_Quantity"]
+	end
+	button._atlasChildren = true
+	return button
+end
+
+-- Model cache for ScrollBarLootUpdate: the resolved + server-filtered loot page
+-- data is pure per (StoredElement, StoredMenu, active server) and does not depend
+-- on the scroll offset, so it must not be rebuilt on every mouse-wheel step.
+-- WishList/SearchResult and menu/function pages always rebuild (their data changes).
+local lootPageModelCache = nil
+local lootPageModelKey = nil
+
+--- Invalidates the cached loot page model (e.g. on server switch)
+function Atlas.LootBrowserUI.InvalidateLootPageCache()
+	lootPageModelKey = nil
+	lootPageModelCache = nil
+end
+
 -- OnUpdate handler for triple blink
 local function AtlasLoot_Blink_OnUpdate()
 	this._blinkElapsed = (this._blinkElapsed or 0) + arg1
@@ -227,79 +256,98 @@ function Atlas.LootBrowserUI.ScrollBarLootUpdate()
 	end
 	local instanceKey = (AtlasLootItemsFrame and type(AtlasLootItemsFrame.StoredMenu) == "string") and
 		AtlasLootItemsFrame.StoredMenu or nil
-	local dataSource = Atlas.DataResolver.GetLootByElemName(dataID, instanceKey) or AtlasLootItemsFrame.StoredMenu
+	-- Model cache: the resolved + server-filtered page data depends only on the
+	-- selected element/menu/server, NOT the scroll offset, so it must not be
+	-- rebuilt on every mouse-wheel step. WishList/SearchResult and menu/function
+	-- pages always rebuild (their data changes per interaction).
+	local canCache = (type(dataID) == "string") and (dataID ~= "WishList") and (dataID ~= "SearchResult")
+	local modelKey = canCache and (dataID .. "|" .. tostring(instanceKey) .. "|" .. tostring(Atlas.Server.GetActive())) or nil
 
-	-- Special handling for wish list and search results
-	if dataID == "WishList" or dataID == "SearchResult" then
-		if dataID == "WishList" and not AtlasCharDB["WishList"] then
-			AtlasCharDB["WishList"] = {}
-		end
-		if dataID == "SearchResult" and not AtlasCharDB["SearchResult"] then
-			AtlasCharDB["SearchResult"] = {}
-		end
-		-- Create categorized list for display
-		local list = (dataID == "WishList") and AtlasCharDB["WishList"] or AtlasCharDB["SearchResult"]
-		dataSource = AtlasLoot_CategorizeWishList(list)
+	local dataSource
+	if modelKey and modelKey == lootPageModelKey then
+		dataSource = lootPageModelCache
 	else
-		if type(dataID) == "string" and (AtlasLoot_Data[dataID] or AtlasLoot_Data[dataSource]) then
-			dataSource = AtlasLoot_Data[dataID] or AtlasLoot_Data[dataSource]
-		end
-		if type(dataSource) == "string" then
-			dataSource = Atlas.DataResolver.GetLootByElemName(dataSource, instanceKey) or dataSource
-		end
-	end
-	--Check if dataID and dataSource are valid
-	if not dataID and not dataSource then
-		return --PrintA("Atlas.LootBrowserUI.ScrollBarLootUpdate: No dataID and No dataSource!")
-	end
+		dataSource = Atlas.DataResolver.GetLootByElemName(dataID, instanceKey) or AtlasLootItemsFrame.StoredMenu
 
-	-- Filter dataSource by server compatibility
-	if type(dataSource) == "table" then
-		local filtered = {}
-		local maxIdx = GetMaxNumericIndex(dataSource)
-		for i = 1, maxIdx do
-			local element = dataSource[i]
-			if element == nil then
-				-- Preserve original sparse array gaps (nil holes) as empty rows for layout
-				table.insert(filtered, {})
-			elseif type(element) == "table" and not next(element) then
-				-- Preserve original empty tables `{}` (spacers)
-				table.insert(filtered, element)
-			else
-				local isVisible = Atlas.Server.IsVisible(element)
-				local el_type = Atlas.Server.GetDataField(element, "type")
-				if isVisible and type(element) == "table" and element.id and not (el_type == "item") then
-					local spellID = element.id
-					local wlType = element._wlType
-					local link = nil
-					if Atlas.SpellDB then
-						if wlType == "enchant" then
-							link = Atlas.SpellDB.enchants and Atlas.SpellDB.enchants[spellID]
-						elseif wlType == "spell" then
-							link = Atlas.SpellDB.craftspells and Atlas.SpellDB.craftspells[spellID]
-						else
-							link = (Atlas.SpellDB.enchants and Atlas.SpellDB.enchants[spellID]) or
-								(Atlas.SpellDB.craftspells and Atlas.SpellDB.craftspells[spellID])
+		-- Special handling for wish list and search results
+		if dataID == "WishList" or dataID == "SearchResult" then
+			if dataID == "WishList" and not AtlasCharDB["WishList"] then
+				AtlasCharDB["WishList"] = {}
+			end
+			if dataID == "SearchResult" and not AtlasCharDB["SearchResult"] then
+				AtlasCharDB["SearchResult"] = {}
+			end
+			-- Create categorized list for display
+			local list = (dataID == "WishList") and AtlasCharDB["WishList"] or AtlasCharDB["SearchResult"]
+			dataSource = AtlasLoot_CategorizeWishList(list)
+		else
+			if type(dataID) == "string" and (AtlasLoot_Data[dataID] or AtlasLoot_Data[dataSource]) then
+				dataSource = AtlasLoot_Data[dataID] or AtlasLoot_Data[dataSource]
+			end
+			if type(dataSource) == "string" then
+				dataSource = Atlas.DataResolver.GetLootByElemName(dataSource, instanceKey) or dataSource
+			end
+		end
+		--Check if dataID and dataSource are valid
+		if not dataID and not dataSource then
+			return --PrintA("Atlas.LootBrowserUI.ScrollBarLootUpdate: No dataID and No dataSource!")
+		end
+
+		-- Filter dataSource by server compatibility
+		if type(dataSource) == "table" then
+			local filtered = {}
+			local maxIdx = GetMaxNumericIndex(dataSource)
+			for i = 1, maxIdx do
+				local element = dataSource[i]
+				if element == nil then
+					-- Preserve original sparse array gaps (nil holes) as empty rows for layout
+					table.insert(filtered, {})
+				elseif type(element) == "table" and not next(element) then
+					-- Preserve original empty tables `{}` (spacers)
+					table.insert(filtered, element)
+				else
+					local isVisible = Atlas.Server.IsVisible(element)
+					local el_type = Atlas.Server.GetDataField(element, "type")
+					if isVisible and type(element) == "table" and element.id and not (el_type == "item") then
+						local spellID = element.id
+						local wlType = element._wlType
+						local link = nil
+						if Atlas.SpellDB then
+							if wlType == "enchant" then
+								link = Atlas.SpellDB.enchants and Atlas.SpellDB.enchants[spellID]
+							elseif wlType == "spell" then
+								link = Atlas.SpellDB.craftspells and Atlas.SpellDB.craftspells[spellID]
+							else
+								link = (Atlas.SpellDB.enchants and Atlas.SpellDB.enchants[spellID]) or
+									(Atlas.SpellDB.craftspells and Atlas.SpellDB.craftspells[spellID])
+							end
+						end
+						if link then
+							isVisible = Atlas.Server.IsVisible(link)
 						end
 					end
-					if link then
-						isVisible = Atlas.Server.IsVisible(link)
+					if isVisible then
+						table.insert(filtered, element)
 					end
 				end
-				if isVisible then
-					table.insert(filtered, element)
+				-- If Atlas.Server.IsVisible(element) is false, we don't insert anything,
+				-- effectively compacting the list and removing the row entirely.
+			end
+			-- Keep non-numeric fields (metadata like wishlist, etc)
+			for k, v in pairs(dataSource) do
+				if type(k) ~= "number" then
+					filtered[k] = v
 				end
 			end
-			-- If Atlas.Server.IsVisible(element) is false, we don't insert anything,
-			-- effectively compacting the list and removing the row entirely.
+			dataSource = filtered
 		end
-		-- Keep non-numeric fields (metadata like wishlist, etc)
-		for k, v in pairs(dataSource) do
-			if type(k) ~= "number" then
-				filtered[k] = v
-			end
+
+		-- Store the model for reuse on subsequent scroll ticks (table pages only;
+		-- menu/function pages stay uncached so they always re-run their generator).
+		if modelKey and type(dataSource) == "table" then
+			lootPageModelKey = modelKey
+			lootPageModelCache = dataSource
 		end
-		dataSource = filtered
 	end
 	-- Hide navigation buttons by default
 	_G["AtlasLootItemsFrame_BACK"]:Hide()
@@ -326,8 +374,8 @@ function Atlas.LootBrowserUI.ScrollBarLootUpdate()
 		local offset = FauxScrollFrame_GetOffset(AtlasLootScrollBar)
 		-- Update content and visibility of AtlasLootItem buttons
 		for i = 1, Atlas.LOOT_NUM_LINES do
-			itemButton = _G["AtlasLootItem_" .. i]
-			menuButton = _G["AtlasLootMenuItem_" .. i]
+			itemButton = EnsureButtonChildren(_G["AtlasLootItem_" .. i])
+			menuButton = EnsureButtonChildren(_G["AtlasLootMenuItem_" .. i])
 			-- Calculate correct index for two columns
 			local itemIndex = i + offset
 			if offset > 0 then
@@ -353,10 +401,10 @@ function Atlas.LootBrowserUI.ScrollBarLootUpdate()
 			end
 			if itemIndex <= totalItems and dataSource[itemIndex] then
 				if menuButton and type(dataID) == "table" then
-					nameFrame = _G["AtlasLootMenuItem_" .. i .. "_Name"]
-					iconFrame = _G["AtlasLootMenuItem_" .. i .. "_Icon"]
-					extraFrame = _G["AtlasLootMenuItem_" .. i .. "_Extra"]
-					borderFrame = _G["AtlasLootMenuItem_" .. i .. "Border"]
+					nameFrame = menuButton and menuButton._nameFS
+					iconFrame = menuButton and menuButton._iconTx
+					extraFrame = menuButton and menuButton._extraFS
+					borderFrame = menuButton and menuButton._border
 					quantityFrame = nil
 					local element = dataSource[itemIndex]
 					defaultIcon = dataID.defaultIcon or "Interface\\Icons\\INV_Misc_QuestionMark"
@@ -391,11 +439,11 @@ function Atlas.LootBrowserUI.ScrollBarLootUpdate()
 						itemButton:Hide()
 					end
 				elseif itemButton then
-					nameFrame = _G["AtlasLootItem_" .. i .. "_Name"]
-					iconFrame = _G["AtlasLootItem_" .. i .. "_Icon"]
-					extraFrame = _G["AtlasLootItem_" .. i .. "_Extra"]
-					borderFrame = _G["AtlasLootItem_" .. i .. "Border"]
-					quantityFrame = _G["AtlasLootItem_" .. i .. "_Quantity"]
+					nameFrame = itemButton._nameFS
+					iconFrame = itemButton._iconTx
+					extraFrame = itemButton._extraFS
+					borderFrame = itemButton._border
+					quantityFrame = itemButton._quantityFS
 
 					local shouldShow = false
 
@@ -632,10 +680,10 @@ function Atlas.LootBrowserUI.ScrollBarLootUpdate()
 					end
 				end
 			else
-				nameFrame = _G["AtlasLootMenuItem_" .. i .. "_Name"]
-				iconFrame = _G["AtlasLootMenuItem_" .. i .. "_Icon"]
-				extraFrame = _G["AtlasLootMenuItem_" .. i .. "_Extra"]
-				borderFrame = _G["AtlasLootMenuItem_" .. i .. "Border"]
+				nameFrame = menuButton and menuButton._nameFS
+				iconFrame = menuButton and menuButton._iconTx
+				extraFrame = menuButton and menuButton._extraFS
+				borderFrame = menuButton and menuButton._border
 				-- Clear button content if no data
 				if iconFrame then iconFrame:SetTexture("") end
 				if nameFrame then nameFrame:SetText("") end
@@ -649,10 +697,10 @@ function Atlas.LootBrowserUI.ScrollBarLootUpdate()
 				menuButton.lootpage = nil
 				menuButton.container = nil
 				menuButton.firstBoss = nil
-				iconFrame = _G["AtlasLootItem_" .. i .. "_Icon"]
-				extraFrame = _G["AtlasLootItem_" .. i .. "_Extra"]
-				borderFrame = _G["AtlasLootItem_" .. i .. "Border"]
-				quantityFrame = _G["AtlasLootItem_" .. i .. "_Quantity"]
+				iconFrame = itemButton._iconTx
+				extraFrame = itemButton._extraFS
+				borderFrame = itemButton._border
+				quantityFrame = itemButton._quantityFS
 				-- Clear button content if no data
 				if iconFrame then iconFrame:SetTexture("") end
 				if nameFrame then nameFrame:SetText("") end
@@ -1027,11 +1075,11 @@ function Atlas.LootBrowserUI.ClearLootLine(lineIndex)
 		button.itemID = nil
 		button.elemID = nil
 		button.droprate = nil
-		local nameFS = _G[button:GetName() .. "_Name"]
+		local nameFS = EnsureButtonChildren(button)._nameFS
 		if nameFS then nameFS:SetText("") end
-		local iconTx = _G[button:GetName() .. "_Icon"]
+		local iconTx = EnsureButtonChildren(button)._iconTx
 		if iconTx then iconTx:SetTexture(nil) end
-		local extraFS = _G[button:GetName() .. "_Extra"]
+		local extraFS = EnsureButtonChildren(button)._extraFS
 		if extraFS then
 			extraFS:SetText(""); extraFS:Hide()
 		end
@@ -1073,7 +1121,7 @@ function Atlas.LootBrowserUI.UpdateItemButton(button, itemData)
 	button.droprate = itemData.dropRate or itemData.droprate
 
 	-- Set icon (prefer provided icon, otherwise try game item icon, else a question mark)
-	local iconTx = _G[button:GetName() .. "_Icon"]
+	local iconTx = EnsureButtonChildren(button)._iconTx
 	if iconTx then
 		local texture = itemData.icon
 		if not texture and button.itemID ~= 0 then
@@ -1084,7 +1132,7 @@ function Atlas.LootBrowserUI.UpdateItemButton(button, itemData)
 	end
 
 	-- Set item name with embedded color prefix so Interactions.lua can parse it
-	local nameFS = _G[button:GetName() .. "_Name"]
+	local nameFS = EnsureButtonChildren(button)._nameFS
 	if nameFS then
 		local itemName, _, quality = GetItemInfo(button.itemID)
 		local _, _, _, hex = GetItemQualityColor(quality or 1)
@@ -1097,7 +1145,7 @@ function Atlas.LootBrowserUI.UpdateItemButton(button, itemData)
 	end
 
 	-- Optional extra line: drop rate or explicit extra text
-	local extraFS = _G[button:GetName() .. "_Extra"]
+	local extraFS = EnsureButtonChildren(button)._extraFS
 	if extraFS then
 		local extraText
 		if itemData.extra then
@@ -1128,7 +1176,7 @@ function Atlas.LootBrowserUI.UpdateTextButton(button, textData)
 	end
 
 	-- Update icon if provided, otherwise clear it
-	local iconTx = _G[button:GetName() .. "_Icon"]
+	local iconTx = EnsureButtonChildren(button)._iconTx
 	if iconTx then
 		if textData.icon then
 			iconTx:SetTexture(textData.icon)
@@ -1138,14 +1186,14 @@ function Atlas.LootBrowserUI.UpdateTextButton(button, textData)
 	end
 
 	-- Update visible label
-	local nameFS = _G[button:GetName() .. "_Name"]
+	local nameFS = EnsureButtonChildren(button)._nameFS
 	if nameFS then
 		local label = textData.name or textData.text or ""
 		nameFS:SetText(label)
 	end
 
 	-- Extra line for text entries (if any)
-	local extraFS = _G[button:GetName() .. "_Extra"]
+	local extraFS = EnsureButtonChildren(button)._extraFS
 	if extraFS then
 		if textData.extra then
 			extraFS:SetText(textData.extra)
@@ -1171,11 +1219,11 @@ function Atlas.LootBrowserUI.ClearMenuLine(lineIndex)
 		button.lootpage = nil
 		button.firstBoss = nil
 		button.isheader = nil
-		local nameFS = _G[button:GetName() .. "_Name"]
+		local nameFS = EnsureButtonChildren(button)._nameFS
 		if nameFS then nameFS:SetText("") end
-		local iconTx = _G[button:GetName() .. "_Icon"]
+		local iconTx = EnsureButtonChildren(button)._iconTx
 		if iconTx then iconTx:SetTexture(nil) end
-		local extraFS = _G[button:GetName() .. "_Extra"]
+		local extraFS = EnsureButtonChildren(button)._extraFS
 		if extraFS then
 			extraFS:SetText(""); extraFS:Hide()
 		end

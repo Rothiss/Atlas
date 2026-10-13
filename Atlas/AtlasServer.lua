@@ -174,49 +174,51 @@ end
 --- @param entry table The data entry table
 --- @param fieldName string The base field name (e.g. "reagents", "skill")
 --- @return any The field value
+-- Memo of resolved override key names per (activeServer, fieldName); the base
+-- field names form a small fixed set, so this stays bounded and kills the
+-- per-call string concatenation (GetDataField runs many times per loot row).
+local dataFieldKeysMemo = {}
+
+local function GetDataFieldKeys(active, fieldName)
+    local perServer = dataFieldKeysMemo[active]
+    if not perServer then
+        perServer = {}
+        dataFieldKeysMemo[active] = perServer
+    end
+    local keys = perServer[fieldName]
+    if keys then return keys end
+
+    local primary, fb1, fb2
+    if active == Atlas.Server.TURTLE then
+        primary = fieldName .. "_TURTLE"
+        fb1 = fieldName .. "_TURTLE1"
+    elseif active == Atlas.Server.TURTLE1 then
+        primary = fieldName .. "_TURTLE1"
+    elseif active == Atlas.Server.VANILLA_PLUS then
+        primary = fieldName .. "_VANILLA_PLUS"
+    elseif active == Atlas.Server.OCTO then
+        primary = fieldName .. "_OCTO"
+        fb1 = fieldName .. "_TURTLE"
+        fb2 = fieldName .. "_TURTLE1"
+    end
+    keys = { primary, fb1, fb2 }
+    perServer[fieldName] = keys
+    return keys
+end
+
 function Atlas.Server.GetDataField(entry, fieldName)
     if not entry or type(entry) ~= "table" then return nil end
     if not fieldName then return nil end
 
-    local active = Atlas.Server.GetActive()
-
-    -- Check for current server specific field
-    local suffix = nil
-    if active == Atlas.Server.TURTLE then
-        suffix = "_TURTLE"
-    elseif active == Atlas.Server.TURTLE1 then
-        suffix = "_TURTLE1"
-    elseif active == Atlas.Server.VANILLA_PLUS then
-        suffix = "_VANILLA_PLUS"
-    elseif active == Atlas.Server.OCTO then
-        suffix = "_OCTO"
+    local keys = GetDataFieldKeys(Atlas.Server.GetActive(), fieldName)
+    if keys[1] and entry[keys[1]] ~= nil then
+        return entry[keys[1]]
     end
-
-    if suffix then
-        local serverField = fieldName .. suffix
-        if entry[serverField] ~= nil then
-            return entry[serverField]
-        end
+    if keys[2] and entry[keys[2]] ~= nil then
+        return entry[keys[2]]
     end
-
-    -- OctoWoW inherits from Turtle WoW (1.18.1 then 1.17.2)
-    if active == Atlas.Server.OCTO then
-        local fallbackTurtleField = fieldName .. "_TURTLE"
-        if entry[fallbackTurtleField] ~= nil then
-            return entry[fallbackTurtleField]
-        end
-        local fallbackField = fieldName .. "_TURTLE1"
-        if entry[fallbackField] ~= nil then
-            return entry[fallbackField]
-        end
-    end
-
-    -- Inheritance: TURTLE (1.18.1) inherits from TURTLE1 (1.17.2)
-    if active == Atlas.Server.TURTLE then
-        local fallbackField = fieldName .. "_TURTLE1"
-        if entry[fallbackField] ~= nil then
-            return entry[fallbackField]
-        end
+    if keys[3] and entry[keys[3]] ~= nil then
+        return entry[keys[3]]
     end
 
     return entry[fieldName]

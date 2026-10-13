@@ -36,6 +36,7 @@ DataIndex.callbacks = {}
 function DataIndex.ResetIndex()
     DataIndex.isIndexed = false
     DataIndex.isIndexing = false
+    findItemsMemo = nil
     DataIndex.SourceCache = {}
     DataIndex.LocationCache = {}
     DataIndex.SkillCache = {}
@@ -69,6 +70,8 @@ end
 -- Consolidated from ProfessionHooks.lua
 -- Memoized during a build session to avoid repeated spell/item tooltip scans.
 local namesMemo = {}
+-- Last FindItems result memo (cleared when the index is rebuilt/reset).
+local findItemsMemo = nil
 
 function DataIndex.GetNamesFromID(id)
     if not id then return {} end
@@ -467,6 +470,7 @@ function DataIndex.BuildIndex(incremental)
     local function FinalizeIndexing()
         DataIndex.isIndexed = true
         DataIndex.isIndexing = false
+        findItemsMemo = nil -- Results are stale once the index is rebuilt
         itemToSetMap = {} -- Clear temporary map
         NotifyCallbacks()
     end
@@ -819,6 +823,15 @@ function DataIndex.FindItems(text, options)
 
     local types = options and options.types -- nil means all
 
+    -- Memoize identical repeat queries (predict-search + explicit search share text)
+    local memoKey = text .. "|" .. tostring(partial) .. "|" .. (types and "T" or "N")
+    if findItemsMemo and findItemsMemo.key == memoKey then
+        local copy = {}
+        local n = table.getn(findItemsMemo.results)
+        for i = 1, n do copy[i] = findItemsMemo.results[i] end
+        return copy
+    end
+
     local results = {}
 
     -- Numeric search prep
@@ -910,5 +923,11 @@ function DataIndex.FindItems(text, options)
         end
     end
 
-    return results
+    findItemsMemo = { key = memoKey, results = results }
+
+    -- Return a shallow copy so callers cannot mutate the cached array
+    local copy = {}
+    local n = table.getn(results)
+    for i = 1, n do copy[i] = results[i] end
+    return copy
 end

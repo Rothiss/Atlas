@@ -736,6 +736,9 @@ function Atlas.HewdropMenus:OpenServerMenu(parent)
                         if Atlas.DataIndex and Atlas.DataIndex.ResetIndex then
                             Atlas.DataIndex.ResetIndex()
                         end
+                        if Atlas.LootBrowserUI and Atlas.LootBrowserUI.InvalidateLootPageCache then
+                            Atlas.LootBrowserUI.InvalidateLootPageCache()
+                        end
                         if Atlas.UpdateOptionsUI then
                             Atlas.UpdateOptionsUI()
                         end

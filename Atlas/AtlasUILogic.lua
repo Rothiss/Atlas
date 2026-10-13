@@ -83,7 +83,9 @@ function Atlas.MinimapButtonUpdatePosition()
 		54 - (radius * cos(position)),
 		(radius * sin(position)) - 55
 	)
-	Atlas.OptionsInit()
+	-- Lightweight slider sync only (a full OptionsInit would re-assert ~30
+	-- checkbox/slider states on every drag/slider tick)
+	Atlas.SyncPositionControls()
 end
 
 -- Handles minimap button dragging
