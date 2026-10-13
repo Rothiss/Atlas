@@ -365,8 +365,8 @@ Atlas.Localization:RegisterNamespace("UI", "enUS", {
     ["NewVersionAvailableFmt"] = "|cffff0000New version available!|r |cff00ff00Download here:|r %s",
     [" |cffA52A2Aloaded."] = true,
     ["NoticeText"] = "If you find anything missing, please report it at:|r",
-    ["NoticeLink"] = "https://github.com/byCFM2/Atlas-CFM/issues/|r",
-    ["Link"] = "https://github.com/byCFM2/Atlas-CFM/|r",
+    ["NoticeLink"] = "https://github.com/Rothiss/Atlas/issues/|r",
+    ["Link"] = "https://github.com/Rothiss/Atlas/|r",
 
     --************************************************
     -- Categories & Menus
