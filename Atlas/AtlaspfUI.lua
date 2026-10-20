@@ -990,32 +990,38 @@ local function StyleInsideAtlasFrame()
 end
 
 ---
+--- Hooks a single tooltip to trigger pfUI's equip-compare on show
+--- and hide the comparison tooltips on hide.
+--- @param tooltip table - The AtlasLoot tooltip frame to hook
+---
+local function HookPfUICompare(tooltip)
+    if not tooltip or not pfUI.eqcompare or not pfUI.eqcompare.GameTooltipShow then
+        return
+    end
+
+    local origOnShow = tooltip:GetScript("OnShow")
+    tooltip:SetScript("OnShow", function()
+        if origOnShow then origOnShow() end
+        pfUI.eqcompare.GameTooltipShow()
+    end)
+
+    local origOnHide = tooltip:GetScript("OnHide")
+    tooltip:SetScript("OnHide", function()
+        if origOnHide then origOnHide() end
+        if ShoppingTooltip1 then ShoppingTooltip1:Hide() end
+        if ShoppingTooltip2 then ShoppingTooltip2:Hide() end
+    end)
+end
+
+---
 --- Adds comparison support to Atlas tooltips
 --- Works regardless of pfUI styling setting if pfUI is loaded
 ---
 local function SetupTooltipComparison()
     if not IsPfUIBaseLoaded() then return end
 
-    if AtlasLootTooltip then
-        -- Add comparison support
-        if pfUI.eqcompare and pfUI.eqcompare.GameTooltipShow then
-            -- Check if comparison is enabled in pfUI settings
-            -- In pfUI, if the module is active, eqcompare.GameTooltipShow exists.
-            -- We hook it directly.
-            local origOnShow = AtlasLootTooltip:GetScript("OnShow")
-            AtlasLootTooltip:SetScript("OnShow", function()
-                if origOnShow then origOnShow() end
-                pfUI.eqcompare.GameTooltipShow()
-            end)
-
-            local origOnHide = AtlasLootTooltip:GetScript("OnHide")
-            AtlasLootTooltip:SetScript("OnHide", function()
-                if origOnHide then origOnHide() end
-                if ShoppingTooltip1 then ShoppingTooltip1:Hide() end
-                if ShoppingTooltip2 then ShoppingTooltip2:Hide() end
-            end)
-        end
-    end
+    HookPfUICompare(AtlasLootTooltip)
+    HookPfUICompare(AtlasLootTooltip2)
 end
 
 ---
