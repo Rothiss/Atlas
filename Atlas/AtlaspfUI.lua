@@ -990,39 +990,69 @@ local function StyleInsideAtlasFrame()
 end
 
 ---
---- Hooks a single tooltip to trigger pfUI's equip-compare on show
---- and hide the comparison tooltips on hide.
+--- Tracks whether the pfUI equip-compare hook has been applied
+---
+local eqCompareHooked = false
+
+---
+--- Hooks a single Atlas tooltip into pfUI's equip-compare.
+--- Supports both pfUI API variants:
+---  - brues-code/pfUI (ClassicAPI fork): pfUI.eqcompare.HookTooltip(tooltip)
+---  - shagu/pfUI: pfUI.eqcompare.GameTooltipShow (manual OnShow hook)
 --- @param tooltip table - The AtlasLoot tooltip frame to hook
 ---
 local function HookPfUICompare(tooltip)
-    if not tooltip or not pfUI.eqcompare or not pfUI.eqcompare.GameTooltipShow then
-        return
+    if not tooltip then return end
+
+    if pfUI.eqcompare.HookTooltip then
+        pfUI.eqcompare.HookTooltip(tooltip)
+    elseif pfUI.eqcompare.GameTooltipShow then
+        local origOnShow = tooltip:GetScript("OnShow")
+        tooltip:SetScript("OnShow", function()
+            if origOnShow then origOnShow() end
+            pfUI.eqcompare.GameTooltipShow()
+        end)
+
+        local origOnHide = tooltip:GetScript("OnHide")
+        tooltip:SetScript("OnHide", function()
+            if origOnHide then origOnHide() end
+            if ShoppingTooltip1 then ShoppingTooltip1:Hide() end
+            if ShoppingTooltip2 then ShoppingTooltip2:Hide() end
+        end)
     end
-
-    local origOnShow = tooltip:GetScript("OnShow")
-    tooltip:SetScript("OnShow", function()
-        if origOnShow then origOnShow() end
-        pfUI.eqcompare.GameTooltipShow()
-    end)
-
-    local origOnHide = tooltip:GetScript("OnHide")
-    tooltip:SetScript("OnHide", function()
-        if origOnHide then origOnHide() end
-        if ShoppingTooltip1 then ShoppingTooltip1:Hide() end
-        if ShoppingTooltip2 then ShoppingTooltip2:Hide() end
-    end)
 end
 
 ---
---- Adds comparison support to Atlas tooltips
---- Works regardless of pfUI styling setting if pfUI is loaded
+--- Attempts to install the pfUI equip-compare hook.
+--- Retried by the lurker until pfUI's eqcompare and the Atlas tooltips are ready.
+--- Works regardless of pfUI styling setting if pfUI is loaded.
 ---
-local function SetupTooltipComparison()
-    if not IsPfUIBaseLoaded() then return end
+local function TrySetupTooltipComparison()
+    if eqCompareHooked then return end
+    if not pfUI or not pfUI.eqcompare then return end
+    if not (pfUI.eqcompare.HookTooltip or pfUI.eqcompare.GameTooltipShow) then return end
+    if not AtlasLootTooltip or not AtlasLootTooltip2 then return end
 
     HookPfUICompare(AtlasLootTooltip)
     HookPfUICompare(AtlasLootTooltip2)
+    eqCompareHooked = true
+
+    if Atlas.DEBUGMODE then
+        PrintA("pfUI equip-compare hooked")
+    end
 end
+
+--- Lurker: keeps retrying the comparison hook until everything is ready.
+local eqCompareLurker = CreateFrame("Frame")
+eqCompareLurker:RegisterEvent("ADDON_LOADED")
+eqCompareLurker:RegisterEvent("VARIABLES_LOADED")
+eqCompareLurker:RegisterEvent("PLAYER_ENTERING_WORLD")
+eqCompareLurker:SetScript("OnEvent", function()
+    TrySetupTooltipComparison()
+    if eqCompareHooked then
+        this:UnregisterAllEvents()
+    end
+end)
 
 ---
 --- Applies pfUI styling to tooltips
@@ -1245,9 +1275,6 @@ function Atlas.pfUI.Initialize()
     if not IsPfUIBaseLoaded() then
         return
     end
-
-    -- Setup tooltip comparison (works even if styling is disabled)
-    SetupTooltipComparison()
 
     -- Apply styling only if enabled in options
     if not IsPfUIStylingEnabled() then
