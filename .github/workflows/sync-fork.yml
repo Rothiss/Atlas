@@ -1,0 +1,49 @@
+name: Sync Fork
+
+on:
+  schedule:
+    - cron: '0 3 * * *' # Runs daily at 03:00 UTC
+  workflow_dispatch: # Allows you to manually trigger it via the Actions tab
+
+permissions:
+  contents: write
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout target repo
+        uses: actions/checkout@v4
+
+      - name: Sync upstream changes
+        id: sync
+        uses: aormsby/Fork-Sync-With-Upstream-action@v3.4.3
+        with:
+          target_sync_branch: master
+          target_repo_token: ${{ secrets.GITHUB_TOKEN }}
+          upstream_sync_repo: byCFM2/Atlas-CFM
+          upstream_sync_branch: main
+
+      - name: Notify Discord
+        if: always() && (steps.sync.outputs.has_new_commits == 'true' || failure())
+        env:
+          DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK_URL }}
+        run: |
+          RUN_URL="$GITHUB_SERVER_URL/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID"
+          if [ "${{ job.status }}" = "success" ]; then
+            TITLE="✅ Atlas fork synced"
+            COLOR=3066993
+            DESC="New commits from \`byCFM2/Atlas-CFM\` were merged into the fork."
+          else
+            TITLE="❌ Atlas fork sync failed"
+            COLOR=15158332
+            DESC="The scheduled sync failed. Check the run for details."
+          fi
+          curl -sS -o /dev/null -X POST "$DISCORD_WEBHOOK" \
+            -H "Content-Type: application/json" \
+            -d "$(jq -nc \
+                --arg title "$TITLE" \
+                --arg desc "$DESC" \
+                --arg url "$RUN_URL" \
+                --argjson color "$COLOR" \
+                '{embeds:[{title:$title, description:$desc, color:$color, url:$url}]}')"
